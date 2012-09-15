@@ -1,13 +1,36 @@
 package com.alexrnl;
 
+import com.sun.istack.internal.logging.Logger;
+
 /**
- * Hello world!
- *
+ * Launcher class for the application.<br />
+ * @author Alex
  */
-public class App 
-{
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+public class App {
+	/** Logger */
+	private static Logger	lg	= Logger.getLogger(App.class);
+	
+	/**
+	 * Constructor #1.<br />
+	 */
+	private App () {
+		super();
+	}
+	
+	/**
+	 * Launch the application.
+	 */
+	private void launch () {
+		lg.info("Subtitle Corrector starting...");
+	}
+	
+	/**
+	 * Entry point of the application.
+	 * @param args
+	 *        the arguments from the command line.
+	 */
+	public static void main (final String[] args) {
+		final App app = new App();
+		app.launch();
+	}
 }
