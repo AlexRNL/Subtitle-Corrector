@@ -1,6 +1,6 @@
 package com.alexrnl;
 
-import com.sun.istack.internal.logging.Logger;
+import java.util.logging.Logger;
 
 /**
  * Launcher class for the application.<br />
@@ -8,7 +8,7 @@ import com.sun.istack.internal.logging.Logger;
  */
 public class App {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(App.class);
+	private static Logger	lg	= Logger.getLogger(App.class.getName());
 	
 	/**
 	 * Constructor #1.<br />
