@@ -22,6 +22,10 @@ public class App {
 	 */
 	private void launch () {
 		lg.info("Subtitle Corrector starting...");
+		
+		
+		
+		lg.info("Subtitle Corrector running");
 	}
 	
 	/**
