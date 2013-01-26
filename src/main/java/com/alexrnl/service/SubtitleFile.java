@@ -1,40 +1,52 @@
 package com.alexrnl.service;
 
 import java.nio.file.Path;
-import java.util.NavigableSet;
 import java.util.TreeSet;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * TODO
  * @author Alex
  */
-public class SubtitleFile {
+public class SubtitleFile extends TreeSet<Subtitle> {
 	/** Logger */
-	private static Logger					lg	= Logger.getLogger(SubtitleFile.class.getName());
+	private static Logger		lg					= Logger.getLogger(SubtitleFile.class.getName());
+	
+	/** Serial Version UID */
+	private static final long	serialVersionUID	= -5783605599009372323L;
 	
 	/** The actual file which is represented */
-	private final Path						file;
-	/** The list of subtitles of a file */
-	private final NavigableSet<Subtitle>	subtitles;
+	private final Path			file;
 	
+	/**
+	 * Constructor #1.<br />
+	 * @param file
+	 *        the file backed-up by this instance.
+	 */
 	public SubtitleFile (final Path file) {
 		super();
 		this.file = file;
-		this.subtitles = new TreeSet<>();
+		
+		if (lg.isLoggable(Level.FINE)) {
+			lg.fine(this.getClass().getSimpleName() + " created: " + toString());
+		}
 	}
 	
 	/**
-	 * Add a subtitle to the file.
-	 * @param subtitle
-	 *        the subtitle to add.
+	 * Return the file represented by this instance.
+	 * @return the file.
 	 */
-	public void addSubtitle (final Subtitle subtitle) {
-		if (subtitle == null) {
-			lg.warning("Cannot add null subtitle");
-			return;
-		}
-		subtitles.add(subtitle);
+	public Path getFile () {
+		return file;
 	}
 	
+	/**
+	 * Update the subtitle so the ordering is updated if necessary.
+	 */
+	public void update () {
+		final TreeSet<Subtitle> tmp = new TreeSet<>(this);
+		this.clear();
+		this.addAll(tmp);
+	}
 }
