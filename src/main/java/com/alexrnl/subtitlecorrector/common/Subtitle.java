@@ -1,4 +1,4 @@
-package com.alexrnl.service;
+package com.alexrnl.subtitlecorrector.common;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

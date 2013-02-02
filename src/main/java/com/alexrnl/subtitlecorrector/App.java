@@ -1,4 +1,4 @@
-package com.alexrnl;
+package com.alexrnl.subtitlecorrector;
 
 import java.util.logging.Logger;
 

@@ -1,4 +1,4 @@
-package com.alexrnl.service;
+package com.alexrnl.subtitlecorrector.common;
 
 import java.nio.file.Path;
 import java.util.TreeSet;
