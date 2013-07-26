@@ -34,7 +34,6 @@ public class App {
 	 *        the arguments from the command line.
 	 */
 	public static void main (final String[] args) {
-		final App app = new App();
-		app.launch();
+		new App().launch();
 	}
 }
