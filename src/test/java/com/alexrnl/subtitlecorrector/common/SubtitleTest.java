@@ -1,5 +1,9 @@
 package com.alexrnl.subtitlecorrector.common;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -10,12 +14,24 @@ import org.junit.Test;
  * @author Alex
  */
 public class SubtitleTest {
+	/** The current time */
+	private long		currentTime;
+	/** Empty subtitle */
+	private Subtitle	empty;
+	/** A valid subtitle */
+	private Subtitle	validSubtitle;
+	/** An invalid subtitle */
+	private Subtitle	invalidSubtitle;
 	
 	/**
 	 * Set up test attributes.
 	 */
 	@Before
 	public void setUp () {
+		currentTime = System.currentTimeMillis();
+		empty = new Subtitle();
+		validSubtitle = new Subtitle(currentTime - 1000, currentTime, "<i>This is a test</i>");
+		invalidSubtitle = new Subtitle(currentTime + 1000, currentTime, "LDR\n- ABA");
 	}
 	
 	/**
@@ -23,7 +39,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testGetBegin () {
-		fail("Not yet implemented"); // TODO
+		assertEquals(0, empty.getBegin());
+		assertEquals(currentTime - 1000, validSubtitle.getBegin());
+		assertEquals(currentTime + 1000, invalidSubtitle.getBegin());
 	}
 	
 	/**
@@ -31,7 +49,13 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testSetBegin () {
-		fail("Not yet implemented"); // TODO
+		final long actualTime = System.currentTimeMillis();
+		empty.setBegin(actualTime);
+		validSubtitle.setBegin(actualTime);
+		invalidSubtitle.setBegin(actualTime);
+		assertEquals(actualTime, empty.getBegin());
+		assertEquals(actualTime, validSubtitle.getBegin());
+		assertEquals(actualTime, invalidSubtitle.getBegin());
 	}
 	
 	/**
@@ -39,7 +63,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testGetEnd () {
-		fail("Not yet implemented"); // TODO
+		assertEquals(0, empty.getEnd());
+		assertEquals(currentTime, validSubtitle.getEnd());
+		assertEquals(currentTime, invalidSubtitle.getEnd());
 	}
 	
 	/**
@@ -47,7 +73,13 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testSetEnd () {
-		fail("Not yet implemented"); // TODO
+		final long actualTime = System.currentTimeMillis();
+		empty.setEnd(actualTime);
+		validSubtitle.setEnd(actualTime);
+		invalidSubtitle.setEnd(actualTime);
+		assertEquals(actualTime, empty.getEnd());
+		assertEquals(actualTime, validSubtitle.getEnd());
+		assertEquals(actualTime, invalidSubtitle.getEnd());
 	}
 	
 	/**
@@ -55,7 +87,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testGetContent () {
-		fail("Not yet implemented"); // TODO
+		assertNull(empty.getContent());
+		assertEquals("<i>This is a test</i>", validSubtitle.getContent());
+		assertEquals("LDR\n- ABA", invalidSubtitle.getContent());
 	}
 	
 	/**
@@ -63,7 +97,12 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testSetContent () {
-		fail("Not yet implemented"); // TODO
+		empty.setContent("");
+		validSubtitle.setContent("LLLLLDDDAAA");
+		invalidSubtitle.setContent("No, I am your father");
+		assertEquals("", empty.getContent());
+		assertEquals("LLLLLDDDAAA", validSubtitle.getContent());
+		assertEquals("No, I am your father", invalidSubtitle.getContent());
 	}
 	
 	/**
@@ -71,7 +110,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testGetDuration () {
-		fail("Not yet implemented"); // TODO
+		assertEquals(0, empty.getDuration());
+		assertEquals(1000, validSubtitle.getDuration());
+		assertEquals(-1000, invalidSubtitle.getDuration());
 	}
 	
 	/**
@@ -79,7 +120,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testIsValid () {
-		fail("Not yet implemented"); // TODO
+		assertFalse(empty.isValid());
+		assertTrue(validSubtitle.isValid());
+		assertFalse(invalidSubtitle.isValid());
 	}
 	
 	/**
@@ -87,7 +130,9 @@ public class SubtitleTest {
 	 */
 	@Test
 	public void testToString () {
-		fail("Not yet implemented"); // TODO
+		assertEquals("[0, 0] null", empty.toString());
+		assertEquals("[" + (currentTime - 1000) + ", " + currentTime + "] <i>This is a test</i>", validSubtitle.toString());
+		assertEquals("[" + (currentTime + 1000) + ", " + currentTime + "] LDR\n- ABA", invalidSubtitle.toString());
 	}
 	
 	/**
