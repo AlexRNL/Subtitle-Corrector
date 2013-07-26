@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,13 +17,15 @@ import org.junit.Test;
  */
 public class SubtitleTest {
 	/** The current time */
-	private long		currentTime;
+	private long			currentTime;
 	/** Empty subtitle */
-	private Subtitle	empty;
+	private Subtitle		empty;
 	/** A valid subtitle */
-	private Subtitle	validSubtitle;
+	private Subtitle		validSubtitle;
 	/** An invalid subtitle */
-	private Subtitle	invalidSubtitle;
+	private Subtitle		invalidSubtitle;
+	/** List with all the subtitles to test */
+	private List<Subtitle>	subtitles;
 	
 	/**
 	 * Set up test attributes.
@@ -32,6 +36,10 @@ public class SubtitleTest {
 		empty = new Subtitle();
 		validSubtitle = new Subtitle(currentTime - 1000, currentTime, "<i>This is a test</i>");
 		invalidSubtitle = new Subtitle(currentTime + 1000, currentTime, "LDR\n- ABA");
+		subtitles = new LinkedList<>();
+		subtitles.add(empty);
+		subtitles.add(validSubtitle);
+		subtitles.add(invalidSubtitle);
 	}
 	
 	/**
@@ -137,9 +145,34 @@ public class SubtitleTest {
 	
 	/**
 	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#compareTo(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * @throws CloneNotSupportedException
+	 *         if a clone operation fails.
 	 */
 	@Test
-	public void testCompareTo () {
-		fail("Not yet implemented"); // TODO
+	public void testCompareTo () throws CloneNotSupportedException {
+		for (final Subtitle subtitle : subtitles) {
+			final Subtitle before = subtitle.clone();
+			final Subtitle after = subtitle.clone();
+			before.setBegin(before.getBegin() - 1);
+			after.setBegin(after.getBegin() + 1);
+
+			assertTrue(before.compareTo(subtitle) < 0);
+			assertTrue(after.compareTo(subtitle) > 0);
+		}
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#clone()}.
+	 * @throws CloneNotSupportedException
+	 *         if a clone operation fails.
+	 */
+	@Test
+	public void testClone () throws CloneNotSupportedException {
+		for (final Subtitle subtitle : subtitles) {
+			final Subtitle clone = subtitle.clone();
+			assertEquals(subtitle.getBegin(), clone.getBegin());
+			assertEquals(subtitle.getEnd(), clone.getEnd());
+			assertEquals(subtitle.getContent(), clone.getContent());
+		}
 	}
 }
