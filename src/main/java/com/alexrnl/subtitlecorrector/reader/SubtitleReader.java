@@ -1,6 +1,7 @@
 package com.alexrnl.subtitlecorrector.reader;
 
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -8,6 +9,8 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
 /**
@@ -31,27 +34,34 @@ public abstract class SubtitleReader {
 	 * @param file
 	 *        the file to read.
 	 * @return the subtitle file, loaded.
+	 * @throws IOException
+	 *         if there was a problem while reading the file.
 	 */
-	public SubtitleFile readFile (final Path file) {
+	public SubtitleFile readFile (final Path file) throws IOException {
 		if (Files.exists(file) || Files.isReadable(file)) {
-			lg.warning("");
+			lg.warning("File " + file + " does not exists or cannot be read");
 		}
-		if (lg.isLoggable(Level.FINE)) {
+		if (lg.isLoggable(Level.INFO)) {
 			lg.fine("Loading file " + file);
 		}
 		
 		SubtitleFile subtitleFile = null;
 		
-		try (BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
-			subtitleFile = readHeader(file, reader);
-			while (!readSubtitle(subtitleFile, reader)) {
-				
+		try (final BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+			try {
+				subtitleFile = readHeader(file, reader);
+				for (;;) {
+					subtitleFile.add(readSubtitle(subtitleFile, reader));
+				}
+			} catch (final EOFException e) {
+				if (lg.isLoggable(Level.INFO)) {
+					lg.info("Finished reading file " + file);
+				}
+				readFooter(subtitleFile, reader);
 			}
-			readFooter(subtitleFile, reader);
 		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			lg.warning("TODO (" + e.getMessage() + ")");
-			e.printStackTrace();
+			lg.warning("Problem while reading subitle file: " + ExceptionUtils.display(e));
+			throw e;
 		}
 		
 		return subtitleFile;
@@ -65,8 +75,10 @@ public abstract class SubtitleReader {
 	 * @param reader
 	 *        the reader to use.
 	 * @return the subtitle file to use to store the data.
+	 * @throws IOException
+	 *         if there was a problem while reading the file.
 	 */
-	protected SubtitleFile readHeader (final Path file, final BufferedReader reader) {
+	protected SubtitleFile readHeader (final Path file, final BufferedReader reader) throws IOException {
 		return new SubtitleFile(file);
 	}
 	
@@ -76,8 +88,10 @@ public abstract class SubtitleReader {
 	 *        the subtitle file being read.
 	 * @param reader
 	 *        the reader to use.
+	 * @throws IOException
+	 *         if there was a problem while reading the file.
 	 */
-	protected void readFooter (final SubtitleFile subtitleFile, final BufferedReader reader) {
+	protected void readFooter (final SubtitleFile subtitleFile, final BufferedReader reader) throws IOException {
 		// Do nothing
 	}
 	
@@ -87,7 +101,9 @@ public abstract class SubtitleReader {
 	 *        the subtitle file being read.
 	 * @param reader
 	 *        the reader to use.
-	 * @return <code>true</code> if the subtitle is the last of the file.
+	 * @return The subtitle read.
+	 * @throws IOException
+	 *         if there was a problem while reading the file.
 	 */
-	protected abstract boolean readSubtitle (final SubtitleFile subtitleFile, final BufferedReader reader);
+	protected abstract Subtitle readSubtitle (final SubtitleFile subtitleFile, final BufferedReader reader) throws IOException;
 }
