@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ SubtitleTest.class })
+@SuiteClasses({ SubtitleTest.class, SubtitleFileTest.class })
 public class CommonTests {
 	
 }
