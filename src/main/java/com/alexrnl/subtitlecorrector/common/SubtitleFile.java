@@ -5,6 +5,8 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.alexrnl.commons.utils.CollectionUtils;
+
 /**
  * Represent a single subtitle file.<br />
  * @author Alex
@@ -45,6 +47,10 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 	 * Update the subtitle so the ordering is updated if necessary.
 	 */
 	public void update () {
+		if (CollectionUtils.isSorted(this)) {
+			return;
+		}
+
 		final TreeSet<Subtitle> tmp = new TreeSet<>(this);
 		this.clear();
 		this.addAll(tmp);
