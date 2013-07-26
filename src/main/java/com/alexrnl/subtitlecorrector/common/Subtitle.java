@@ -111,7 +111,7 @@ public class Subtitle implements Comparable<Subtitle> {
 	 * @return <true>true</true> if the subtitle is valid.
 	 */
 	public boolean isValid () {
-		return begin > end;
+		return begin < end;
 	}
 	
 	/**
