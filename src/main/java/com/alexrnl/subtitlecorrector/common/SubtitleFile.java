@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * TODO
+ * Represent a single subtitle file.<br />
  * @author Alex
  */
 public class SubtitleFile extends TreeSet<Subtitle> {
