@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  * Class describing a simple subtitle.
  * @author Alex
  */
-public class Subtitle implements Comparable<Subtitle> {
+public class Subtitle implements Comparable<Subtitle>, Cloneable {
 	/** Logger */
 	private static Logger	lg	= Logger.getLogger(Subtitle.class.getName());
 	
@@ -132,6 +132,15 @@ public class Subtitle implements Comparable<Subtitle> {
 	@Override
 	public int compareTo (final Subtitle sub) {
 		return Long.valueOf(begin).compareTo(sub.getBegin());
+	}
+
+	@Override
+	public Subtitle clone () throws CloneNotSupportedException {
+		final Subtitle clone = (Subtitle) super.clone();
+		clone.setBegin(begin);
+		clone.setEnd(end);
+		clone.setContent(content);
+		return clone;
 	}
 	
 }
