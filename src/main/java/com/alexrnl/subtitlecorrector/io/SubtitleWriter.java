@@ -82,8 +82,7 @@ public abstract class SubtitleWriter {
 	 *        the writer to use.
 	 */
 	private void writeFooter (final SubtitleFile file, final BufferedWriter writer) {
-		// TODO Auto-generated method stub
-
+		// Do nothing.
 	}
 	
 	/**
