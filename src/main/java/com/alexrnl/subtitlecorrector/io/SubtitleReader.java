@@ -1,4 +1,4 @@
-package com.alexrnl.subtitlecorrector.reader;
+package com.alexrnl.subtitlecorrector.io;
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -83,7 +83,8 @@ public abstract class SubtitleReader {
 	}
 	
 	/**
-	 * Read the footer of the subtitle file.
+	 * Read the footer of the subtitle file.<br />
+	 * May be override by specific implementations.
 	 * @param subtitleFile
 	 *        the subtitle file being read.
 	 * @param reader
