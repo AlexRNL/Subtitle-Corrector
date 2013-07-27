@@ -1,6 +1,8 @@
 package com.alexrnl.subtitlecorrector.common;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,8 +53,10 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 			return;
 		}
 
-		final TreeSet<Subtitle> tmp = new TreeSet<>(this);
+		final List<Subtitle> tmp = new ArrayList<>(this);
 		this.clear();
-		this.addAll(tmp);
+		for (final Subtitle subtitle : tmp) {
+			this.add(subtitle);
+		}
 	}
 }
