@@ -14,7 +14,7 @@ import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
 /**
- * Abstract class for a subtitle reader.
+ * Abstract class for a subtitle reader.<br />
  * @author Alex
  */
 public abstract class SubtitleReader {
@@ -47,6 +47,7 @@ public abstract class SubtitleReader {
 		
 		SubtitleFile subtitleFile = null;
 		
+		// TODO check for char set
 		try (final BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
 			try {
 				subtitleFile = readHeader(file, reader);
