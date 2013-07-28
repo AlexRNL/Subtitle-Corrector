@@ -28,6 +28,15 @@ public abstract class SubtitleWriter {
 		super();
 	}
 	
+	/**
+	 * Write the generated subtitle file to a specified file.
+	 * @param file
+	 *        the subtitle file to write.
+	 * @param target
+	 *        the target location.
+	 * @throws IOException
+	 *         if there was an issue while writing the subtitle.
+	 */
 	public void writeFile (final SubtitleFile file, final Path target) throws IOException {
 		if (Files.isDirectory(target)) {
 			lg.warning("File " + target + " is a director, it will not be overwritten");
