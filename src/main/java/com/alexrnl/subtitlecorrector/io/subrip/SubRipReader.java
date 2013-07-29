@@ -25,7 +25,7 @@ public class SubRipReader extends SubtitleReader {
 	/**
 	 * Constructor #1.<br />
 	 */
-	private SubRipReader () {
+	public SubRipReader () {
 		super();
 		dateFormatter = new SimpleDateFormat(SubRip.SUBRIP_DATE_FORMAT);
 	}
@@ -63,6 +63,7 @@ public class SubRipReader extends SubtitleReader {
 			lg.warning("Could not parse either " + dates[0] + " or " + dates[1] + " as a date");
 			throw new IOException("Problem while parsing a date", e);
 		}
+		
 		// Get the content of the subtitle
 		do {
 			currentLine = reader.readLine().trim();
