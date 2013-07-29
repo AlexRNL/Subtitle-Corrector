@@ -38,8 +38,9 @@ public abstract class SubtitleReader {
 	 *         if there was a problem while reading the file.
 	 */
 	public SubtitleFile readFile (final Path file) throws IOException {
-		if (Files.exists(file) || Files.isReadable(file)) {
+		if (!Files.exists(file) || !Files.isReadable(file)) {
 			lg.warning("File " + file + " does not exists or cannot be read");
+			throw new IllegalArgumentException("The file does not exist or cannot be read");
 		}
 		if (lg.isLoggable(Level.INFO)) {
 			lg.fine("Loading file " + file);
