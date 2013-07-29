@@ -12,7 +12,7 @@ import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.io.SubtitleReader;
 
 /**
- * TODO
+ * Reader for the SubRip format.<br />
  * @author Alex
  */
 public class SubRipReader extends SubtitleReader {
