@@ -1,7 +1,5 @@
 package com.alexrnl.subtitlecorrector.io.subrip;
 
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -28,16 +26,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.subrip.SubRipReader#readSubtitle(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.io.BufferedReader)}.
-	 */
-	@Test
-	public void testReadSubtitle () {
-		fail("Not yet implemented"); // TODO
-	}
-	
-	/**
-	 * Test method for
-	 * {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
 	 * @throws URISyntaxException
 	 *         if the syntax of the files to test is not valid.
 	 * @throws IOException
@@ -48,5 +37,15 @@ public class SubRipReaderTest {
 		final SubtitleFile subtitles = reader.readFile(Paths.get(getClass().getResource("/Suits - 03x01 - The Arrangement.EVOLVE.English.C.updated.Addic7ed.com.srt").toURI()));
 		
 		System.out.println(subtitles);
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * @throws IOException
+	 *         if there was an issue while reading the subtitle.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testReadFileNotExists () throws IOException {
+		reader.readFile(Paths.get("I", "don't", "exist"));
 	}
 }
