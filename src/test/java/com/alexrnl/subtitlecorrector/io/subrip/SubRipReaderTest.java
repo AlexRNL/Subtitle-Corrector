@@ -60,4 +60,16 @@ public class SubRipReaderTest {
 	public void testReadBadDate () throws IOException, URISyntaxException {
 		reader.readFile(Paths.get(getClass().getResource("/badDate.srt").toURI()));
 	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * @throws IOException
+	 *         if there was an issue while reading the subtitle.
+	 * @throws URISyntaxException
+	 *         if the syntax of the subtitle file is not valid.
+	 */
+	@Test(expected = IOException.class)
+	public void testReadMissingDate () throws IOException, URISyntaxException {
+		reader.readFile(Paths.get(getClass().getResource("/missingDate.srt").toURI()));
+	}
 }
