@@ -34,7 +34,7 @@ public class SubRipReaderTest {
 	 */
 	@Test
 	public void testReadFile () throws IOException, URISyntaxException {
-		final SubtitleFile subtitles = reader.readFile(Paths.get(getClass().getResource("/Suits - 03x01 - The Arrangement.EVOLVE.English.C.updated.Addic7ed.com.srt").toURI()));
+		final SubtitleFile subtitles = reader.readFile(Paths.get(getClass().getResource("/Suits.S03E01.srt").toURI()));
 		
 		System.out.println(subtitles);
 	}
