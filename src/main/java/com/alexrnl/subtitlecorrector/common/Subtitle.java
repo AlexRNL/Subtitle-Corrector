@@ -150,6 +150,14 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 		if (endCmp != 0) {
 			return endCmp;
 		}
+		// Finally, compare subtitle content
+		if (content == null && sub.getContent() == null) {
+			return 0;
+		} else if (content == null) {
+			return 1;
+		} else if (sub.getContent() == null) {
+			return -1;
+		}
 		return content.compareTo(sub.getContent());
 	}
 
