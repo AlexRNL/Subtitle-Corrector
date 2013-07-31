@@ -2,6 +2,7 @@ package com.alexrnl.subtitlecorrector.common;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -151,13 +152,71 @@ public class SubtitleTest {
 	@Test
 	public void testCompareTo () throws CloneNotSupportedException {
 		for (final Subtitle subtitle : subtitles) {
-			final Subtitle before = subtitle.clone();
-			final Subtitle after = subtitle.clone();
-			before.setBegin(before.getBegin() - 1);
-			after.setBegin(after.getBegin() + 1);
+			final Subtitle beforeBegin = subtitle.clone();
+			final Subtitle afterBegin = subtitle.clone();
+			beforeBegin.setBegin(beforeBegin.getBegin() - 1);
+			afterBegin.setBegin(afterBegin.getBegin() + 1);
 
-			assertTrue(before.compareTo(subtitle) < 0);
-			assertTrue(after.compareTo(subtitle) > 0);
+			assertTrue(beforeBegin.compareTo(subtitle) < 0);
+			assertTrue(afterBegin.compareTo(subtitle) > 0);
+			assertEquals(0, subtitle.compareTo(subtitle));
+			
+			final Subtitle beforeEnd = subtitle.clone();
+			final Subtitle afterEnd = subtitle.clone();
+			beforeEnd.setEnd(beforeEnd.getEnd() - 1);
+			afterEnd.setEnd(afterEnd.getEnd() + 1);
+
+			assertTrue(beforeEnd.compareTo(subtitle) < 0);
+			assertTrue(afterEnd.compareTo(subtitle) > 0);
+			assertEquals(0, subtitle.compareTo(subtitle));
+			
+			final Subtitle beforeContent = subtitle.clone();
+			final Subtitle afterContent= subtitle.clone();
+			beforeContent.setContent(beforeContent.getContent() != null ? beforeContent.getContent().substring(0, 1) : null);
+			afterContent.setContent(null);
+
+			if (subtitle.getContent() == null) {
+				assertEquals(0, beforeContent.compareTo(subtitle));
+				assertEquals(0, afterContent.compareTo(subtitle));
+			} else {
+				assertTrue(beforeContent.compareTo(subtitle) < 0);
+				assertTrue(afterContent.compareTo(subtitle) > 0);
+			}
+			assertEquals(0, subtitle.compareTo(subtitle));
+			
+		}
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#hashCode()}.
+	 */
+	@Test
+	public void testHashCode () {
+		for (final Subtitle subtitle : subtitles) {
+			for (final Subtitle other : subtitles) {
+				if (other == subtitle) {
+					assertEquals(subtitle.hashCode(), other.hashCode());
+				} else {
+					assertNotEquals(subtitle.hashCode(), other.hashCode());
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#equals(Object)}.
+	 */
+	@Test
+	public void testEquals () {
+		for (final Subtitle subtitle : subtitles) {
+			for (final Subtitle other : subtitles) {
+				if (other == subtitle) {
+					assertTrue(subtitle.equals(other));
+				} else {
+					assertFalse(subtitle.equals(other));
+				}
+				assertFalse(subtitle.equals(new Object()));
+			}
 		}
 	}
 	
