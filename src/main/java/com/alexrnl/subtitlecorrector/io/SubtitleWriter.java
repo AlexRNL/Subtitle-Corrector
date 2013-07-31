@@ -90,7 +90,7 @@ public abstract class SubtitleWriter {
 	 * @param writer
 	 *        the writer to use.
 	 */
-	private void writeFooter (final SubtitleFile file, final BufferedWriter writer) {
+	protected void writeFooter (final SubtitleFile file, final BufferedWriter writer) {
 		// Do nothing.
 	}
 	
