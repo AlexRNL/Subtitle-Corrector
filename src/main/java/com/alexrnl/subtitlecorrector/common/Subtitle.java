@@ -1,15 +1,14 @@
 package com.alexrnl.subtitlecorrector.common;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.alexrnl.commons.utils.object.AutoCompare;
+import com.alexrnl.commons.utils.object.AutoHashCode;
+import com.alexrnl.commons.utils.object.Field;
 
 /**
  * Class describing a simple subtitle.
  * @author Alex
  */
 public class Subtitle implements Comparable<Subtitle>, Cloneable {
-	/** Logger */
-	private static Logger	lg	= Logger.getLogger(Subtitle.class.getName());
 	
 	/** Timestamp (in milliseconds) for beginning of subtitle display */
 	private long			begin;
@@ -40,16 +39,13 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 		this.begin = begin;
 		this.end = end;
 		this.content = content;
-		
-		if (lg.isLoggable(Level.FINE)) {
-			lg.fine(this.getClass().getSimpleName() + " created: " + toString());
-		}
 	}
 	
 	/**
 	 * Return the attribute begin.
 	 * @return the attribute begin.
 	 */
+	@Field
 	public long getBegin () {
 		return begin;
 	}
@@ -67,6 +63,7 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 	 * Return the attribute end.
 	 * @return the attribute end.
 	 */
+	@Field
 	public long getEnd () {
 		return end;
 	}
@@ -84,6 +81,7 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 	 * Return the attribute content.
 	 * @return the attribute content.
 	 */
+	@Field
 	public String getContent () {
 		return content;
 	}
@@ -114,6 +112,19 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 		return begin < end;
 	}
 	
+	@Override
+	public int hashCode () {
+		return AutoHashCode.getInstance().hashCode(this);
+	}
+
+	@Override
+	public boolean equals (final Object obj) {
+		if (!(obj instanceof Subtitle)) {
+			return false;
+		}
+		return AutoCompare.getInstance().compare(this, (Subtitle) obj);
+	}
+
 	/**
 	 * Return the text representation of the subtitle as follow:
 	 * 
@@ -127,11 +138,19 @@ public class Subtitle implements Comparable<Subtitle>, Cloneable {
 	}
 	
 	/**
-	 * Compare the subtitles based on their begin times.
+	 * Compare the subtitles based on their begin times, then end times, and finally their content.
 	 */
 	@Override
 	public int compareTo (final Subtitle sub) {
-		return Long.valueOf(begin).compareTo(sub.getBegin());
+		final int beginCmp = Long.valueOf(begin).compareTo(sub.getBegin());
+		if (beginCmp != 0) {
+			return beginCmp;
+		}
+		final int endCmp = Long.valueOf(end).compareTo(sub.getEnd());
+		if (endCmp != 0) {
+			return endCmp;
+		}
+		return content.compareTo(sub.getContent());
 	}
 
 	@Override
