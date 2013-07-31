@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class SubtitleFileTest {
 	@Test
 	public void testGetFile () {
 		assertNull(emptyFile.getFile());
-		assertEquals("this" + File.separatorChar + "is" + File.separatorChar + "dumb", file.getFile().toString());
+		assertEquals(Paths.get("this/is/dumb").toAbsolutePath(), file.getFile());
 	}
 	
 	/**

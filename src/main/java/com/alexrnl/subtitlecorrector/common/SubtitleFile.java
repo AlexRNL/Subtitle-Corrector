@@ -1,6 +1,8 @@
 package com.alexrnl.subtitlecorrector.common;
 
+import java.net.URI;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
@@ -21,7 +23,7 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 	private static final long	serialVersionUID	= -5783605599009372323L;
 	
 	/** The actual file which is represented */
-	private final Path			file;
+	private final URI			file;
 	
 	/**
 	 * Constructor #1.<br />
@@ -30,7 +32,7 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 	 */
 	public SubtitleFile (final Path file) {
 		super();
-		this.file = file;
+		this.file = file == null ? null : file.toUri();
 		
 		if (lg.isLoggable(Level.FINE)) {
 			lg.fine(this.getClass().getSimpleName() + " created: " + toString());
@@ -42,7 +44,7 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 	 * @return the file.
 	 */
 	public Path getFile () {
-		return file;
+		return file == null ? null : Paths.get(file);
 	}
 	
 	/**
