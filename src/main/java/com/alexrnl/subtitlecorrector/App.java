@@ -6,7 +6,7 @@ import java.util.logging.Logger;
  * Launcher class for the application.<br />
  * @author Alex
  */
-public class App {
+public final class App {
 	/** Logger */
 	private static Logger	lg	= Logger.getLogger(App.class.getName());
 	
