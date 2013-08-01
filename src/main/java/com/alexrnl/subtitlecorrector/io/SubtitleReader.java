@@ -30,14 +30,15 @@ public abstract class SubtitleReader {
 	}
 	
 	/**
-	 * Read the specified file and return the loaded {@link SubtitleFile}.
+	 * Read the specified file and return the loaded {@link SubtitleFile}.<br />
+	 * This method is synchronized, to avoid read files from different threads simultaneously.
 	 * @param file
 	 *        the file to read.
 	 * @return the subtitle file, loaded.
 	 * @throws IOException
 	 *         if there was a problem while reading the file.
 	 */
-	public SubtitleFile readFile (final Path file) throws IOException {
+	public synchronized SubtitleFile readFile (final Path file) throws IOException {
 		if (!Files.exists(file) || !Files.isReadable(file)) {
 			lg.warning("File " + file + " does not exists or cannot be read");
 			throw new IllegalArgumentException("The file does not exist or cannot be read");
