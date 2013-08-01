@@ -45,8 +45,7 @@ public class SubRipReader extends SubtitleReader {
 		
 		// Removing empty lines
 		do {
-			// TODO move the unicode byte order mark to a common library
-			currentLine = IOUtils.readLine(reader).replace("\ufeff", "").trim();
+			currentLine = IOUtils.readLine(reader).trim();
 		} while (currentLine.isEmpty());
 		
 		// Get the subtitle number

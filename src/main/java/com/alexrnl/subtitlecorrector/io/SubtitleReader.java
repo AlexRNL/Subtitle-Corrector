@@ -3,6 +3,7 @@ package com.alexrnl.subtitlecorrector.io;
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
@@ -21,14 +23,27 @@ public abstract class SubtitleReader {
 	/** Logger */
 	private static Logger	lg	= Logger.getLogger(SubtitleReader.class.getName());
 	
+	/** The charset of the subtitle files read */
+	private final Charset			charSet;
+	
 	/**
 	 * Constructor #1.<br />
-	 * Default constructor.
+	 * Default constructor, uses {@link StandardCharsets#UTF_8 UTF-8} as charset.
 	 */
 	public SubtitleReader () {
-		super();
+		this(StandardCharsets.UTF_8);
 	}
 	
+	/**
+	 * Constructor #.<br />
+	 * @param charSet
+	 *        the character set to use for reading the subtitles.
+	 */
+	public SubtitleReader (final Charset charSet) {
+		super();
+		this.charSet = charSet;
+	}
+
 	/**
 	 * Read the specified file and return the loaded {@link SubtitleFile}.<br />
 	 * This method is synchronized, to avoid read files from different threads simultaneously.
@@ -49,9 +64,12 @@ public abstract class SubtitleReader {
 		
 		SubtitleFile subtitleFile = null;
 		
-		// TODO check for char set
-		try (final BufferedReader reader = Files.newBufferedReader(file, StandardCharsets.UTF_8)) {
+		try (final BufferedReader reader = Files.newBufferedReader(file, charSet)) {
 			try {
+				reader.mark(1);
+				if (reader.read() != IOUtils.UNICODE_BYTE_ORDER_MARK.charValue()) {
+					reader.reset();
+				}
 				subtitleFile = readHeader(file, reader);
 				for (;;) {
 					subtitleFile.add(readSubtitle(subtitleFile, reader));
