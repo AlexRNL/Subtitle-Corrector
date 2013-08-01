@@ -50,7 +50,6 @@ public class SubRipWriter extends SubtitleWriter {
 
 	@Override
 	protected void writeSubtitle (final Subtitle subtitle, final BufferedWriter writer) throws IOException {
-		// TODO write byte order mark for UTF-8
 		writer.write(++subtitleCounter);
 		// TODO newline
 		writer.write(dateFormat.format(subtitle.getBegin()));

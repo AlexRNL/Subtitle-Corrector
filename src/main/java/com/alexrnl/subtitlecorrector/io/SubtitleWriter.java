@@ -2,6 +2,7 @@ package com.alexrnl.subtitlecorrector.io;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
@@ -21,13 +23,27 @@ public abstract class SubtitleWriter {
 	/** Logger */
 	private static Logger	lg	= Logger.getLogger(SubtitleWriter.class.getName());
 	
+	/** The character set used for writing the subtitles */
+	private final Charset	charSet;
+	
 	/**
 	 * Constructor #1.<br />
+	 * Default constructor, uses {@link StandardCharsets#UTF_8 UTF-8} for writing the subtitles.
 	 */
 	public SubtitleWriter () {
-		super();
+		this(StandardCharsets.UTF_8);
 	}
 	
+	/**
+	 * Constructor #.<br />
+	 * @param charSet
+	 *        the character set to use for writing the subtitles.
+	 */
+	public SubtitleWriter (final Charset charSet) {
+		super();
+		this.charSet = charSet;
+	}
+
 	/**
 	 * Write the generated subtitle file to a specified file.<br />
 	 * This method is synchronized to avoid write files simultaneously.
@@ -53,9 +69,10 @@ public abstract class SubtitleWriter {
 			lg.info("File " + target + " will be overwritten");
 		}
 		
-		// TODO check for char set
-		try (BufferedWriter writer = Files.newBufferedWriter(target, StandardCharsets.UTF_8,
-				StandardOpenOption.CREATE)) {
+		try (BufferedWriter writer = Files.newBufferedWriter(target, charSet, StandardOpenOption.CREATE)) {
+			if (charSet.equals(StandardCharsets.UTF_8)) {
+				writer.write(IOUtils.UNICODE_BYTE_ORDER_MARK);
+			}
 			writeHeader(file, writer);
 			for (final Subtitle subtitle : file) {
 				writeSubtitle(subtitle, writer);
