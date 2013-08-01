@@ -29,7 +29,8 @@ public abstract class SubtitleWriter {
 	}
 	
 	/**
-	 * Write the generated subtitle file to a specified file.
+	 * Write the generated subtitle file to a specified file.<br />
+	 * This method is synchronized to avoid write files simultaneously.
 	 * @param file
 	 *        the subtitle file to write.
 	 * @param target
@@ -37,7 +38,7 @@ public abstract class SubtitleWriter {
 	 * @throws IOException
 	 *         if there was an issue while writing the subtitle.
 	 */
-	public void writeFile (final SubtitleFile file, final Path target) throws IOException {
+	public synchronized void writeFile (final SubtitleFile file, final Path target) throws IOException {
 		if (Files.isDirectory(target)) {
 			lg.warning("File " + target + " is a director, it will not be overwritten");
 			throw new IllegalArgumentException("File specified is a directory");
@@ -77,8 +78,10 @@ public abstract class SubtitleWriter {
 	 *        the subtitle file to write.
 	 * @param writer
 	 *        the writer to use.
+	 * @throws IOException
+	 *         if there was a problem while writing the subtitle.
 	 */
-	protected void writeHeader (final SubtitleFile file, final BufferedWriter writer) {
+	protected void writeHeader (final SubtitleFile file, final BufferedWriter writer) throws IOException {
 		// Do nothing
 	}
 	
@@ -89,8 +92,10 @@ public abstract class SubtitleWriter {
 	 *        the subtitle file to write.
 	 * @param writer
 	 *        the writer to use.
+	 * @throws IOException
+	 *         if there was a problem while writing the subtitle.
 	 */
-	protected void writeFooter (final SubtitleFile file, final BufferedWriter writer) {
+	protected void writeFooter (final SubtitleFile file, final BufferedWriter writer) throws IOException {
 		// Do nothing.
 	}
 	
@@ -100,6 +105,8 @@ public abstract class SubtitleWriter {
 	 *        the subtitle to write.
 	 * @param writer
 	 *        the writer to use.
+	 * @throws IOException
+	 *         if there was a problem while writing the subtitle.
 	 */
-	protected abstract void writeSubtitle (Subtitle subtitle, BufferedWriter writer);
+	protected abstract void writeSubtitle (Subtitle subtitle, BufferedWriter writer) throws IOException;
 }
