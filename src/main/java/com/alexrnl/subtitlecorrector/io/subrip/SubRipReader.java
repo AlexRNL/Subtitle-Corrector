@@ -1,7 +1,6 @@
 package com.alexrnl.subtitlecorrector.io.subrip;
 
 import java.io.BufferedReader;
-import java.io.EOFException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.io.SubtitleReader;
@@ -45,12 +45,10 @@ public class SubRipReader extends SubtitleReader {
 		
 		// Removing empty lines
 		do {
-			currentLine = reader.readLine();
-			if (currentLine == null) {
-				throw new EOFException("End of file was reach, current line is null");
-			}
-			currentLine = currentLine.replace("\ufeff", "").trim();
+			// TODO move the unicode byte order mark to a common library
+			currentLine = IOUtils.readLine(reader).replace("\ufeff", "").trim();
 		} while (currentLine.isEmpty());
+		
 		// Get the subtitle number
 		int subtitleIndex;
 		try {
@@ -64,7 +62,7 @@ public class SubRipReader extends SubtitleReader {
 		}
 		
 		// Get the begin and end dates of the subtitle
-		currentLine = reader.readLine().trim();
+		currentLine = IOUtils.readLine(reader).trim();
 		final String[] dates = currentLine.split(SubRip.SUBRIP_DATE_SEPARATOR);
 		if (dates.length < 2) {
 			throw new IOException("Could not parse " + currentLine + " as a valid line in the subrip format");
@@ -83,7 +81,7 @@ public class SubRipReader extends SubtitleReader {
 		
 		// Get the content of the subtitle
 		do {
-			currentLine = reader.readLine().trim();
+			currentLine = IOUtils.readLine(reader).trim();
 			content.append(currentLine).append(System.lineSeparator());
 		} while (!currentLine.isEmpty());
 		
