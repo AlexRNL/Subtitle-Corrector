@@ -35,6 +35,14 @@ public abstract class SubtitleWriter {
 	}
 	
 	/**
+	 * Return the current character set used by this writer.
+	 * @return the charset used.
+	 */
+	protected Charset getCharSet () {
+		return charSet;
+	}
+	
+	/**
 	 * Constructor #.<br />
 	 * @param charSet
 	 *        the character set to use for writing the subtitles.
