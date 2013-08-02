@@ -2,6 +2,8 @@ package com.alexrnl.subtitlecorrector.io.subrip;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,9 +27,19 @@ public class SubRipWriter extends SubtitleWriter {
 	
 	/**
 	 * Constructor #1.<br />
+	 * Default constructor, uses UTF-8 for writing the file.
 	 */
 	public SubRipWriter () {
-		super();
+		this(StandardCharsets.UTF_8);
+	}
+
+	/**
+	 * Constructor #2.<br />
+	 * @param charSet
+	 *        the character to use for this writer.
+	 */
+	public SubRipWriter (final Charset charSet) {
+		super(charSet);
 		dateFormat = new SimpleDateFormat(SubRip.SUBRIP_DATE_FORMAT);
 		subtitleCounter = null;
 	}
