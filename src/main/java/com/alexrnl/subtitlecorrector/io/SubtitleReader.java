@@ -43,7 +43,15 @@ public abstract class SubtitleReader {
 		super();
 		this.charSet = charSet;
 	}
-
+	
+	/**
+	 * Return the current character set used by this reader.
+	 * @return the charset used.
+	 */
+	protected Charset getCharSet () {
+		return charSet;
+	}
+	
 	/**
 	 * Read the specified file and return the loaded {@link SubtitleFile}.<br />
 	 * This method is synchronized, to avoid read files from different threads simultaneously.
