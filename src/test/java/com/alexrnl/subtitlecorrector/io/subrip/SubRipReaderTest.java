@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector.io.subrip;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
@@ -35,8 +37,9 @@ public class SubRipReaderTest {
 	@Test
 	public void testReadFile () throws IOException, URISyntaxException {
 		final SubtitleFile subtitles = reader.readFile(Paths.get(getClass().getResource("/Suits.S03E01.srt").toURI()));
-		
-		System.out.println(subtitles);
+		assertEquals(1122, subtitles.size());
+		assertEquals("You lose,\r\nwe don't merge.\r\n", subtitles.first().getContent());
+		assertEquals("== sync, corrected by <font color=#00FF00>elderman</font> ==\r\n<font color=#00FFFF>@elder_man</font>\r\n", subtitles.last().getContent());
 	}
 	
 	/**
