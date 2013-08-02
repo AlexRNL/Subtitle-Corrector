@@ -81,7 +81,9 @@ public class SubRipReader extends SubtitleReader {
 		// Get the content of the subtitle
 		do {
 			currentLine = IOUtils.readLine(reader).trim();
-			content.append(currentLine).append(System.lineSeparator());
+			if (!currentLine.isEmpty()) {
+				content.append(currentLine).append(System.lineSeparator());
+			}
 		} while (!currentLine.isEmpty());
 		
 		return new Subtitle(begin, end, content.toString());
