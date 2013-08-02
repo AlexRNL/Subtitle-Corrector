@@ -62,7 +62,7 @@ public class SubRipWriter extends SubtitleWriter {
 
 	@Override
 	protected void writeSubtitle (final Subtitle subtitle, final BufferedWriter writer) throws IOException {
-		writer.write(++subtitleCounter);
+		writer.write(Integer.valueOf(++subtitleCounter).toString());
 		writer.write(System.lineSeparator());
 		writer.write(dateFormat.format(subtitle.getBegin()));
 		writer.write(SubRip.SUBRIP_DATE_SEPARATOR);
