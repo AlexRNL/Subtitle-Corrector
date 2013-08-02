@@ -29,6 +29,7 @@ public class SubRipReader extends SubtitleReader {
 	
 	/**
 	 * Constructor #1.<br />
+	 * Default constructor, uses UTF-8 for reading the file.
 	 */
 	public SubRipReader () {
 		this(StandardCharsets.UTF_8);
