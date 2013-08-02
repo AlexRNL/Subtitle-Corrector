@@ -1,9 +1,17 @@
 package com.alexrnl.subtitlecorrector.io.subrip;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertArrayEquals;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
 /**
  * Test suite for the {@link SubRipWriter} class.
@@ -23,9 +31,49 @@ public class SubRipWriterTest {
 	
 	/**
 	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * @throws URISyntaxException
+	 *         if the path to the file is badly formatted.
+	 * @throws IOException
+	 *         if and IO error occurs.
 	 */
 	@Test
-	public void testWriteFile () {
-		fail("Not yet implemented"); // TODO
+	public void testWriteFile () throws IOException, URISyntaxException {
+		final Path original = Paths.get(getClass().getResource("/Suits.S03E01.srt").toURI());
+		final Path output = Files.createTempFile("subtitle", ".srt");
+		
+		final SubRipReader reader = new SubRipReader();
+		final SubtitleFile subtitle = reader.readFile(original);
+		
+		writer.writeFile(subtitle, output);
+		
+		assertArrayEquals(Files.readAllBytes(original), Files.readAllBytes(output));
+		
+		Files.delete(output);
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * @throws IOException
+	 *         if and IO error occurs.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testWriteFileDirectory () throws IOException {
+		final Path temporaryDirectory = Files.createTempDirectory("tmpdir");
+		temporaryDirectory.toFile().deleteOnExit();
+		writer.writeFile(new SubtitleFile(null), temporaryDirectory);
+	}
+	
+
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * @throws IOException
+	 *         if and IO error occurs.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testWriteFileNotWritable () throws IOException {
+		final Path temporaryFile = Files.createTempFile("subtitle", ".srt");
+		temporaryFile.toFile().setWritable(false);
+		writer.writeFile(new SubtitleFile(null), temporaryFile);
 	}
 }
