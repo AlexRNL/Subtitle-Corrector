@@ -2,6 +2,8 @@ package com.alexrnl.subtitlecorrector.io.subrip;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,11 +31,18 @@ public class SubRipReader extends SubtitleReader {
 	 * Constructor #1.<br />
 	 */
 	public SubRipReader () {
-		super();
-		dateFormatter = new SimpleDateFormat(SubRip.SUBRIP_DATE_FORMAT);
+		this(StandardCharsets.UTF_8);
 	}
 
-
+	/**
+	 * Constructor #2.<br />
+	 * @param charSet
+	 *        the character set to use for reading the file.
+	 */
+	public SubRipReader (final Charset charSet) {
+		super(charSet);
+		dateFormatter = new SimpleDateFormat(SubRip.SUBRIP_DATE_FORMAT);
+	}
 
 	@Override
 	protected Subtitle readSubtitle (final SubtitleFile subtitleFile, final BufferedReader reader)
