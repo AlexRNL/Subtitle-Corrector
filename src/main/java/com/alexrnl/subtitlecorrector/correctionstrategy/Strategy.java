@@ -10,8 +10,17 @@ import com.alexrnl.subtitlecorrector.common.Subtitle;
  */
 public interface Strategy {
 	
-	List<Parameter> getParameters ();
+	/**
+	 * Return the list of {@link Parameter parameters} needed by this strategy.
+	 * @return a list of parameters.
+	 */
+	List<Parameter<?>> getParameters ();
 	
+	/**
+	 * Called when parsing a subtitle file, on each subtitle.
+	 * @param subtitle
+	 *        the subtitle being processed.
+	 */
 	void correct (Subtitle subtitle);
 	
 }
