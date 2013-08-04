@@ -14,9 +14,13 @@ public class LetterReplacement implements Strategy {
 	/** Logger */
 	private static Logger				lg	= Logger.getLogger(LetterReplacement.class.getName());
 	
+	/** The original letter to replace */
 	private final Parameter<Character>	originalLetter;
+	/** The new letter to put */
 	private final Parameter<Character>	newLetter;
-	private final Parameter<Boolean>	onlyFromDictionnary;
+	/** Flag indicating to replace only in word which are not in the dictionary */
+	private final Parameter<Boolean>	onlyMissingFromDictionary;
+	/** Flag indicating to prompt user each time before replacing the letter */
 	private final Parameter<Boolean>	promptBeforeCorrecting;
 
 	/**
@@ -26,7 +30,7 @@ public class LetterReplacement implements Strategy {
 		super();
 		this.originalLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.originalletter");
 		this.newLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.newletter");
-		this.onlyFromDictionnary = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.onlyfromdictionnary", false, true);
+		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.onlyfromdictionary", false, true);
 		this.promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.promptbeforecorrecting", false, true);
 	}
 
@@ -35,7 +39,7 @@ public class LetterReplacement implements Strategy {
 		final List<Parameter<?>> parameters = new ArrayList<>(4);
 		parameters.add(originalLetter);
 		parameters.add(newLetter);
-		parameters.add(onlyFromDictionnary);
+		parameters.add(onlyMissingFromDictionary);
 		parameters.add(promptBeforeCorrecting);
 		return parameters;
 	}
