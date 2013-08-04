@@ -46,10 +46,19 @@ public class LetterReplacement implements Strategy {
 	
 	@Override
 	public void correct (final Subtitle subtitle) {
-		// TODO Auto-generated method stub
 		if (!subtitle.getContent().contains(originalLetter.getValue().toString())) {
+			// Skip subtitles which are not concerned
 			return;
 		}
 		
+		final String remaining = subtitle.getContent();
+		final StringBuilder newContent = new StringBuilder();
+		while (!remaining.isEmpty()) {
+			
+			
+		}
+		
+		
+		subtitle.setContent(newContent.toString());
 	}
 }
