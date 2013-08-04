@@ -7,7 +7,7 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
  * @param <T>
  *        the type of the parameter.
  */
-public abstract class Parameter<T> {
+public class Parameter<T> {
 	
 	/** The type of parameter represented */
 	private final ParameterType	type;
@@ -29,7 +29,7 @@ public abstract class Parameter<T> {
 	 * @param defaultValue
 	 *        the default value of the parameter.
 	 */
-	private Parameter (final ParameterType type, final String description, final boolean required,
+	public Parameter (final ParameterType type, final String description, final boolean required,
 			final T defaultValue) {
 		super();
 		this.type = type;
@@ -38,6 +38,18 @@ public abstract class Parameter<T> {
 		this.value = defaultValue;
 	}
 	
+	/**
+	 * Constructor #2.<br />
+	 * Build a parameter with no default value (which is therefore, required).
+	 * @param type
+	 *        the type of the parameter.
+	 * @param description
+	 *        the description of the parameter.
+	 */
+	public Parameter (final ParameterType type, final String description) {
+		this(type, description, true, null);
+	}
+
 	/**
 	 * Return the attribute type.
 	 * @return the attribute type.
