@@ -54,8 +54,11 @@ public class LetterReplacement implements Strategy {
 		final String remaining = subtitle.getContent();
 		final StringBuilder newContent = new StringBuilder();
 		while (!remaining.isEmpty()) {
+			// add to new content all characters before the first word
 			
+			// get next word, check if correction if needed
 			
+			// append corrected word
 		}
 		
 		
