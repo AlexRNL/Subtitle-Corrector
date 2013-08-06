@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 
 /**
@@ -51,14 +52,31 @@ public class LetterReplacement implements Strategy {
 			return;
 		}
 		
-		final String remaining = subtitle.getContent();
+		String remaining = subtitle.getContent();
 		final StringBuilder newContent = new StringBuilder();
 		while (!remaining.isEmpty()) {
-			// add to new content all characters before the first word
+			final Word currentWord = Word.getNextWord(remaining);
+			newContent.append(remaining.substring(0, currentWord.getBegin() - 1));
+			remaining = remaining.substring(currentWord.getEnd());
 			
-			// get next word, check if correction if needed
+			if (!currentWord.getWord().contains(originalLetter.getValue().toString())) {
+				// The letter to replace is not in the word
+				newContent.append(currentWord);
+				continue;
+			}
 			
-			// append corrected word
+			if (onlyMissingFromDictionary.getValue()) {// && dictionary.contains(currentWord.getWord())) {
+				// The current word is in the dictionary
+				continue;
+			}
+			
+			final String replacement = currentWord.getWord().replaceAll(
+					originalLetter.getValue().toString(), newLetter.getValue().toString());
+			
+			if (promptBeforeCorrecting.getValue()) {
+				// replacement = prompt.ask(subtitle.getContent(), currentWord, replacement);
+			}
+			newContent.append(replacement);
 		}
 		
 		
