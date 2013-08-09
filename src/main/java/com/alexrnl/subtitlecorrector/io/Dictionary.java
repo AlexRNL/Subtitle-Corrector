@@ -26,16 +26,16 @@ import com.alexrnl.commons.io.IOUtils;
  */
 public class Dictionary {
 	/** Logger */
-	private static Logger			lg					= Logger.getLogger(Dictionary.class.getName());
+	private static Logger		lg	= Logger.getLogger(Dictionary.class.getName());
 	
 	/** The dictionary with the words */
-	private final TreeSet<String>	dictionary;
+	private final Set<String>	dictionary;
 	/** The path to the dictionary file */
-	private final Path				dictionaryFile;
+	private final Path			dictionaryFile;
 	/** The character set of the file */
-	private final Charset			charSet;
+	private final Charset		charSet;
 	/** <code>true</code> if word can be added to the dictionary */
-	private final boolean			editable;
+	private final boolean		editable;
 	
 	/**
 	 * Constructor #1.<br />
