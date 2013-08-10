@@ -40,6 +40,7 @@ public class SubRipWriterTest {
 	public void testWriteFile () throws IOException, URISyntaxException {
 		final Path original = Paths.get(getClass().getResource("/Suits.S03E01.srt").toURI());
 		final Path output = Files.createTempFile("subtitle", ".srt");
+		output.toFile().deleteOnExit();
 		
 		final SubRipReader reader = new SubRipReader();
 		final SubtitleFile subtitle = reader.readFile(original);
@@ -48,7 +49,6 @@ public class SubRipWriterTest {
 		
 		assertArrayEquals(Files.readAllBytes(original), Files.readAllBytes(output));
 		
-		Files.delete(output);
 	}
 	
 	/**
@@ -74,6 +74,7 @@ public class SubRipWriterTest {
 	public void testWriteFileNotWritable () throws IOException {
 		final Path temporaryFile = Files.createTempFile("subtitle", ".srt");
 		temporaryFile.toFile().setWritable(false);
+		temporaryFile.toFile().deleteOnExit();
 		writer.writeFile(new SubtitleFile(null), temporaryFile);
 	}
 }
