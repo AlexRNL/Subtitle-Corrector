@@ -11,7 +11,7 @@ import com.alexrnl.subtitlecorrector.io.subrip.SubRipTests;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ SubRipTests.class })
+@SuiteClasses({ DictionaryTest.class, SubRipTests.class })
 public class IOTests {
 	
 }
