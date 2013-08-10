@@ -155,6 +155,9 @@ public class Dictionary {
 	 * @return <code>true</code> if the word is in the dictionary.
 	 */
 	public boolean contains (final String word) {
+		if (word == null) {
+			return false;
+		}
 		return dictionary.contains(word);
 	}
 	
