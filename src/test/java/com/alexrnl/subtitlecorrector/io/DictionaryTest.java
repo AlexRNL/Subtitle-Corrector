@@ -136,11 +136,29 @@ public class DictionaryTest {
 	}
 	
 	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#isUpdated()}.
+	 * @throws IOException
+	 *         if a save action fails.
+	 */
+	@Test
+	public void testIsUpdated () throws IOException {
+		assertFalse(dictionary.isUpdated());
+		assertTrue(dictionary.addWord("zedzfrgtforopfz"));
+		assertTrue(dictionary.isUpdated());
+
+		assertFalse(editableDictionary.isUpdated());
+		assertTrue(editableDictionary.addWord("zedgtlermforop"));
+		assertTrue(editableDictionary.isUpdated());
+		editableDictionary.save();
+		assertFalse(editableDictionary.isUpdated());
+	}
+	
+	/**
 	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#contains(java.lang.String)}.
 	 */
 	@Test
 	public void testContains () {
-		assertFalse(dictionary.contains("zedzfrgtlermforopfz"));
+		assertFalse(dictionary.contains("zedzfrgtlermforo"));
 		assertFalse(dictionary.contains(null));
 		assertFalse(dictionary.contains(""));
 		assertTrue(dictionary.contains("mot"));
