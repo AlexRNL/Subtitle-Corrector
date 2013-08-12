@@ -36,6 +36,8 @@ public class Dictionary {
 	private final Charset		charSet;
 	/** <code>true</code> if word can be added to the dictionary */
 	private final boolean		editable;
+	/** <code>true</code> if the dictionary has been updated with new words since the last save/load */
+	private boolean				updated;
 	
 	/**
 	 * Constructor #1.<br />
@@ -116,6 +118,7 @@ public class Dictionary {
 					+ ExceptionUtils.display(e));
 			throw e;
 		}
+		updated = false;
 	}
 	
 	/**
@@ -138,6 +141,7 @@ public class Dictionary {
 					+ ExceptionUtils.display(e));
 			throw e;
 		}
+		updated = false;
 	}
 
 	/**
@@ -146,6 +150,14 @@ public class Dictionary {
 	 */
 	public boolean isEditable () {
 		return editable;
+	}
+
+	/**
+	 * Return the attribute updated.
+	 * @return the attribute updated.
+	 */
+	public boolean isUpdated () {
+		return updated;
 	}
 
 	/**
@@ -174,6 +186,7 @@ public class Dictionary {
 		if (dictionary.contains(wordToAdd)) {
 			return false;
 		}
-		return dictionary.add(wordToAdd);
+		updated = dictionary.add(wordToAdd);
+		return updated;
 	}
 }
