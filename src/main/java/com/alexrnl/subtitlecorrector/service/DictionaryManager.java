@@ -56,8 +56,9 @@ public class DictionaryManager {
 		localeDictionaries = new HashMap<>();
 		customDictionaries = new HashMap<>();
 		activeDictionaries = new LinkedList<>();
-		sessionDictionary = new Dictionary(Files.createTempFile("sessionDictionary", ".txt"),
-				Charset.defaultCharset(), true);
+		final Path sessionDictionaryPath = Files.createTempFile("sessionDictionary", ".txt");
+		sessionDictionaryPath.toFile().deleteOnExit();
+		sessionDictionary = new Dictionary(sessionDictionaryPath, Charset.defaultCharset(), true);
 		// TODO load dictionaries
 		Files.walkFileTree(pathToLocale, new HashSet<FileVisitOption>(), 1, new SimpleFileVisitor<Path>() {
 
