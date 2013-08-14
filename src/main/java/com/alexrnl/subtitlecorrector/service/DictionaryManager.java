@@ -2,9 +2,15 @@ package com.alexrnl.subtitlecorrector.service;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -22,7 +28,10 @@ import com.alexrnl.subtitlecorrector.io.Dictionary;
  */
 public class DictionaryManager {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(DictionaryManager.class.getName());
+	private static Logger					lg						= Logger.getLogger(DictionaryManager.class.getName());
+	
+	/** The file extension for the dictionary files */
+	private static final String				DICTIONARY_EXTENSION	= ".txt";
 	
 	/** Map with the dictionary for each locale */
 	private final Map<Locale, Dictionary>	localeDictionaries;
@@ -35,10 +44,14 @@ public class DictionaryManager {
 	
 	/**
 	 * Constructor #1.<br />
+	 * @param pathToLocale
+	 *        the path to the directory where are the dictionaries for locales.
+	 * @param pathToCustom
+	 *        the path to the directory where are the custom dictionaries.
 	 * @throws IOException
 	 *         if a dictionary could not be created.
 	 */
-	public DictionaryManager () throws IOException {
+	public DictionaryManager (final Path pathToLocale, final Path pathToCustom) throws IOException {
 		super();
 		localeDictionaries = new HashMap<>();
 		customDictionaries = new HashMap<>();
@@ -46,6 +59,24 @@ public class DictionaryManager {
 		sessionDictionary = new Dictionary(Files.createTempFile("sessionDictionary", ".txt"),
 				Charset.defaultCharset(), true);
 		// TODO load dictionaries
+		Files.walkFileTree(pathToLocale, new HashSet<FileVisitOption>(), 1, new SimpleFileVisitor<Path>() {
+
+			@Override
+			public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs)
+					throws IOException {
+				// TODO remove extension for parsing the locale
+				final Locale locale = Locale.forLanguageTag(file.getFileName().toString());
+				localeDictionaries.put(locale, new Dictionary(file));
+				return FileVisitResult.CONTINUE;
+			}
+
+			@Override
+			public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
+				lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
+				return FileVisitResult.CONTINUE;
+			}
+
+		});
 	}
 	
 	/**
