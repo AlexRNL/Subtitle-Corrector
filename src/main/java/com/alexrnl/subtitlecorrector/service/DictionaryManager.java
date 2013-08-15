@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.subtitlecorrector.io.Dictionary;
 
 /**
@@ -59,25 +60,8 @@ public class DictionaryManager {
 		final Path sessionDictionaryPath = Files.createTempFile("sessionDictionary", ".txt");
 		sessionDictionaryPath.toFile().deleteOnExit();
 		sessionDictionary = new Dictionary(sessionDictionaryPath, Charset.defaultCharset(), true);
-		// TODO load dictionaries
-		Files.walkFileTree(pathToLocale, new HashSet<FileVisitOption>(), 1, new SimpleFileVisitor<Path>() {
-
-			@Override
-			public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs)
-					throws IOException {
-				// TODO remove extension for parsing the locale
-				final Locale locale = Locale.forLanguageTag(file.getFileName().toString());
-				localeDictionaries.put(locale, new Dictionary(file));
-				return FileVisitResult.CONTINUE;
-			}
-
-			@Override
-			public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
-				lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
-				return FileVisitResult.CONTINUE;
-			}
-
-		});
+		Files.walkFileTree(pathToLocale, new HashSet<FileVisitOption>(), 1, new LocaleDictionaryFileVisitor());
+		Files.walkFileTree(pathToCustom, new HashSet<FileVisitOption>(), 1, new CustomDictionaryFileVisitor());
 	}
 	
 	/**
@@ -141,5 +125,87 @@ public class DictionaryManager {
 			}
 		}
 		activeDictionaries.clear();
+	}
+	
+	/**
+	 * Template for dictionary file visitors.<br />
+	 * @author Alex
+	 * @param <T>
+	 *        the type of keys of the map to fill.
+	 */
+	private abstract class DictionaryFileVisitor<T> extends SimpleFileVisitor<Path> {
+		/** The reference to the dictionary map used */
+		private final Map<T, Dictionary> dictionaryMap;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param dictionaryMap
+		 *        the dictionary map to fill by the visitor.
+		 */
+		public DictionaryFileVisitor (final Map<T, Dictionary> dictionaryMap) {
+			super();
+			this.dictionaryMap = dictionaryMap;
+		}
+		
+		@Override
+		public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs)
+				throws IOException {
+			if (file.getFileName().toString().endsWith(DICTIONARY_EXTENSION)) {
+				dictionaryMap.put(getDictionaryKey(file), new Dictionary(file));
+			}
+			return FileVisitResult.CONTINUE;
+		}
+
+		@Override
+		public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
+			lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
+			return FileVisitResult.CONTINUE;
+		}
+		
+		/**
+		 * This method computes the dictionary key to use for the current file.
+		 * @param file
+		 *        the dictionary file.
+		 * @return the key to map the dictionary.
+		 */
+		protected abstract T getDictionaryKey (Path file);
+	}
+	
+	/**
+	 * File visitor for the locale dictionary.
+	 * @author Alex
+	 */
+	private class LocaleDictionaryFileVisitor extends DictionaryFileVisitor<Locale> {
+
+		/**
+		 * Constructor #1.<br />
+		 */
+		public LocaleDictionaryFileVisitor () {
+			super(localeDictionaries);
+		}
+
+		@Override
+		protected Locale getDictionaryKey (final Path file) {
+			return Locale.forLanguageTag(IOUtils.getFilename(file));
+		}
+	}
+	
+	/**
+	 * File visitor for the custom dictionary.
+	 * @author Alex
+	 */
+	private class CustomDictionaryFileVisitor extends DictionaryFileVisitor<String> {
+
+		/**
+		 * Constructor #1.<br />
+		 */
+		public CustomDictionaryFileVisitor () {
+			super(customDictionaries);
+		}
+
+		@Override
+		protected String getDictionaryKey (final Path file) {
+			return IOUtils.getFilename(file);
+		}
 	}
 }
