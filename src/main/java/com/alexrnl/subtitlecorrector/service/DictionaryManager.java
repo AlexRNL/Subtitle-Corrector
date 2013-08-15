@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -84,6 +85,22 @@ public class DictionaryManager {
 	}
 	
 	/**
+	 * Return an unmodifiable view of the map with the locale dictionaries.
+	 * @return the map with the locale dictionaries.
+	 */
+	public Map<Locale, Dictionary> getLocaleDictionaries () {
+		return Collections.unmodifiableMap(localeDictionaries);
+	}
+	
+	/**
+	 * Return an unmodifiable view of the map with the custom dictionaries.
+	 * @return the map with the custom dictionaries.
+	 */
+	public Map<String, Dictionary> getCustomDictionaries () {
+		return Collections.unmodifiableMap(customDictionaries);
+	}
+	
+	/**
 	 * Start the session with the following dictionaries.
 	 * @param localeDictionary
 	 *        the locale dictionary to use (<code>null</code> disable any locale dictionary).
@@ -151,7 +168,7 @@ public class DictionaryManager {
 		public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs)
 				throws IOException {
 			if (file.getFileName().toString().endsWith(DICTIONARY_EXTENSION)) {
-				dictionaryMap.put(getDictionaryKey(file), new Dictionary(file));
+				dictionaryMap.put(getDictionaryKey(file), new Dictionary(file, isEditable()));
 			}
 			return FileVisitResult.CONTINUE;
 		}
@@ -169,6 +186,12 @@ public class DictionaryManager {
 		 * @return the key to map the dictionary.
 		 */
 		protected abstract T getDictionaryKey (Path file);
+		
+		/**
+		 * Return <code>true</code> if the dictionary should be editable.
+		 * @return <code>true</code> for an editable dictionary.
+		 */
+		protected abstract boolean isEditable ();
 	}
 	
 	/**
@@ -188,6 +211,11 @@ public class DictionaryManager {
 		protected Locale getDictionaryKey (final Path file) {
 			return Locale.forLanguageTag(IOUtils.getFilename(file));
 		}
+
+		@Override
+		protected boolean isEditable () {
+			return false;
+		}
 	}
 	
 	/**
@@ -206,6 +234,11 @@ public class DictionaryManager {
 		@Override
 		protected String getDictionaryKey (final Path file) {
 			return IOUtils.getFilename(file);
+		}
+
+		@Override
+		protected boolean isEditable () {
+			return true;
 		}
 	}
 }
