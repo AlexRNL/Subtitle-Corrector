@@ -2,6 +2,7 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.utils.Word;
@@ -27,7 +28,7 @@ public class LetterReplacement implements Strategy {
 	/**
 	 * Constructor #1.<br />
 	 */
-	private LetterReplacement () {
+	public LetterReplacement () {
 		super();
 		this.originalLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.originalletter");
 		this.newLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.newletter");
@@ -49,6 +50,9 @@ public class LetterReplacement implements Strategy {
 	public void correct (final Subtitle subtitle) {
 		if (!subtitle.getContent().contains(originalLetter.getValue().toString())) {
 			// Skip subtitles which are not concerned
+			if (lg.isLoggable(Level.FINE)) {
+				lg.fine("Skipping subtitle " + subtitle);
+			}
 			return;
 		}
 		
@@ -79,6 +83,9 @@ public class LetterReplacement implements Strategy {
 			newContent.append(replacement);
 		}
 		
+		if (lg.isLoggable(Level.FINE)) {
+			lg.fine("Replacing subtitle content '" + subtitle.getContent() + "' with '" + newContent + "'");
+		}
 		
 		subtitle.setContent(newContent.toString());
 	}
