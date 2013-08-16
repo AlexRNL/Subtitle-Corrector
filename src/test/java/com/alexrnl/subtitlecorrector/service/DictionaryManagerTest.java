@@ -1,30 +1,69 @@
 package com.alexrnl.subtitlecorrector.service;
 
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Locale;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.alexrnl.commons.io.IOUtils;
+import com.alexrnl.subtitlecorrector.io.Dictionary;
+
 /**
  * Test suite for the {@link DictionaryManager} class.
  * @author Alex
  */
 public class DictionaryManagerTest {
+	/** The path where to load the custom dictionaries */
+	private static Path pathToCustom;
+	/** The path to the custom dictionary 1 */
+	private static Path pathToCustom1;
+	/** The path to the custom dictionary 2 */
+	private static Path pathToCustom2;
+	
+	/** The dictionary manager to test */
+	private DictionaryManager manager;
 	
 	/**
-	 * 
+	 * Create the custom dictionaries which will be used in the test.
+	 * @throws IOException
+	 *         if there was an error while creating the temporary custom dictionaries.
 	 */
 	@BeforeClass
-	public static void setUpBeforeClass () {
+	public static void setUpBeforeClass () throws IOException {
+		pathToCustom = Files.createTempDirectory("customDictionaries");
+		pathToCustom.toFile().deleteOnExit();
+		pathToCustom1 = Files.createTempFile(pathToCustom, "custom1", DictionaryManager.DICTIONARY_EXTENSION);
+		pathToCustom2 = Files.createTempFile(pathToCustom, "custom2", DictionaryManager.DICTIONARY_EXTENSION);
+		final Dictionary customDictionary1 = new Dictionary(pathToCustom1, true);
+		final Dictionary customDictionary2 = new Dictionary(pathToCustom2, true);
+		customDictionary1.addWord("helloworld");
+		customDictionary2.addWord("abaldr");
+		customDictionary1.save();
+		customDictionary2.save();
 	}
 	
 	/**
-	 * 
+	 * Set up test attributes.
+	 * @throws IOException
+	 *         if there was an error while loading the dictionaries.
+	 * @throws URISyntaxException
+	 *         if the URI is badly formatted.
 	 */
 	@Before
-	public void setUp () {
+	public void setUp () throws IOException, URISyntaxException {
+		manager = new DictionaryManager(Paths.get(DictionaryManager.class.getResource("/dictionary").toURI()), pathToCustom);
 	}
 	
 	/**
@@ -35,19 +74,12 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#contains(java.lang.String)}.
-	 */
-	@Test
-	public void testContains () {
-		fail("Not yet implemented"); // TODO
-	}
-	
-	/**
 	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#getLocaleDictionaries()}.
 	 */
 	@Test
 	public void testGetLocaleDictionaries () {
-		fail("Not yet implemented"); // TODO
+		assertEquals(1, manager.getLocaleDictionaries().size());
+		assertNotNull(manager.getLocaleDictionaries().get(Locale.FRENCH));
 	}
 	
 	/**
@@ -55,22 +87,63 @@ public class DictionaryManagerTest {
 	 */
 	@Test
 	public void testGetCustomDictionaries () {
-		fail("Not yet implemented"); // TODO
+		assertEquals(2, manager.getCustomDictionaries().size());
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#startSession(java.util.Locale, java.lang.String[])}.
+	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#startSession(java.util.Locale, java.lang.String[])},
+	 * {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#stopSession()}, and
+	 * {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#contains(java.lang.String)}.
+	 * @throws IOException
+	 *         if an IO operation fails.
 	 */
 	@Test
-	public void testStartSession () {
-		fail("Not yet implemented"); // TODO
+	public void testSession () throws IOException {
+		// Test with no dictionaries
+		manager.startSession(null);
+		assertFalse(manager.contains("helloworld"));
+		assertFalse(manager.contains("abaldr"));
+		assertFalse(manager.contains("ldr"));
+		assertFalse(manager.contains("mot"));
+		assertTrue(manager.addWord("ldr"));
+		assertTrue(manager.contains("ldr"));
+		manager.stopSession();
+		
+		// Test with only French locale
+		manager.startSession(Locale.FRENCH);
+		assertFalse(manager.contains("helloworld"));
+		assertFalse(manager.contains("abaldr"));
+		assertTrue(manager.contains("mot"));
+		manager.stopSession();
+		
+		// Test with one custom dictionary
+		manager.startSession(null, IOUtils.getFilename(pathToCustom1));
+		assertFalse(manager.contains("mot"));
+		assertTrue(manager.contains("helloworld"));
+		manager.stopSession();
+		
+		// Test with one custom (updated) and the French locale
+		manager.startSession(Locale.FRENCH, IOUtils.getFilename(pathToCustom2));
+		assertTrue(manager.contains("mot"));
+		assertTrue(manager.contains("abaldr"));
+		assertFalse(manager.contains("aba"));
+		assertTrue(manager.addWord(IOUtils.getFilename(pathToCustom2), "aba"));
+		assertTrue(manager.contains("aba"));
+		manager.stopSession();
+		
+		// Check that the custom dictionary has been saved
+		final Dictionary dictionary = new Dictionary(pathToCustom2);
+		assertEquals(2, dictionary.size());
+		assertTrue(dictionary.contains("aba"));
+		assertTrue(dictionary.contains("abaldr"));
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#stopSession()}.
+	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#contains(java.lang.String)}.
 	 */
-	@Test
-	public void testStopSession () {
-		fail("Not yet implemented"); // TODO
+	@Test(expected = IllegalStateException.class)
+	public void testContainsNoSession () {
+		manager.contains("ldr");
 	}
+	
 }
