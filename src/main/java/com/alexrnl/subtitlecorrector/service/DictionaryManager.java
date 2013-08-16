@@ -66,14 +66,15 @@ public class DictionaryManager {
 	}
 	
 	/**
-	 * Check if the active dictionaries contains the following word.
+	 * Check if the active dictionaries contains the following word.<br />
+	 * This method requires that a correcting session have been started.
 	 * @param word
 	 *        the word to check.
 	 * @return <code>true</code> if any of the dictionaries contains the word.
 	 */
 	public boolean contains (final String word) {
 		if (activeDictionaries.isEmpty()) {
-			throw new IllegalStateException("");
+			throw new IllegalStateException("Session has not been started");
 		}
 		
 		for (final Dictionary dictionary : activeDictionaries) {
