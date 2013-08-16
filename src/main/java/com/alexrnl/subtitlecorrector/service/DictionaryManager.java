@@ -33,7 +33,7 @@ public class DictionaryManager {
 	private static Logger					lg						= Logger.getLogger(DictionaryManager.class.getName());
 	
 	/** The file extension for the dictionary files */
-	private static final String				DICTIONARY_EXTENSION	= ".txt";
+	public static final String				DICTIONARY_EXTENSION	= ".txt";
 	
 	/** Map with the dictionary for each locale */
 	private final Map<Locale, Dictionary>	localeDictionaries;
