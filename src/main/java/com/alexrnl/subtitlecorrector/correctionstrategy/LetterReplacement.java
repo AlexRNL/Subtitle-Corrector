@@ -31,7 +31,7 @@ public class LetterReplacement implements Strategy {
 		super();
 		this.originalLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.originalletter");
 		this.newLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.newletter");
-		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.onlyfromdictionary", false, true);
+		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.onlymissingfromdictionary", false, true);
 		this.promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.promptbeforecorrecting", false, true);
 	}
 
