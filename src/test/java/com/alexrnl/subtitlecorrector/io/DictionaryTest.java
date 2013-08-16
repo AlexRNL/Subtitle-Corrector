@@ -65,6 +65,7 @@ public class DictionaryTest {
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
+	@SuppressWarnings("unused")
 	@Test(expected = NullPointerException.class)
 	public void testDictionaryNPEPath () throws IOException {
 		new Dictionary(null);
@@ -75,6 +76,7 @@ public class DictionaryTest {
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
+	@SuppressWarnings("unused")
 	@Test(expected = NullPointerException.class)
 	public void testDictionaryNPECharSet () throws IOException {
 		new Dictionary(Paths.get("dummy", "path"), null, true);
@@ -85,6 +87,7 @@ public class DictionaryTest {
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testDictionaryIAEPathNotExists () throws IOException {
 		new Dictionary(Paths.get("dummy", "path"));
@@ -95,6 +98,7 @@ public class DictionaryTest {
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
+	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testDictionaryIAENotWritable () throws IOException {
 		final Path temporaryFile = Files.createTempFile("dictionary", ".txt");
