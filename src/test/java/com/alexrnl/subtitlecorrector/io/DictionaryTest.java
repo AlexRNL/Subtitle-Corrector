@@ -40,7 +40,7 @@ public class DictionaryTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass () throws IOException, URISyntaxException {
-		dictionaryFile = Paths.get(Dictionary.class.getResource("/dico.fr.txt").toURI());
+		dictionaryFile = Paths.get(Dictionary.class.getResource("/dictionary/fr.txt").toURI());
 		dictionaryCopy = Files.createTempFile("dictionary", ".txt");
 		dictionaryCopy.toFile().deleteOnExit();
 		Files.copy(dictionaryFile, dictionaryCopy, StandardCopyOption.REPLACE_EXISTING);
