@@ -66,6 +66,16 @@ public class DictionaryManager {
 	}
 	
 	/**
+	 * Check that the session has been started.<br />
+	 * Throw an {@link IllegalStateException} if it is not the case.
+	 */
+	private void checkSessionStarted () {
+		if (activeDictionaries.isEmpty()) {
+			throw new IllegalStateException("Session has not been started");
+		}
+	}
+	
+	/**
 	 * Check if the active dictionaries contains the following word.<br />
 	 * This method requires that a correcting session have been started.
 	 * @param word
@@ -73,15 +83,43 @@ public class DictionaryManager {
 	 * @return <code>true</code> if any of the dictionaries contains the word.
 	 */
 	public boolean contains (final String word) {
-		if (activeDictionaries.isEmpty()) {
-			throw new IllegalStateException("Session has not been started");
-		}
+		checkSessionStarted();
 		
 		for (final Dictionary dictionary : activeDictionaries) {
 			if (dictionary.contains(word)) {
 				return true;
 			}
 		}
+		return false;
+	}
+	
+	/**
+	 * Add a word to the dictionary for the current session.
+	 * @param word
+	 *        the word to add.
+	 * @return <code>true</code> if the word could be added to the dictionary.
+	 */
+	public boolean addWord (final String word) {
+		checkSessionStarted();
+		
+		return sessionDictionary.addWord(word);
+	}
+	
+	/**
+	 * Add a word to a specific custom dictionary.
+	 * @param customDictionaryKey
+	 *        the custom dictionary to edit.
+	 * @param word
+	 *        the word to add.
+	 * @return <code>true</code> if the word could be added.
+	 */
+	public boolean addWord (final String customDictionaryKey, final String word) {
+		checkSessionStarted();
+		
+		if (customDictionaries.containsKey(customDictionaryKey)) {
+			return customDictionaries.get(customDictionaryKey).addWord(word);
+		}
+		lg.warning("Could not find custom dictionary " + customDictionaryKey);
 		return false;
 	}
 	
