@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
+import com.alexrnl.subtitlecorrector.service.DictionaryManager;
 
 /**
  * TODO
@@ -18,6 +19,8 @@ public class LetterReplacement implements Strategy {
 	/** Logger */
 	private static Logger				lg	= Logger.getLogger(LetterReplacement.class.getName());
 	
+	/** The dictionary manager used in the application */
+	private final DictionaryManager		dictionaryManager;
 	/** The original letter to replace */
 	private final Parameter<Character>	originalLetter;
 	/** The new letter to put */
@@ -30,12 +33,13 @@ public class LetterReplacement implements Strategy {
 	/**
 	 * Constructor #1.<br />
 	 */
-	public LetterReplacement () {
+	public LetterReplacement (final DictionaryManager dictionaryManager) {
 		super();
-		this.originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
-		this.newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
-		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
-		this.promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().promptBeforeCorrecting(), false, true);
+		this.dictionaryManager = dictionaryManager;
+		originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
+		newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
+		onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
+		promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().promptBeforeCorrecting(), false, true);
 	}
 
 	@Override
@@ -71,7 +75,7 @@ public class LetterReplacement implements Strategy {
 				continue;
 			}
 			
-			if (onlyMissingFromDictionary.getValue()) {// && dictionary.contains(currentWord.getWord())) {
+			if (onlyMissingFromDictionary.getValue() && dictionaryManager.contains(currentWord.getWord())) {
 				// The current word is in the dictionary
 				continue;
 			}
@@ -81,6 +85,7 @@ public class LetterReplacement implements Strategy {
 			
 			if (promptBeforeCorrecting.getValue()) {
 				// replacement = prompt.ask(subtitle.getContent(), currentWord, replacement);
+				// TODO prompt for auto correction on next occurrence of word?
 			}
 			newContent.append(replacement);
 		}
