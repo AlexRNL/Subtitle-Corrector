@@ -161,6 +161,14 @@ public class Dictionary {
 	}
 
 	/**
+	 * Return the number of words in the dictionary.
+	 * @return the number of words.
+	 */
+	public int size () {
+		return dictionary.size();
+	}
+	
+	/**
 	 * Check if the word is in the dictionary.
 	 * @param word
 	 *        the word to check.

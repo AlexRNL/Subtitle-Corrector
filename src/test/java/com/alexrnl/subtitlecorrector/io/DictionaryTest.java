@@ -1,5 +1,6 @@
 package com.alexrnl.subtitlecorrector.io;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -151,6 +152,20 @@ public class DictionaryTest {
 		assertTrue(editableDictionary.isUpdated());
 		editableDictionary.save();
 		assertFalse(editableDictionary.isUpdated());
+	}
+	
+	/**
+	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#contains(java.lang.String)}.
+	 * @throws IOException
+	 *         if there was an error while saving the dictionary.
+	 */
+	@Test
+	public void testSize () throws IOException {
+		assertEquals(336531, dictionary.size());
+		final int beforeAdd = editableDictionary.size();
+		editableDictionary.addWord("ldraba");
+		editableDictionary.save();
+		assertEquals(beforeAdd + 1, editableDictionary.size());
 	}
 	
 	/**
