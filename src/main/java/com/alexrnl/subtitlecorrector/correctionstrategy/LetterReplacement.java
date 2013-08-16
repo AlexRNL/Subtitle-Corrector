@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector.correctionstrategy;
 
+import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,10 +32,10 @@ public class LetterReplacement implements Strategy {
 	 */
 	public LetterReplacement () {
 		super();
-		this.originalLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.originalletter");
-		this.newLetter = new Parameter<>(ParameterType.FREE, "strategy.letterreplacement.newletter");
-		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.onlymissingfromdictionary", false, true);
-		this.promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, "strategy.letterreplacement.promptbeforecorrecting", false, true);
+		this.originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
+		this.newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
+		this.onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
+		this.promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().promptBeforeCorrecting(), false, true);
 	}
 
 	@Override

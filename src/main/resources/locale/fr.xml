@@ -5,10 +5,10 @@
 	
 	<!-- Translations for the strategies -->
 	<!-- Translations for the letter replacement strategy -->
-	<entry key="strategy.letterreplacement">Remplacement de lettre</entry>
-	<entry key="strategy.letterreplacement.description">Cette méthode de correction remplace les occurences d'une lettre par une autre.</entry>
-	<entry key="strategy.letterreplacement.originalletter">Lettre d'origine</entry>
-	<entry key="strategy.letterreplacement.newletter">Nouvelle lettre</entry>
-	<entry key="strategy.letterreplacement.onlymissingfromdictionary">Uniquement les mots non présents dans le dictionnaire</entry>
-	<entry key="strategy.letterreplacement.promptbeforecorrecting">Demander une confirmation avant de remplacer les mots</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement">Remplacement de lettre</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.description">Cette méthode de correction remplace les occurences d'une lettre par une autre.</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.originalletter">Lettre d'origine</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.newletter">Nouvelle lettre</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.onlymissingfromdictionary">Uniquement les mots non présents dans le dictionnaire</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.promptbeforecorrecting">Demander une confirmation avant de remplacer les mots</entry>
 </properties>
