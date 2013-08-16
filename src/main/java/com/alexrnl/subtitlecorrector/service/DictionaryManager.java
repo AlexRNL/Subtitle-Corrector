@@ -207,7 +207,11 @@ public class DictionaryManager {
 		public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs)
 				throws IOException {
 			if (file.getFileName().toString().endsWith(DICTIONARY_EXTENSION)) {
-				dictionaryMap.put(getDictionaryKey(file), new Dictionary(file, isEditable()));
+				final T key = getDictionaryKey(file);
+				if (lg.isLoggable(Level.INFO)) {
+					lg.info("Adding dictionary " + key + " from file " + file);
+				}
+				dictionaryMap.put(key, new Dictionary(file, isEditable()));
 			}
 			return FileVisitResult.CONTINUE;
 		}
