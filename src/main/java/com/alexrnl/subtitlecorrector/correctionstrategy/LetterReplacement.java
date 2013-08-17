@@ -32,6 +32,8 @@ public class LetterReplacement implements Strategy {
 
 	/**
 	 * Constructor #1.<br />
+	 * @param dictionaryManager
+	 *        the dictionary manager to use.
 	 */
 	public LetterReplacement (final DictionaryManager dictionaryManager) {
 		super();
