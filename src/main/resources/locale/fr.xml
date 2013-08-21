@@ -11,4 +11,9 @@
 	<entry key="subtitlecorrector.strategy.letterreplacement.newletter">Nouvelle lettre</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.onlymissingfromdictionary">Uniquement les mots non présents dans le dictionnaire</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.promptbeforecorrecting">Demander une confirmation avant de remplacer les mots</entry>
+	
+	<!-- Translations for the main window -->
+	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>
+	<entry key="subtitlecorrector.mainwindow.subtitleLabel">Sous titre à corriger</entry>
+	<entry key="subtitlecorrector.mainwindow.strategyLabel">Stratégie de correction</entry>
 </properties>

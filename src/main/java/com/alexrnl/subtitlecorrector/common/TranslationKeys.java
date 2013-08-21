@@ -135,4 +135,67 @@ public final class TranslationKeys {
 	public Strategy strategy () {
 		return new Strategy(subtitleCorrectorKey);
 	}
+	
+	/**
+	 * The translation for the main window.
+	 * @author Alex
+	 */
+	public static final class MainWindow {
+		/** The root key for the main window translations */
+		private static final String MAIN_WINDOW_KEY	= "mainwindow";
+		
+		/** The key for the main window translation */
+		private final String mainWindowKey;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param parentKey
+		 *        the key from the parent category.
+		 */
+		private MainWindow (final String parentKey) {
+			super();
+			mainWindowKey = parentKey + HIERARCHY_SEPARATOR + MAIN_WINDOW_KEY;
+		}
+
+		/**
+		 * The translation for the title of the main window.
+		 * @return the main window's title translation.
+		 */
+		public String title () {
+			return mainWindowKey + HIERARCHY_SEPARATOR + "title";
+		}
+
+		/**
+		 * The translation for the subtitle label.
+		 * @return the subtitle label translation.
+		 */
+		public String subtitleLabel () {
+			return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleLabel";
+		}
+
+		/**
+		 * The translation for the subtitle button.
+		 * @return the subtitle button translation.
+		 */
+		public String subtitleButton () {
+			return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleButton";
+		}
+
+		/**
+		 * The translation for the subtitle label.
+		 * @return the subtitle label translation.
+		 */
+		public String strategyLabel () {
+			return mainWindowKey + HIERARCHY_SEPARATOR + "strategyLabel";
+		}
+		
+	}
+	
+	/**
+	 * The main window translations.
+	 * @return the main window translation.
+	 */
+	public MainWindow mainWindow () {
+		return new MainWindow(subtitleCorrectorKey);
+	}
 }

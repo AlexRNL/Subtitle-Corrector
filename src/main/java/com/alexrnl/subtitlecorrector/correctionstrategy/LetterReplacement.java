@@ -86,7 +86,7 @@ public class LetterReplacement implements Strategy {
 					originalLetter.getValue().toString(), newLetter.getValue().toString());
 			
 			if (promptBeforeCorrecting.getValue()) {
-				// replacement = prompt.ask(subtitle.getContent(), currentWord, replacement);
+				// replacement = prompt.confirm(subtitle.getContent(), currentWord, replacement);
 				// TODO prompt for auto correction on next occurrence of word?
 			}
 			newContent.append(replacement);

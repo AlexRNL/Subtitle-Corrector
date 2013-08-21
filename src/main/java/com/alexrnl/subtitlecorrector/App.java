@@ -2,6 +2,10 @@ package com.alexrnl.subtitlecorrector;
 
 import java.util.logging.Logger;
 
+import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
+import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
+import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
+
 /**
  * Launcher class for the application.<br />
  * @author Alex
@@ -23,7 +27,13 @@ public final class App {
 	private void launch () {
 		lg.info("Subtitle Corrector starting...");
 		
+		final MainWindowController controller = new MainWindowController();
+		final MainWindowModel model = new MainWindowModel();
+		final MainWindowView view = new MainWindowView(null, controller);
+		controller.addModel(model);
+		controller.addView(view);
 		
+		view.setVisible(true);
 		
 		lg.info("Subtitle Corrector running");
 	}

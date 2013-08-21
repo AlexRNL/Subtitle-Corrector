@@ -23,5 +23,10 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.strategy.letterreplacement.newletter", KEYS.strategy().letterReplacement().newLetter());
 		assertEquals("subtitlecorrector.strategy.letterreplacement.onlymissingfromdictionary", KEYS.strategy().letterReplacement().onlyMissingFromDictionary());
 		assertEquals("subtitlecorrector.strategy.letterreplacement.promptbeforecorrecting", KEYS.strategy().letterReplacement().promptBeforeCorrecting());
+		
+		assertEquals("subtitlecorrector.mainwindow.title", KEYS.mainWindow().title());
+		assertEquals("subtitlecorrector.mainwindow.subtitleLabel", KEYS.mainWindow().subtitleLabel());
+		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
+		assertEquals("subtitlecorrector.mainwindow.strategyLabel", KEYS.mainWindow().strategyLabel());
 	}
 }
