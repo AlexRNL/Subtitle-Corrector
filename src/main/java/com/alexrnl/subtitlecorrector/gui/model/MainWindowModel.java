@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.mvc.AbstractModel;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 
 /**
@@ -17,7 +18,7 @@ public class MainWindowModel extends AbstractModel {
 	/** The path of the subtitle */
 	private Path			subtitle;
 	/** The name of the strategy to use */
-	private String			strategy;
+	private Strategy		strategy;
 	
 	/**
 	 * Constructor #.<br />
@@ -50,7 +51,7 @@ public class MainWindowModel extends AbstractModel {
 	 * Return the attribute strategy.
 	 * @return the attribute strategy.
 	 */
-	public String getStrategy () {
+	public Strategy getStrategy () {
 		return strategy;
 	}
 	
@@ -59,8 +60,8 @@ public class MainWindowModel extends AbstractModel {
 	 * @param strategy
 	 *        the attribute strategy.
 	 */
-	public void setStrategy (final String strategy) {
-		final String oldStrategyName = this.strategy;
+	public void setStrategy (final Strategy strategy) {
+		final Strategy oldStrategyName = this.strategy;
 		this.strategy = strategy;
 		fireModelChange(MainWindowController.STRATEGY_PROPERTY, oldStrategyName, strategy);
 	}

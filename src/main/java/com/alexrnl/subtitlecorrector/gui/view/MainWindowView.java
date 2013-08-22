@@ -6,14 +6,24 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.alexrnl.commons.gui.swing.AbstractFrame;
@@ -66,6 +76,14 @@ public class MainWindowView extends AbstractFrame {
 	protected void build () {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
+		buildMainContainer();
+		installListeners();
+	}
+
+	/**
+	 * Build the main container of the main window.
+	 */
+	private void buildMainContainer () {
 		final Container panel = getContentPane();
 		panel.setLayout(new GridBagLayout());
 		
@@ -86,6 +104,7 @@ public class MainWindowView extends AbstractFrame {
 		
 		c.gridx = ++xIndex;
 		subtitleButton = new JButton(KEYS.mainWindow().subtitleButton());
+		subtitleButton.
 		add(subtitleButton, c);
 		
 		c.gridx = --xIndex;
@@ -93,6 +112,50 @@ public class MainWindowView extends AbstractFrame {
 		c.gridwidth = 2;
 		strategyComboBox = new JComboBox<>();//strategyManager.getStrategies()
 		add(strategyComboBox, c);
+	}
+	
+	/**
+	 * Install the listeners on the components.
+	 */
+	private void installListeners () {
+		if (subtitleField == null || subtitleButton == null || strategyComboBox == null) {
+			throw new IllegalStateException("Cannot install listener on null components, call " +
+					"buildMainContainer before this method");
+		}
+		
+		subtitleField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped (final KeyEvent e) {
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run () {
+						controller.changeSubtitle(Paths.get(subtitleField.getText()));
+					}
+				});
+			}
+		});
+		subtitleButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed (final ActionEvent e) {
+				final JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				fileChooser.setMultiSelectionEnabled(false);
+				final int answer = fileChooser.showOpenDialog(getFrame());
+				if (answer == JFileChooser.APPROVE_OPTION) {
+					controller.changeSubtitle(fileChooser.getSelectedFile().toPath());
+				} else {
+					if (lg.isLoggable(Level.INFO)) {
+						lg.info("User canceled file selection");
+					}
+				}
+			}
+		});
+		strategyComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged (final ItemEvent e) {
+				controller.changeStrategy((Strategy) e.getItem());
+			}
+		});
 	}
 	
 	@Override
@@ -119,7 +182,7 @@ public class MainWindowView extends AbstractFrame {
 				subtitleField.setText(((Path)evt.getNewValue()).toString());
 				break;
 			case MainWindowController.STRATEGY_PROPERTY:
-				final Strategy strategy = null; //strategyManager.getStrategyByName(evt.getNewValue());
+				final Strategy strategy = (Strategy) evt.getNewValue();
 				strategyComboBox.setSelectedItem(strategy);
 				break;
 			default:

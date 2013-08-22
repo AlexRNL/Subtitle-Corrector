@@ -3,6 +3,7 @@ package com.alexrnl.subtitlecorrector.gui.controller;
 import java.nio.file.Path;
 
 import com.alexrnl.commons.mvc.AbstractController;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 
 /**
  * The controller of the main window.<br />
@@ -28,7 +29,7 @@ public class MainWindowController extends AbstractController {
 	 * @param strategy
 	 *        the new strategy.
 	 */
-	public void changeStrategy (final String strategy) {
+	public void changeStrategy (final Strategy strategy) {
 		setModelProperty(STRATEGY_PROPERTY, strategy);
 	}
 }
