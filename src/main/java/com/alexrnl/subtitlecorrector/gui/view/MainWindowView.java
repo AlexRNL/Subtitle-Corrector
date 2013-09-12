@@ -104,7 +104,6 @@ public class MainWindowView extends AbstractFrame {
 		
 		c.gridx = ++xIndex;
 		subtitleButton = new JButton(KEYS.mainWindow().subtitleButton());
-		subtitleButton.
 		add(subtitleButton, c);
 		
 		c.gridx = --xIndex;
