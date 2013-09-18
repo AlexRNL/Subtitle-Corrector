@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ DictionaryManagerTest.class })
+@SuiteClasses({ DictionaryManagerTest.class, UserPromptAnswerTest.class })
 public class ServiceTests {
 	
 }
