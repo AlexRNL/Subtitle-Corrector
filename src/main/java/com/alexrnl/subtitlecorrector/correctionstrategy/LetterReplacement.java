@@ -12,7 +12,7 @@ import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
 
 /**
- * TODO
+ * Strategy for replacing a letter by an other in subtitles.
  * @author Alex
  */
 public class LetterReplacement implements Strategy {
