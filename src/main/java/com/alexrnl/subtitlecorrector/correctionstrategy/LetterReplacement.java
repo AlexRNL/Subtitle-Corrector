@@ -10,6 +10,8 @@ import java.util.logging.Logger;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.UserPrompt;
+import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
 /**
  * Strategy for replacing a letter by an other in subtitles.
@@ -21,6 +23,8 @@ public class LetterReplacement implements Strategy {
 	
 	/** The dictionary manager used in the application */
 	private final DictionaryManager		dictionaryManager;
+	/** The user prompt to use */
+	private final UserPrompt			prompt;
 	/** The original letter to replace */
 	private final Parameter<Character>	originalLetter;
 	/** The new letter to put */
@@ -34,10 +38,13 @@ public class LetterReplacement implements Strategy {
 	 * Constructor #1.<br />
 	 * @param dictionaryManager
 	 *        the dictionary manager to use.
+	 * @param prompt
+	 *        the prompt to use.
 	 */
-	public LetterReplacement (final DictionaryManager dictionaryManager) {
+	public LetterReplacement (final DictionaryManager dictionaryManager, final UserPrompt prompt) {
 		super();
 		this.dictionaryManager = dictionaryManager;
+		this.prompt = prompt;
 		originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
 		newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
 		onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
@@ -79,15 +86,23 @@ public class LetterReplacement implements Strategy {
 			
 			if (onlyMissingFromDictionary.getValue() && dictionaryManager.contains(currentWord.getWord())) {
 				// The current word is in the dictionary
+				newContent.append(currentWord);
 				continue;
 			}
 			
-			final String replacement = currentWord.getWord().replaceAll(
+			String replacement = currentWord.getWord().replaceAll(
 					originalLetter.getValue().toString(), newLetter.getValue().toString());
 			
 			if (promptBeforeCorrecting.getValue()) {
-				// replacement = prompt.confirm(subtitle.getContent(), currentWord, replacement);
-				// TODO prompt for auto correction on next occurrence of word?
+				final UserPromptAnswer answer = prompt.confirm(subtitle.getContent(), currentWord, replacement);
+				if (answer.isCancelled()) {
+					newContent.append(currentWord);
+					continue;
+				}
+				if (answer.isRememberChoice()) {
+					// TODO add choice to map for remember on next occurences
+				}
+				replacement = answer.getAnswer();
 			}
 			newContent.append(replacement);
 		}
