@@ -4,12 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
+import com.alexrnl.subtitlecorrector.io.SubtitleReader;
 
 /**
  * Test suite for the {@link SubRipReader} class.
@@ -28,7 +30,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link SubtitleReader#readFile(Path)}.
 	 * @throws URISyntaxException
 	 *         if the syntax of the files to test is not valid.
 	 * @throws IOException
@@ -47,7 +49,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link SubtitleReader#readFile(Path)}.
 	 * @throws IOException
 	 *         if there was an issue while reading the subtitle.
 	 */
@@ -57,7 +59,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link SubtitleReader#readFile(Path)}.
 	 * @throws IOException
 	 *         if there was an issue while reading the subtitle.
 	 * @throws URISyntaxException
@@ -69,7 +71,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link SubtitleReader#readFile(Path)}.
 	 * @throws IOException
 	 *         if there was an issue while reading the subtitle.
 	 * @throws URISyntaxException
@@ -81,7 +83,7 @@ public class SubRipReaderTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleReader#readFile(java.nio.file.Path)}.
+	 * Test method for {@link SubtitleReader#readFile(Path)}.
 	 * @throws IOException
 	 *         if there was an issue while reading the subtitle.
 	 * @throws URISyntaxException

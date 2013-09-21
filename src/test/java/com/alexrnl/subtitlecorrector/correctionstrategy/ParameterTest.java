@@ -28,7 +28,7 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.Parameter#getType()}.
+	 * Test method for {@link Parameter#getType()}.
 	 */
 	@Test
 	public void testGetType () {
@@ -37,7 +37,7 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.Parameter#getDescription()}.
+	 * Test method for {@link Parameter#getDescription()}.
 	 */
 	@Test
 	public void testGetDescription () {
@@ -46,7 +46,7 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.Parameter#isRequired()}.
+	 * Test method for {@link Parameter#isRequired()}.
 	 */
 	@Test
 	public void testIsRequired () {
@@ -55,7 +55,7 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.Parameter#getValue()}.
+	 * Test method for {@link Parameter#getValue()}.
 	 */
 	@Test
 	public void testGetValue () {
@@ -64,7 +64,7 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.Parameter#setValue(java.lang.Object)}.
+	 * Test method for {@link Parameter#setValue(Object)}.
 	 */
 	@Test
 	public void testSetValue () {

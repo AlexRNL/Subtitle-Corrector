@@ -30,7 +30,7 @@ public class UserPromptAnswerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.UserPromptAnswer#getAnswer()}.
+	 * Test method for {@link UserPromptAnswer#getAnswer()}.
 	 */
 	@Test
 	public void testGetAnswer () {
@@ -40,7 +40,7 @@ public class UserPromptAnswerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.UserPromptAnswer#isCancelled()}.
+	 * Test method for {@link UserPromptAnswer#isCancelled()}.
 	 */
 	@Test
 	public void testIsCancelled () {
@@ -50,7 +50,7 @@ public class UserPromptAnswerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.UserPromptAnswer#isRememberChoice()}.
+	 * Test method for {@link UserPromptAnswer#isRememberChoice()}.
 	 */
 	@Test
 	public void testIsRememberChoice () {

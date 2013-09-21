@@ -44,7 +44,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#getBegin()}.
+	 * Test method for {@link Subtitle#getBegin()}.
 	 */
 	@Test
 	public void testGetBegin () {
@@ -54,7 +54,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#setBegin(long)}.
+	 * Test method for {@link Subtitle#setBegin(long)}.
 	 */
 	@Test
 	public void testSetBegin () {
@@ -68,7 +68,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#getEnd()}.
+	 * Test method for {@link Subtitle#getEnd()}.
 	 */
 	@Test
 	public void testGetEnd () {
@@ -78,7 +78,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#setEnd(long)}.
+	 * Test method for {@link Subtitle#setEnd(long)}.
 	 */
 	@Test
 	public void testSetEnd () {
@@ -92,7 +92,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#getContent()}.
+	 * Test method for {@link Subtitle#getContent()}.
 	 */
 	@Test
 	public void testGetContent () {
@@ -102,7 +102,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#setContent(java.lang.String)}.
+	 * Test method for {@link Subtitle#setContent(String)}.
 	 */
 	@Test
 	public void testSetContent () {
@@ -115,7 +115,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#getDuration()}.
+	 * Test method for {@link Subtitle#getDuration()}.
 	 */
 	@Test
 	public void testGetDuration () {
@@ -125,7 +125,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#isValid()}.
+	 * Test method for {@link Subtitle#isValid()}.
 	 */
 	@Test
 	public void testIsValid () {
@@ -135,7 +135,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#toString()}.
+	 * Test method for {@link Subtitle#toString()}.
 	 */
 	@Test
 	public void testToString () {
@@ -145,7 +145,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#compareTo(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link Subtitle#compareTo(Subtitle)}.
 	 * @throws CloneNotSupportedException
 	 *         if a clone operation fails.
 	 */
@@ -188,7 +188,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#hashCode()}.
+	 * Test method for {@link Subtitle#hashCode()}.
 	 */
 	@Test
 	public void testHashCode () {
@@ -204,7 +204,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#equals(Object)}.
+	 * Test method for {@link Subtitle#equals(Object)}.
 	 */
 	@Test
 	public void testEquals () {
@@ -221,7 +221,7 @@ public class SubtitleTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.Subtitle#clone()}.
+	 * Test method for {@link Subtitle#clone()}.
 	 * @throws CloneNotSupportedException
 	 *         if a clone operation fails.
 	 */

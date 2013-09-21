@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
+import com.alexrnl.subtitlecorrector.io.SubtitleWriter;
 
 /**
  * Test suite for the {@link SubRipWriter} class.
@@ -30,7 +31,7 @@ public class SubRipWriterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * Test method for {@link SubtitleWriter#writeFile(SubtitleFile, Path)}.
 	 * @throws URISyntaxException
 	 *         if the path to the file is badly formatted.
 	 * @throws IOException
@@ -52,7 +53,7 @@ public class SubRipWriterTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * Test method for {@link SubtitleWriter#writeFile(SubtitleFile, Path)}.
 	 * @throws IOException
 	 *         if and IO error occurs.
 	 */
@@ -66,7 +67,7 @@ public class SubRipWriterTest {
 
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.SubtitleWriter#writeFile(com.alexrnl.subtitlecorrector.common.SubtitleFile, java.nio.file.Path)}.
+	 * Test method for {@link SubtitleWriter#writeFile(SubtitleFile, Path)}.
 	 * @throws IOException
 	 *         if and IO error occurs.
 	 */

@@ -34,7 +34,7 @@ public class SubtitleFileTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.SubtitleFile#getFile()}.
+	 * Test method for {@link SubtitleFile#getFile()}.
 	 */
 	@Test
 	public void testGetFile () {
@@ -43,7 +43,7 @@ public class SubtitleFileTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.common.SubtitleFile#update()}.
+	 * Test method for {@link SubtitleFile#update()}.
 	 */
 	@Test
 	public void testUpdate () {

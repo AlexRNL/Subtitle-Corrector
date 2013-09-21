@@ -74,7 +74,7 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#getLocaleDictionaries()}.
+	 * Test method for {@link DictionaryManager#getLocaleDictionaries()}.
 	 */
 	@Test
 	public void testGetLocaleDictionaries () {
@@ -83,7 +83,7 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#getCustomDictionaries()}.
+	 * Test method for {@link DictionaryManager#getCustomDictionaries()}.
 	 */
 	@Test
 	public void testGetCustomDictionaries () {
@@ -91,9 +91,8 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#startSession(java.util.Locale, java.lang.String[])},
-	 * {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#stopSession()}, and
-	 * {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#contains(java.lang.String)}.
+	 * Test method for {@link DictionaryManager#startSession(Locale, String[])},
+	 * {@link DictionaryManager#stopSession()}, and {@link DictionaryManager#contains(String)}.
 	 * @throws IOException
 	 *         if an IO operation fails.
 	 */
@@ -139,7 +138,7 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.service.DictionaryManager#contains(java.lang.String)}.
+	 * Test method for {@link DictionaryManager#contains(String)}.
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testContainsNoSession () {

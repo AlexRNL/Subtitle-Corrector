@@ -61,7 +61,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#Dictionary(java.nio.file.Path)}.
+	 * Test method for {@link Dictionary#Dictionary(Path)}.
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
@@ -72,7 +72,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#Dictionary(java.nio.file.Path)}.
+	 * Test method for {@link Dictionary#Dictionary(Path)}.
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
@@ -83,7 +83,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#Dictionary(java.nio.file.Path)}.
+	 * Test method for {@link Dictionary#Dictionary(Path)}.
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
@@ -94,7 +94,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#Dictionary(java.nio.file.Path)}.
+	 * Test method for {@link Dictionary#Dictionary(Path)}.
 	 * @throws IOException
 	 *         if there is a problem when loading the file.
 	 */
@@ -108,7 +108,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#save()}.
+	 * Test method for {@link Dictionary#save()}.
 	 * @throws IOException
 	 *         if there is a problem when writing the file.
 	 */
@@ -122,7 +122,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#save()}.
+	 * Test method for {@link Dictionary#save()}.
 	 * @throws IOException
 	 *         if there is a problem when writing the file.
 	 */
@@ -132,7 +132,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#isEditable()}.
+	 * Test method for {@link Dictionary#isEditable()}.
 	 */
 	@Test
 	public void testIsEditable () {
@@ -141,7 +141,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#isUpdated()}.
+	 * Test method for {@link Dictionary#isUpdated()}.
 	 * @throws IOException
 	 *         if a save action fails.
 	 */
@@ -159,7 +159,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#contains(java.lang.String)}.
+	 * Test method for {@link Dictionary#size()}.
 	 * @throws IOException
 	 *         if there was an error while saving the dictionary.
 	 */
@@ -173,7 +173,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#contains(java.lang.String)}.
+	 * Test method for {@link Dictionary#contains(String)}.
 	 */
 	@Test
 	public void testContains () {
@@ -184,7 +184,7 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.io.Dictionary#addWord(java.lang.String)}.
+	 * Test method for {@link Dictionary#addWord(String)}.
 	 */
 	@Test
 	public void testAddWord () {

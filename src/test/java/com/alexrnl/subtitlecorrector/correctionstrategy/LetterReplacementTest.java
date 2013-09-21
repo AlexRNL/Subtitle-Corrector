@@ -57,7 +57,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#getParameters()}.
+	 * Test method for {@link LetterReplacement#getParameters()}.
 	 */
 	@Test
 	public void testGetParameters () {
@@ -65,7 +65,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#getParameterByName(java.lang.String)}.
+	 * Test method for {@link LetterReplacement#getParameterByName(String)}.
 	 */
 	@Test
 	public void testGetParameterByName () {
@@ -78,7 +78,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#getParameterByName(java.lang.String)}.
+	 * Test method for {@link LetterReplacement#getParameterByName(String)}.
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testGetParameterByNameNullPointerException () {
@@ -86,7 +86,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Null original letter parameter.
 	 */
 	@Test(expected = NullPointerException.class)
@@ -95,7 +95,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Null replacementLetter parameter.
 	 */
 	@Test(expected = NullPointerException.class)
@@ -105,7 +105,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Null subtitle test.
 	 */
 	@Test(expected = NullPointerException.class)
@@ -114,7 +114,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * No relevant letter in subtitle test.
 	 */
 	@Test
@@ -127,7 +127,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Test correction without prompt or dictionary.
 	 */
 	@Test
@@ -142,7 +142,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement#correct(com.alexrnl.subtitlecorrector.common.Subtitle)}.
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Test correction without prompt and with dictionary.
 	 */
 	@Test
