@@ -17,6 +17,14 @@ public interface Strategy {
 	List<Parameter<?>> getParameters ();
 	
 	/**
+	 * Return the parameter matching the name specified.
+	 * @param name
+	 *        the name to search for.
+	 * @return the relevant parameter.
+	 */
+	Parameter<?> getParameterByName (String name);
+	
+	/**
 	 * Called when parsing a subtitle file, on each subtitle.
 	 * @param subtitle
 	 *        the subtitle being processed.

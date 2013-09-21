@@ -4,6 +4,7 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,6 +63,18 @@ public class LetterReplacement implements Strategy {
 	}
 	
 	@Override
+	public Parameter<?> getParameterByName (final String name) {
+		Objects.requireNonNull(name);
+		for (final Parameter<?> parameter : getParameters()) {
+			if (parameter.getDescription().equals(name)) {
+				return parameter;
+			}
+		}
+		lg.info("No parameter with name " + name + " found");
+		return null;
+	}
+
+	@Override
 	public void correct (final Subtitle subtitle) {
 		if (!subtitle.getContent().contains(originalLetter.getValue().toString())) {
 			// Skip subtitles which are not concerned
@@ -75,7 +88,9 @@ public class LetterReplacement implements Strategy {
 		final StringBuilder newContent = new StringBuilder();
 		while (!remaining.isEmpty()) {
 			final Word currentWord = Word.getNextWord(remaining);
-			newContent.append(remaining.substring(0, currentWord.getBegin() - 1));
+			if (currentWord.getBegin() > 0) {
+				newContent.append(remaining.substring(0, currentWord.getBegin()));
+			}
 			remaining = remaining.substring(currentWord.getEnd());
 			
 			if (!currentWord.getWord().contains(originalLetter.getValue().toString())) {
@@ -100,7 +115,7 @@ public class LetterReplacement implements Strategy {
 					continue;
 				}
 				if (answer.isRememberChoice()) {
-					// TODO add choice to map for remember on next occurences
+					// TODO add choice to map for remember on next occurrences
 				}
 				replacement = answer.getAnswer();
 			}
