@@ -4,6 +4,9 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -12,10 +15,14 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
+import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
+import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
 /**
  * Test suite for the {@link LetterReplacement} class.
@@ -155,5 +162,27 @@ public class LetterReplacementTest {
 		when(dictionary.contains("Hello")).thenReturn(true);
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hello xvxryonx!", subtitleToCorrect.getContent());
+	}
+	
+	/**
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
+	 * Test correction with prompt and without dictionary.
+	 */
+	@Test
+	public void testCorrectWithPromptNoDictionary () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		originalLetter.setValue('e');
+		replacementLetter.setValue('x');
+		onlyMissingFromDictionary.setValue(false);
+		promptBeforeCorrecting.setValue(true);
+		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				return new UserPromptAnswer((String) invocation.getArguments()[2]);
+			}
+		});
+		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).thenReturn(new UserPromptAnswer("LDR"));
+		letterReplacement.correct(subtitleToCorrect);
+		assertEquals("LDR xvxryonx!", subtitleToCorrect.getContent());
 	}
 }
