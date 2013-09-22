@@ -25,6 +25,16 @@ public interface Strategy {
 	Parameter<?> getParameterByName (String name);
 	
 	/**
+	 * Called when starting the correcting session.
+	 */
+	void startSession ();
+	
+	/**
+	 * Called when stopping the correcting session.
+	 */
+	void stopSession ();
+	
+	/**
 	 * Called when parsing a subtitle file, on each subtitle.
 	 * @param subtitle
 	 *        the subtitle being processed.

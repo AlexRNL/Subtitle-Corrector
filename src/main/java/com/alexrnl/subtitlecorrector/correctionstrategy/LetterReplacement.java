@@ -3,7 +3,9 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
 import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +28,8 @@ public class LetterReplacement implements Strategy {
 	private final DictionaryManager		dictionaryManager;
 	/** The user prompt to use */
 	private final UserPrompt			prompt;
+	/** The choice which were saved by the user for this session */
+	private final Map<String, String>	savedChoices;
 	/** The original letter to replace */
 	private final Parameter<Character>	originalLetter;
 	/** The new letter to put */
@@ -46,6 +50,7 @@ public class LetterReplacement implements Strategy {
 		super();
 		this.dictionaryManager = dictionaryManager;
 		this.prompt = prompt;
+		savedChoices = new HashMap<>();
 		originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
 		newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
 		onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
@@ -73,6 +78,22 @@ public class LetterReplacement implements Strategy {
 		lg.info("No parameter with name " + name + " found");
 		return null;
 	}
+	
+	@Override
+	public void startSession () {
+		if (!savedChoices.isEmpty()) {
+			throw new IllegalStateException("Cannot start session with non-empty saved choices.");
+		}
+		
+	}
+	
+	@Override
+	public void stopSession () {
+		if (lg.isLoggable(Level.INFO)) {
+			lg.info("End of session, " + savedChoices.size() + " were saved during the session.");
+		}
+		savedChoices.clear();
+	}
 
 	@Override
 	public void correct (final Subtitle subtitle) {
@@ -99,6 +120,11 @@ public class LetterReplacement implements Strategy {
 				continue;
 			}
 			
+			if (savedChoices.containsKey(currentWord.getWord())) {
+				newContent.append(savedChoices.get(currentWord.getWord()));
+				continue;
+			}
+			
 			if (onlyMissingFromDictionary.getValue() && dictionaryManager.contains(currentWord.getWord())) {
 				// The current word is in the dictionary
 				newContent.append(currentWord);
@@ -115,7 +141,7 @@ public class LetterReplacement implements Strategy {
 					continue;
 				}
 				if (answer.isRememberChoice()) {
-					// TODO add choice to map for remember on next occurrences
+					savedChoices.put(currentWord.getWord(), answer.getAnswer());
 				}
 				replacement = answer.getAnswer();
 			}

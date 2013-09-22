@@ -4,6 +4,7 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
@@ -217,6 +218,37 @@ public class LetterReplacementTest {
 		when(dictionary.contains("Becaune")).thenReturn(false);
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Because it's not\ngoing up there now.", subtitleToCorrect.getContent());
+	}
+	
+	
+	@Test
+	public void testRememberChoices () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		final Subtitle subtitleToCheck = new Subtitle(0, 2000, "Hello Lucie,\nhow are you doin'?");
+		originalLetter.setValue('e');
+		replacementLetter.setValue('x');
+		onlyMissingFromDictionary.setValue(false);
+		promptBeforeCorrecting.setValue(true);
+		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				return new UserPromptAnswer((String) invocation.getArguments()[2]);
+			}
+		});
+		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).thenReturn(new UserPromptAnswer("LDR", true));
+		
+		letterReplacement.startSession();
+		letterReplacement.correct(subtitleToCorrect);
+		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				fail("This method should not have been called, remember choice is on");
+				return null;
+			}
+		});
+		letterReplacement.correct(subtitleToCheck);
+		letterReplacement.stopSession();
+		assertEquals("LDR Lucix,\nhow arx you doin'?", subtitleToCheck.getContent());
 	}
 	
 }
