@@ -220,7 +220,10 @@ public class LetterReplacementTest {
 		assertEquals("Because it's not\ngoing up there now.", subtitleToCorrect.getContent());
 	}
 	
-	
+	/**
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
+	 * Test for the remember choice option in the user prompt.
+	 */
 	@Test
 	public void testRememberChoices () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
