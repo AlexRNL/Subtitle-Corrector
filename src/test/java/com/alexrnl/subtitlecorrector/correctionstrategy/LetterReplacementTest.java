@@ -185,4 +185,38 @@ public class LetterReplacementTest {
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("LDR xvxryonx!", subtitleToCorrect.getContent());
 	}
+	
+	/**
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
+	 * Test correction with prompt which cancel the question and without dictionary.
+	 */
+	@Test
+	public void testCorrectWithPromptCancelNoDictionary () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		originalLetter.setValue('e');
+		replacementLetter.setValue('x');
+		onlyMissingFromDictionary.setValue(false);
+		promptBeforeCorrecting.setValue(true);
+		when(prompt.confirm(anyString(),  any(Word.class), anyString())).thenReturn(new UserPromptAnswer(null, true, false));
+		letterReplacement.correct(subtitleToCorrect);
+		assertEquals("Hello everyone!", subtitleToCorrect.getContent());
+	}
+	
+	/**
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
+	 * Test correction with a complex subtitle.
+	 */
+	@Test
+	public void testComplexCorrection () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 200, "Becaune it's not\ngoing up there now.");
+		originalLetter.setValue('n');
+		replacementLetter.setValue('s');
+		onlyMissingFromDictionary.setValue(true);
+		promptBeforeCorrecting.setValue(false);
+		when(dictionary.contains(anyString())).thenReturn(true);
+		when(dictionary.contains("Becaune")).thenReturn(false);
+		letterReplacement.correct(subtitleToCorrect);
+		assertEquals("Because it's not\ngoing up there now.", subtitleToCorrect.getContent());
+	}
+	
 }
