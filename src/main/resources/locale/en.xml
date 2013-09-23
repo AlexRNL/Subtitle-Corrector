@@ -16,4 +16,5 @@
 	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>
 	<entry key="subtitlecorrector.mainwindow.subtitleLabel">Subtitle to correct</entry>
 	<entry key="subtitlecorrector.mainwindow.strategyLabel">Correction strategy</entry>
+	<entry key="subtitlecorrector.mainwindow.subtitleButton">Select subtitle...</entry>
 </properties>

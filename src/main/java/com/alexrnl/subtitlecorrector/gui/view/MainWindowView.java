@@ -27,6 +27,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.alexrnl.commons.gui.swing.AbstractFrame;
+import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 
@@ -46,14 +47,16 @@ public class MainWindowView extends AbstractFrame {
 	
 	// GUI elements
 	/** The field where the path of the subtitle will be displayed */
-	private JTextField			subtitleField;
+	private JTextField				subtitleField;
 	/** The button to open the file explorer window to select the subtitle */
-	private JButton				subtitleButton;
+	private JButton					subtitleButton;
 	/** The combo box for the strategy */
-	private JComboBox<Strategy>	strategyComboBox;
+	private JComboBox<Strategy>		strategyComboBox;
 	
 	/** The controller in charge of the view */
-	private MainWindowController controller;
+	private MainWindowController	controller;
+	/** The translator to use for the view */
+	private Translator		translator;
 	
 	/**
 	 * Constructor #1.<br />
@@ -62,14 +65,14 @@ public class MainWindowView extends AbstractFrame {
 	 * @param controller
 	 *        the controller which handle this view.
 	 */
-	public MainWindowView (final Path iconFile, final MainWindowController controller) {
-		super(KEYS.mainWindow().title(), iconFile, controller);
+	public MainWindowView (final Path iconFile, final MainWindowController controller, final Translator translator) {
+		super(translator.get(KEYS.mainWindow().title()), iconFile, controller, translator);
 	}
 
 	@Override
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
-		
+		this.translator = (Translator) parameters[1];
 	}
 	
 	@Override
@@ -92,9 +95,9 @@ public class MainWindowView extends AbstractFrame {
 		final GridBagConstraints c = new GridBagConstraints(xIndex, yIndex, 1, 1, 0, 0,
 				GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.HORIZONTAL,
 				DEFAULT_INSETS, 0, 0);
-		add(new JLabel(KEYS.mainWindow().subtitleLabel()), c);
+		add(new JLabel(translator.get(KEYS.mainWindow().subtitleLabel())), c);
 		c.gridy = ++yIndex;
-		add(new JLabel(KEYS.mainWindow().strategyLabel()), c);
+		add(new JLabel(translator.get(KEYS.mainWindow().strategyLabel())), c);
 		
 		yIndex = 0;
 		c.gridy = yIndex;
@@ -103,7 +106,7 @@ public class MainWindowView extends AbstractFrame {
 		add(subtitleField, c);
 		
 		c.gridx = ++xIndex;
-		subtitleButton = new JButton(KEYS.mainWindow().subtitleButton());
+		subtitleButton = new JButton(translator.get(KEYS.mainWindow().subtitleButton()));
 		add(subtitleButton, c);
 		
 		c.gridx = --xIndex;

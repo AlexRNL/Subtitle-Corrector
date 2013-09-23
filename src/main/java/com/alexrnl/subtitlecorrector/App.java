@@ -1,7 +1,11 @@
 package com.alexrnl.subtitlecorrector;
 
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.logging.Logger;
 
+import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
@@ -12,13 +16,19 @@ import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
  */
 public final class App {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(App.class.getName());
+	private static Logger		lg	= Logger.getLogger(App.class.getName());
+	
+	/** The translator to use in the application */
+	private final Translator	translator;
 	
 	/**
 	 * Constructor #1.<br />
+	 * @throws URISyntaxException
+	 *         if the translation file cannot be loaded.
 	 */
-	private App () {
+	private App () throws URISyntaxException {
 		super();
+		translator = new Translator(Paths.get(App.class.getResource("/locale/en.xml").toURI()));
 	}
 	
 	/**
@@ -29,7 +39,7 @@ public final class App {
 		
 		final MainWindowController controller = new MainWindowController();
 		final MainWindowModel model = new MainWindowModel();
-		final MainWindowView view = new MainWindowView(null, controller);
+		final MainWindowView view = new MainWindowView(null, controller, translator);
 		controller.addModel(model);
 		controller.addView(view);
 		
@@ -44,6 +54,10 @@ public final class App {
 	 *        the arguments from the command line.
 	 */
 	public static void main (final String[] args) {
-		new App().launch();
+		try {
+			new App().launch();
+		} catch (final URISyntaxException e) {
+			lg.warning("Could not load translation file: " + ExceptionUtils.display(e));
+		}
 	}
 }
