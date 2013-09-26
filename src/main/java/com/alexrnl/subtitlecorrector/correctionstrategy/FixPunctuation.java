@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector.correctionstrategy;
 
+import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.FileVisitOption;
@@ -8,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -33,6 +36,8 @@ public class FixPunctuation implements Strategy {
 	
 	/** Map with the punctuation rule per locale */
 	private final Map<Locale, Map<String, String>>	punctuationRules;
+	/** The locale parameter */
+	private final Parameter<Locale>					locale;
 	
 	/**
 	 * Constructor #1.<br />
@@ -48,19 +53,25 @@ public class FixPunctuation implements Strategy {
 			throw new IllegalArgumentException("The path must refer to a folder with the punctuation rules");
 		}
 		
+		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale());
 		punctuationRules = new HashMap<>();
 		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
 	}
 	
 	@Override
 	public List<Parameter<?>> getParameters () {
-		// TODO Auto-generated method stub
-		return null;
+		final List<Parameter<?>> parameters = new ArrayList<>();
+		parameters.add(locale);
+		return parameters;
 	}
 	
 	@Override
 	public Parameter<?> getParameterByName (final String name) {
-		// TODO Auto-generated method stub
+		Objects.requireNonNull(name);
+		// TODO factorise between strategies
+		if (name.equals(locale.getDescription())) {
+			return locale;
+		}
 		return null;
 	}
 	
