@@ -126,6 +126,57 @@ public final class TranslationKeys {
 			return new LetterReplacement(strategyKey);
 		}
 		
+		/**
+		 * Translation for the fix punctuation strategy.
+		 * @author Alex
+		 */
+		public static final class FixPunctuation {
+			/** The root key for the letter replacement strategy */
+			private static final String	FIX_PUNCTUATION_KEY	= "fixpunctuation";
+			
+			/** The key for the fix punctuation translations */
+			private final String		fixPunctuationKey;
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			private FixPunctuation (final String parentKey) {
+				super();
+				fixPunctuationKey = parentKey + HIERARCHY_SEPARATOR + FIX_PUNCTUATION_KEY;
+			}
+			
+			@Override
+			public String toString () {
+				return fixPunctuationKey;
+			}
+			
+			/**
+			 * The translation for the description of the strategy.
+			 * @return the description of the strategy.
+			 */
+			public String description () { // TODO factorise
+				return fixPunctuationKey + HIERARCHY_SEPARATOR + "description";
+			}
+
+			/**
+			 * The translation for the locale parameter.
+			 * @return the translation for the locale parameter.
+			 */
+			public String locale () {
+				return fixPunctuationKey + HIERARCHY_SEPARATOR + "locale";
+			}
+		}
+		
+		/**
+		 * The fix punctuation translations.
+		 * @return the fix punctuation translations.
+		 */
+		public FixPunctuation fixPunctuation () {
+			return new FixPunctuation(strategyKey);
+		}
+		
 	}
 	
 	/**
