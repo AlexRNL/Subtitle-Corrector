@@ -89,8 +89,20 @@ public class FixPunctuation implements Strategy {
 	
 	@Override
 	public void correct (final Subtitle subtitle) {
-		// TODO Auto-generated method stub
+		final StringBuilder newContent = new StringBuilder();
 		
+		for (int indexChar = 0; indexChar < subtitle.getContent().length(); indexChar++) {
+			final Character currentChar = subtitle.getContent().charAt(indexChar);
+			if (punctuationRules.get(locale.getValue()).containsKey(currentChar.toString())) {
+				final String rule = punctuationRules.get(locale.getValue()).get(currentChar.toString());
+				final int indexPunctuation = rule.indexOf(indexChar);
+				
+			} else {
+				newContent.append(currentChar);
+			}
+		}
+		
+		subtitle.setContent(newContent.toString());
 	}
 	
 	/**
