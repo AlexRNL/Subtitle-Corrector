@@ -106,7 +106,7 @@ public class FixPunctuation implements Strategy {
 				// Check that there is a space before the punctuation mark.
 				if (indexChar - 1 > 0) {
 					final Character charBefore = subtitle.getContent().charAt(indexChar - 1);
-					if (!StringUtils.isNewLine(charBefore) && charBefore != SPACE) {
+					if (!StringUtils.isNewLine(charBefore) && !SPACE.equals(charBefore)) {
 						newContent.append(SPACE);
 					}
 				} else {
@@ -118,7 +118,7 @@ public class FixPunctuation implements Strategy {
 				// Check that there is a space after the punctuation mark
 				if (indexChar + 1 < subtitle.getContent().length()) {
 					final Character charAfter = subtitle.getContent().charAt(indexChar + 1);
-					if (!StringUtils.isNewLine(charAfter) && charAfter != SPACE) {
+					if (!StringUtils.isNewLine(charAfter) && !SPACE.equals(charAfter)) {
 						newContent.append(SPACE);
 					}
 				}
