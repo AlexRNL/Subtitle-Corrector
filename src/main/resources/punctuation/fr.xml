@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<!-- English punctuation rules. -->
+<!-- French punctuation rules. -->
 <properties>
-	<entry key=".">. </entry>
-	<entry key=",">, </entry>
-	<entry key="?"> ? </entry>
-	<entry key=";"> ; </entry>
-	<entry key=":"> : </entry>
-	<entry key="!"> ! </entry>
+	<entry key="spacebefore">?;:!</entry>
+	<entry key="spaceafter">.,?;:!</entry>
 </properties>

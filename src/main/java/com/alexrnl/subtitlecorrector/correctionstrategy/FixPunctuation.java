@@ -1,5 +1,6 @@
 package com.alexrnl.subtitlecorrector.correctionstrategy;
 
+import static com.alexrnl.commons.utils.StringUtils.SPACE;
 import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.io.IOException;
@@ -23,21 +24,28 @@ import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.io.IOUtils;
-import com.alexrnl.commons.utils.CollectionUtils;
+import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 
 /**
- * TODO
+ * Correction strategy which fix the punctuation in the subtitles.
  * @author Alex
  */
 public class FixPunctuation implements Strategy {
 	/** Logger */
-	private static Logger							lg	= Logger.getLogger(FixPunctuation.class.getName());
+	private static Logger						lg				= Logger.getLogger(FixPunctuation.class.getName());
 	
-	/** Map with the punctuation rule per locale */
-	private final Map<Locale, Map<String, String>>	punctuationRules;
+	/** Property name for the punctuation marks which have a space before. */
+	private static final String					SPACE_BEFORE	= "spacebefore";
+	/** Property name for the punctuation marks which have a space after. */
+	private static final String					SPACE_AFTER		= "spaceafter";
+	
+	/** Map with the character which have a space after per locale */
+	private final Map<Locale, List<Character>>	hasSpaceAfter;
+	/** Map with the character which have a space before per locale */
+	private final Map<Locale, List<Character>>	hasSpaceBefore;
 	/** The locale parameter */
-	private final Parameter<Locale>					locale;
+	private final Parameter<Locale>				locale;
 	
 	/**
 	 * Constructor #1.<br />
@@ -54,7 +62,8 @@ public class FixPunctuation implements Strategy {
 		}
 		
 		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale());
-		punctuationRules = new HashMap<>();
+		hasSpaceAfter = new HashMap<>();
+		hasSpaceBefore = new HashMap<>();
 		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
 	}
 	
@@ -93,12 +102,26 @@ public class FixPunctuation implements Strategy {
 		
 		for (int indexChar = 0; indexChar < subtitle.getContent().length(); indexChar++) {
 			final Character currentChar = subtitle.getContent().charAt(indexChar);
-			if (punctuationRules.get(locale.getValue()).containsKey(currentChar.toString())) {
-				final String rule = punctuationRules.get(locale.getValue()).get(currentChar.toString());
-				final int indexPunctuation = rule.indexOf(indexChar);
-				
-			} else {
-				newContent.append(currentChar);
+			if (hasSpaceBefore.get(locale.getValue()).contains(currentChar)) {
+				// Check that there is a space before the punctuation mark.
+				if (indexChar - 1 > 0) {
+					final Character charBefore = subtitle.getContent().charAt(indexChar - 1);
+					if (!StringUtils.isNewLine(charBefore) && charBefore != SPACE) {
+						newContent.append(SPACE);
+					}
+				} else {
+					// Punctuation at the beginning of the subtitle, TODO
+				}
+			}
+			newContent.append(currentChar);
+			if (hasSpaceAfter.get(locale.getValue()).contains(currentChar)) {
+				// Check that there is a space after the punctuation mark
+				if (indexChar + 1 < subtitle.getContent().length()) {
+					final Character charAfter = subtitle.getContent().charAt(indexChar + 1);
+					if (!StringUtils.isNewLine(charAfter) && charAfter != SPACE) {
+						newContent.append(SPACE);
+					}
+				}
 			}
 		}
 		
@@ -121,7 +144,8 @@ public class FixPunctuation implements Strategy {
 			if (lg.isLoggable(Level.INFO)) {
 				lg.info("Loaded " + rules.size() + " punctuation rules for locale " + key);
 			}
-			punctuationRules.put(key, CollectionUtils.convertPropertiesToMap(rules));
+			hasSpaceAfter.put(key, StringUtils.toCharList(rules.getProperty(SPACE_AFTER)));
+			hasSpaceBefore.put(key, StringUtils.toCharList(rules.getProperty(SPACE_BEFORE)));
 			return FileVisitResult.CONTINUE;
 		}
 
