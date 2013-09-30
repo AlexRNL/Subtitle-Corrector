@@ -87,13 +87,11 @@ public class FixPunctuation implements Strategy {
 	@Override
 	public void startSession () {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
 	public void stopSession () {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	@Override
@@ -102,22 +100,24 @@ public class FixPunctuation implements Strategy {
 		
 		for (int indexChar = 0; indexChar < subtitle.getContent().length(); indexChar++) {
 			final Character currentChar = subtitle.getContent().charAt(indexChar);
-			if (hasSpaceBefore.get(locale.getValue()).contains(currentChar)) {
-				// Check that there is a space before the punctuation mark.
-				if (indexChar - 1 > 0) {
-					final Character charBefore = subtitle.getContent().charAt(indexChar - 1);
+			if (indexChar - 1 > 0) {
+				final Character charBefore = subtitle.getContent().charAt(indexChar - 1);
+				if (hasSpaceBefore.get(locale.getValue()).contains(currentChar)) {
+					// Check that there is a space before the punctuation mark.
 					if (!StringUtils.isNewLine(charBefore) && !SPACE.equals(charBefore)) {
 						newContent.append(SPACE);
 					}
 				} else {
-					// Punctuation at the beginning of the subtitle, TODO
+					// Check that there is no space before the punctuation mark TODO add rule
 				}
+			} else {
+				// Punctuation at the beginning of the subtitle, TODO
 			}
 			newContent.append(currentChar);
-			if (hasSpaceAfter.get(locale.getValue()).contains(currentChar)) {
+			if (indexChar + 1 < subtitle.getContent().length()) {
 				// Check that there is a space after the punctuation mark
-				if (indexChar + 1 < subtitle.getContent().length()) {
-					final Character charAfter = subtitle.getContent().charAt(indexChar + 1);
+				final Character charAfter = subtitle.getContent().charAt(indexChar + 1);
+				if (hasSpaceAfter.get(locale.getValue()).contains(currentChar)) {
 					if (!StringUtils.isNewLine(charAfter) && !SPACE.equals(charAfter)) {
 						newContent.append(SPACE);
 					}
@@ -125,7 +125,7 @@ public class FixPunctuation implements Strategy {
 			}
 		}
 		
-		subtitle.setContent(newContent.toString());
+		subtitle.setContent(newContent.toString().trim());
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class FixPunctuation implements Strategy {
 			final Locale key = Locale.forLanguageTag(IOUtils.getFilename(file));
 			final Properties rules = new Properties();
 			final InputStream stream = Files.newInputStream(file);
-			rules.load(stream);
+			rules.loadFromXML(stream);
 			stream.close();
 			if (lg.isLoggable(Level.INFO)) {
 				lg.info("Loaded " + rules.size() + " punctuation rules for locale " + key);
