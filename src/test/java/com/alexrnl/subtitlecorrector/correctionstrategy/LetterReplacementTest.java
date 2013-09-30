@@ -122,6 +122,51 @@ public class LetterReplacementTest {
 	}
 	
 	/**
+	 * Test method for {@link LetterReplacement#startSession()}.
+	 * Check that the start session throw an exception if the previous session was not properly
+	 * closed.
+	 */
+	@Test(expected = IllegalStateException.class)
+	public void testBadSessionState () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		originalLetter.setValue('e');
+		replacementLetter.setValue('x');
+		onlyMissingFromDictionary.setValue(false);
+		promptBeforeCorrecting.setValue(true);
+		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				return new UserPromptAnswer((String) invocation.getArguments()[2], true);
+			}
+		});
+		letterReplacement.startSession();
+		letterReplacement.correct(subtitleToCorrect);
+		letterReplacement.startSession();
+	}
+	
+	/**
+	 * Test method for {@link LetterReplacement#startSession()}.
+	 * Check that a new session can be started after the previous one was stopped.
+	 */
+	public void testSessionState () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		originalLetter.setValue('e');
+		replacementLetter.setValue('x');
+		onlyMissingFromDictionary.setValue(false);
+		promptBeforeCorrecting.setValue(true);
+		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				return new UserPromptAnswer((String) invocation.getArguments()[2], true);
+			}
+		});
+		letterReplacement.startSession();
+		letterReplacement.correct(subtitleToCorrect);
+		letterReplacement.stopSession();
+		letterReplacement.startSession();
+	}
+	
+	/**
 	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * No relevant letter in subtitle test.
 	 */
