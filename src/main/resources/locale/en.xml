@@ -11,6 +11,10 @@
 	<entry key="subtitlecorrector.strategy.letterreplacement.newletter">New letter</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.onlymissingfromdictionary">Only on words which are not from the dictionary</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.promptbeforecorrecting">Prompt before correcting words</entry>
+	<!-- Translations for the fix punctuation strategy -->
+	<entry key="subtitlecorrector.strategy.fixpunctuation">Fix punctuation</entry>
+	<entry key="subtitlecorrector.strategy.fixpunctuation.description">This strategy fixes the spaces around the punctuation mark in the subtitles.</entry>
+	<entry key="subtitlecorrector.strategy.fixpunctuation.locale">The rules which should be used to fix the punctuation</entry>
 	
 	<!-- Translations for the main window -->
 	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>

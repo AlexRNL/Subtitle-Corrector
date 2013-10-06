@@ -6,11 +6,15 @@
 	<!-- Translations for the strategies -->
 	<!-- Translations for the letter replacement strategy -->
 	<entry key="subtitlecorrector.strategy.letterreplacement">Remplacement de lettre</entry>
-	<entry key="subtitlecorrector.strategy.letterreplacement.description">Cette méthode de correction remplace les occurences d'une lettre par une autre.</entry>
+	<entry key="subtitlecorrector.strategy.letterreplacement.description">Cette méthode de correction remplace les occurrences d'une lettre par une autre.</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.originalletter">Lettre d'origine</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.newletter">Nouvelle lettre</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.onlymissingfromdictionary">Uniquement les mots non présents dans le dictionnaire</entry>
 	<entry key="subtitlecorrector.strategy.letterreplacement.promptbeforecorrecting">Demander une confirmation avant de remplacer les mots</entry>
+	<!-- Translations for the fix punctuation strategy -->
+	<entry key="subtitlecorrector.strategy.fixpunctuation">Corrige la ponctuation</entry>
+	<entry key="subtitlecorrector.strategy.fixpunctuation.description">Cette correction permet d'ajuster les espaces autour des caractères de ponctuation dans les sous-titres.</entry>
+	<entry key="subtitlecorrector.strategy.fixpunctuation.locale">Le type de correction à appliquer sur les ponctuations</entry>
 	
 	<!-- Translations for the main window -->
 	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>
