@@ -15,6 +15,9 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,7 +55,7 @@ public class MainWindowView extends AbstractFrame {
 	/** The button to open the file explorer window to select the subtitle */
 	private JButton					subtitleButton;
 	/** The combo box for the strategy */
-	private JComboBox<Strategy>		strategyComboBox;
+	private JComboBox<String>		strategyComboBox;
 	/** The button to start the correction */
 	private JButton					startCorrectingButton;
 	
@@ -60,6 +63,8 @@ public class MainWindowView extends AbstractFrame {
 	private MainWindowController	controller;
 	/** The translator to use for the view */
 	private Translator				translator;
+	/** The map for the strategies */
+	private Map<String, Strategy>	strategies;
 	
 	/**
 	 * Constructor #1.<br />
@@ -67,15 +72,25 @@ public class MainWindowView extends AbstractFrame {
 	 *        the icon file to use for the main window.
 	 * @param controller
 	 *        the controller which handle this view.
+	 * @param translator
+	 *        the translator to use for the GUI.
+	 * @param strategies
+	 *        the strategies available.
 	 */
-	public MainWindowView (final Path iconFile, final MainWindowController controller, final Translator translator) {
-		super(translator.get(KEYS.mainWindow().title()), iconFile, controller, translator);
+	public MainWindowView (final Path iconFile, final MainWindowController controller,
+			final Translator translator, final List<Strategy> strategies) {
+		super(translator.get(KEYS.mainWindow().title()), iconFile, controller, translator, strategies);
 	}
 
 	@Override
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
-		this.translator = (Translator) parameters[1];
+		translator = (Translator) parameters[1];
+		strategies = new HashMap<>();
+		for (final Strategy strategy : (List<Strategy>) parameters[2]) {
+			strategies.put(translator.get(strategy.toString()), strategy);
+		}
+		
 	}
 	
 	@Override
@@ -115,7 +130,7 @@ public class MainWindowView extends AbstractFrame {
 		c.gridx = --xIndex;
 		c.gridy = ++yIndex;
 		c.gridwidth = 2;
-		strategyComboBox = new JComboBox<>();//strategyManager.getStrategies()
+		strategyComboBox = new JComboBox<>(strategies.keySet().toArray(new String[0]));
 		add(strategyComboBox, c);
 		
 		c.gridx = 0;
@@ -164,7 +179,7 @@ public class MainWindowView extends AbstractFrame {
 		strategyComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged (final ItemEvent e) {
-				controller.changeStrategy((Strategy) e.getItem());
+				controller.changeStrategy(strategies.get(e.getItem()));
 			}
 		});
 		startCorrectingButton.addActionListener(new ActionListener() {
@@ -200,7 +215,7 @@ public class MainWindowView extends AbstractFrame {
 				break;
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();
-				strategyComboBox.setSelectedItem(strategy);
+				strategyComboBox.setSelectedItem(translator.get(strategy.toString()));
 				break;
 			default:
 				lg.info("Model property not handle by main window: " + evt);

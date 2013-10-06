@@ -1,11 +1,17 @@
 package com.alexrnl.subtitlecorrector;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.translation.Translator;
+import com.alexrnl.subtitlecorrector.correctionstrategy.FixPunctuation;
+import com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
@@ -24,7 +30,7 @@ public final class App {
 	/**
 	 * Constructor #1.<br />
 	 * @throws URISyntaxException
-	 *         if the translation file cannot be loaded.
+	 *         if the path of the translation file cannot be build.
 	 */
 	private App () throws URISyntaxException {
 		super();
@@ -33,13 +39,20 @@ public final class App {
 	
 	/**
 	 * Launch the application.
+	 * @throws URISyntaxException
+	 *         if the path of the file cannot be build.
+	 * @throws IOException
+	 *         if a file cannot be loaded.
 	 */
-	private void launch () {
+	private void launch () throws IOException, URISyntaxException {
 		lg.info("Subtitle Corrector starting...");
 		
 		final MainWindowController controller = new MainWindowController();
 		final MainWindowModel model = new MainWindowModel();
-		final MainWindowView view = new MainWindowView(null, controller, translator);
+		final List<Strategy> strategies = new ArrayList<>();
+		strategies.add(new LetterReplacement(null, null));
+		strategies.add(new FixPunctuation(Paths.get(App.class.getResource("/punctuation").toURI())));
+		final MainWindowView view = new MainWindowView(null, controller, translator, strategies);
 		controller.addModel(model);
 		controller.addView(view);
 		
@@ -56,8 +69,8 @@ public final class App {
 	public static void main (final String[] args) {
 		try {
 			new App().launch();
-		} catch (final URISyntaxException e) {
-			lg.warning("Could not load translation file: " + ExceptionUtils.display(e));
+		} catch (final IOException | URISyntaxException e) {
+			lg.warning("Could not file: " + ExceptionUtils.display(e));
 		}
 	}
 }
