@@ -3,12 +3,13 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
 import java.util.List;
 
 import com.alexrnl.subtitlecorrector.common.Subtitle;
+import com.alexrnl.subtitlecorrector.service.SessionStateListener;
 
 /**
  * Interface for a given strategy to correct the subtitles.
  * @author Alex
  */
-public interface Strategy {
+public interface Strategy extends SessionStateListener {
 	
 	/**
 	 * Return the list of {@link Parameter parameters} needed by this strategy.
@@ -23,16 +24,6 @@ public interface Strategy {
 	 * @return the relevant parameter.
 	 */
 	Parameter<?> getParameterByName (String name);
-	
-	/**
-	 * Called when starting the correcting session.
-	 */
-	void startSession ();
-	
-	/**
-	 * Called when stopping the correcting session.
-	 */
-	void stopSession ();
 	
 	/**
 	 * Called when parsing a subtitle file, on each subtitle.

@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -28,7 +27,7 @@ import com.alexrnl.subtitlecorrector.io.Dictionary;
  * Class in charge of managing the dictionary used while correcting the subtitles.
  * @author Alex
  */
-public class DictionaryManager {
+public class DictionaryManager implements SessionStateListener {
 	/** Logger */
 	private static Logger					lg						= Logger.getLogger(DictionaryManager.class.getName());
 	
@@ -139,30 +138,22 @@ public class DictionaryManager {
 		return Collections.unmodifiableMap(customDictionaries);
 	}
 	
-	/**
-	 * Start the session with the following dictionaries.
-	 * @param localeDictionary
-	 *        the locale dictionary to use (<code>null</code> disable any locale dictionary).
-	 * @param customDictionariesKeys
-	 *        the custom dictionaries to use.
-	 */
-	public void startSession (final Locale localeDictionary, final String... customDictionariesKeys) {
+	@Override
+	public void startSession (final SessionParameters parameters) {
 		activeDictionaries.add(sessionDictionary);
 		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Activating locale dictionary " + localeDictionary + " and customs "
-					+ Arrays.toString(customDictionariesKeys) + " for next session");
+			lg.info("Activating locale dictionary " + parameters.getLocale() + " and customs "
+					+ parameters.getCustomDictionaries() + " for next session");
 		}
-		if (localeDictionary != null) {
-			activeDictionaries.add(localeDictionaries.get(localeDictionary));
+		if (parameters.getLocale() != null) {
+			activeDictionaries.add(localeDictionaries.get(parameters.getLocale()));
 		}
-		for (final String customDictionary : customDictionariesKeys) {
+		for (final String customDictionary : parameters.getCustomDictionaries()) {
 			activeDictionaries.add(customDictionaries.get(customDictionary));
 		}
 	}
 	
-	/**
-	 * Notify that the correcting session has ended, thus all dictionaries are disabled.
-	 */
+	@Override
 	public void stopSession () {
 		for (final Entry<String, Dictionary> dictionary : customDictionaries.entrySet()) {
 			if (activeDictionaries.contains(dictionary.getValue()) && dictionary.getValue().isUpdated()) {

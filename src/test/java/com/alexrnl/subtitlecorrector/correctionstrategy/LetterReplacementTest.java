@@ -139,9 +139,9 @@ public class LetterReplacementTest {
 				return new UserPromptAnswer((String) invocation.getArguments()[2], true);
 			}
 		});
-		letterReplacement.startSession();
+		letterReplacement.startSession(null);
 		letterReplacement.correct(subtitleToCorrect);
-		letterReplacement.startSession();
+		letterReplacement.startSession(null);
 	}
 	
 	/**
@@ -160,10 +160,10 @@ public class LetterReplacementTest {
 				return new UserPromptAnswer((String) invocation.getArguments()[2], true);
 			}
 		});
-		letterReplacement.startSession();
+		letterReplacement.startSession(null);
 		letterReplacement.correct(subtitleToCorrect);
 		letterReplacement.stopSession();
-		letterReplacement.startSession();
+		letterReplacement.startSession(null);
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class LetterReplacementTest {
 		});
 		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).thenReturn(new UserPromptAnswer("LDR", true));
 		
-		letterReplacement.startSession();
+		letterReplacement.startSession(null);
 		letterReplacement.correct(subtitleToCorrect);
 		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).then(new Answer<UserPromptAnswer>() {
 			@Override

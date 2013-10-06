@@ -98,8 +98,10 @@ public class DictionaryManagerTest {
 	 */
 	@Test
 	public void testSession () throws IOException {
+		final SessionParameters sessionParameters = new SessionParameters();
 		// Test with no dictionaries
-		manager.startSession(null);
+		sessionParameters.setLocale(null);
+		manager.startSession(sessionParameters);
 		assertFalse(manager.contains("helloworld"));
 		assertFalse(manager.contains("abaldr"));
 		assertFalse(manager.contains("ldr"));
@@ -109,20 +111,25 @@ public class DictionaryManagerTest {
 		manager.stopSession();
 		
 		// Test with only French locale
-		manager.startSession(Locale.FRENCH);
+		sessionParameters.setLocale(Locale.FRENCH);
+		manager.startSession(sessionParameters);
 		assertFalse(manager.contains("helloworld"));
 		assertFalse(manager.contains("abaldr"));
 		assertTrue(manager.contains("mot"));
 		manager.stopSession();
 		
 		// Test with one custom dictionary
-		manager.startSession(null, IOUtils.getFilename(pathToCustom1));
+		sessionParameters.setLocale(null);
+		sessionParameters.addCustomDictionay(IOUtils.getFilename(pathToCustom1));
+		manager.startSession(sessionParameters);
 		assertFalse(manager.contains("mot"));
 		assertTrue(manager.contains("helloworld"));
 		manager.stopSession();
 		
 		// Test with one custom (updated) and the French locale
-		manager.startSession(Locale.FRENCH, IOUtils.getFilename(pathToCustom2));
+		sessionParameters.setLocale(Locale.FRENCH);
+		sessionParameters.addCustomDictionay(IOUtils.getFilename(pathToCustom2));
+		manager.startSession(sessionParameters);
 		assertTrue(manager.contains("mot"));
 		assertTrue(manager.contains("abaldr"));
 		assertFalse(manager.contains("aba"));

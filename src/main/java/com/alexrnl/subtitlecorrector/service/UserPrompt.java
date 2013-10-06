@@ -7,7 +7,7 @@ import com.alexrnl.commons.utils.Word;
  * This class will be used by the correction strategies to confirm string replacement.
  * @author Alex
  */
-public interface UserPrompt {
+public interface UserPrompt extends SessionStateListener {
 	
 	/**
 	 * Prompt the user to confirm a replacement of a {@link Word}.<br />

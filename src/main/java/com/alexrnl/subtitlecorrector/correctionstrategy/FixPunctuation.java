@@ -26,6 +26,7 @@ import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
+import com.alexrnl.subtitlecorrector.service.SessionParameters;
 
 /**
  * Correction strategy which fix the punctuation in the subtitles.
@@ -85,7 +86,7 @@ public class FixPunctuation implements Strategy {
 	}
 	
 	@Override
-	public void startSession () {
+	public void startSession (final SessionParameters parameters) {
 		// TODO Auto-generated method stub
 	}
 	

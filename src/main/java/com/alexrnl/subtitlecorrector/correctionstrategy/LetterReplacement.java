@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
@@ -80,7 +81,7 @@ public class LetterReplacement implements Strategy {
 	}
 	
 	@Override
-	public void startSession () {
+	public void startSession (final SessionParameters parameters) {
 		if (!savedChoices.isEmpty()) {
 			throw new IllegalStateException("Cannot start session with non-empty saved choices.");
 		}
