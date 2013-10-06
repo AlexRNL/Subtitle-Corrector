@@ -44,6 +44,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 		if (input == null) {
 			throw new IllegalStateException("Session was not properly started, input was null");
 		}
+		input.close();
 		input = null;
 		
 	}
