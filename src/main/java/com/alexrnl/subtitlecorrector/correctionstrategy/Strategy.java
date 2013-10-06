@@ -26,10 +26,22 @@ public interface Strategy extends SessionStateListener {
 	Parameter<?> getParameterByName (String name);
 	
 	/**
+	 * Return the name of the strategy.
+	 * @return the name of the strategy.
+	 */
+	@Override
+	String toString ();
+	
+	/**
+	 * Return the description of the strategy.
+	 * @return the description of the strategy.
+	 */
+	String getDescription ();
+	
+	/**
 	 * Called when parsing a subtitle file, on each subtitle.
 	 * @param subtitle
 	 *        the subtitle being processed.
 	 */
 	void correct (Subtitle subtitle);
-	
 }

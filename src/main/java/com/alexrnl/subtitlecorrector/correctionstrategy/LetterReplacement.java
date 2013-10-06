@@ -79,6 +79,16 @@ public class LetterReplacement implements Strategy {
 		lg.info("No parameter with name " + name + " found");
 		return null;
 	}
+
+	@Override
+	public String toString () {
+		return KEYS.strategy().letterReplacement().toString();
+	}
+	
+	@Override
+	public String getDescription () {
+		return KEYS.strategy().letterReplacement().description();
+	}
 	
 	@Override
 	public void startSession (final SessionParameters parameters) {

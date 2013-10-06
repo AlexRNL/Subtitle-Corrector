@@ -26,13 +26,12 @@ import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
-import com.alexrnl.subtitlecorrector.service.SessionParameters;
 
 /**
  * Correction strategy which fix the punctuation in the subtitles.
  * @author Alex
  */
-public class FixPunctuation implements Strategy {
+public class FixPunctuation extends AbstractStrategy {
 	/** Logger */
 	private static Logger						lg				= Logger.getLogger(FixPunctuation.class.getName());
 	
@@ -84,17 +83,17 @@ public class FixPunctuation implements Strategy {
 		}
 		return null;
 	}
-	
+
 	@Override
-	public void startSession (final SessionParameters parameters) {
-		// TODO Auto-generated method stub
+	public String toString () {
+		return KEYS.strategy().fixPunctuation().toString();
 	}
 	
 	@Override
-	public void stopSession () {
-		// TODO Auto-generated method stub
+	public String getDescription () {
+		return KEYS.strategy().fixPunctuation().description();
 	}
-	
+
 	@Override
 	public void correct (final Subtitle subtitle) {
 		final StringBuilder newContent = new StringBuilder();
