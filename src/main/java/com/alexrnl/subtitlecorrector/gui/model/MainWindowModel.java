@@ -1,7 +1,6 @@
 package com.alexrnl.subtitlecorrector.gui.model;
 
 import java.nio.file.Path;
-import java.util.logging.Logger;
 
 import com.alexrnl.commons.mvc.AbstractModel;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
@@ -12,8 +11,6 @@ import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
  * @author Alex
  */
 public class MainWindowModel extends AbstractModel {
-	/** Logger */
-	private static Logger	lg	= Logger.getLogger(MainWindowModel.class.getName());
 	
 	/** The path of the subtitle */
 	private Path			subtitle;
