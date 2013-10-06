@@ -27,12 +27,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import com.alexrnl.commons.gui.swing.AbstractFrame;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 
 /**
- * TODO
+ * The view of the main window.
  * @author Alex
  */
 public class MainWindowView extends AbstractFrame {
@@ -52,6 +53,8 @@ public class MainWindowView extends AbstractFrame {
 	private JButton					subtitleButton;
 	/** The combo box for the strategy */
 	private JComboBox<Strategy>		strategyComboBox;
+	/** The button to start the correction */
+	private JButton					startCorrectingButton;
 	
 	/** The controller in charge of the view */
 	private MainWindowController	controller;
@@ -114,6 +117,12 @@ public class MainWindowView extends AbstractFrame {
 		c.gridwidth = 2;
 		strategyComboBox = new JComboBox<>();//strategyManager.getStrategies()
 		add(strategyComboBox, c);
+		
+		c.gridx = 0;
+		c.gridy = ++yIndex;
+		c.gridwidth = 3;
+		startCorrectingButton = new JButton(translator.get(KEYS.mainWindow().startCorrectingButton()));
+		add(startCorrectingButton, c);
 	}
 	
 	/**
@@ -158,6 +167,12 @@ public class MainWindowView extends AbstractFrame {
 				controller.changeStrategy((Strategy) e.getItem());
 			}
 		});
+		startCorrectingButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed (final ActionEvent e) {
+				controller.startCorrection();
+			}
+		});
 	}
 	
 	@Override
@@ -181,7 +196,7 @@ public class MainWindowView extends AbstractFrame {
 		
 		switch (evt.getPropertyName()) {
 			case MainWindowController.SUBTITLE_PROPERTY:
-				subtitleField.setText(((Path)evt.getNewValue()).toString());
+				subtitleField.setText(IOUtils.getFilename((Path) evt.getNewValue()));
 				break;
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();

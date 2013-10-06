@@ -10,6 +10,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
  * @author Alex
  */
 public class MainWindowController extends AbstractController {
+	
 	/** The name for the subtitle property */
 	public static final String SUBTITLE_PROPERTY = "Subtitle";
 	/** The name for the strategy property */
@@ -31,5 +32,12 @@ public class MainWindowController extends AbstractController {
 	 */
 	public void changeStrategy (final Strategy strategy) {
 		setModelProperty(STRATEGY_PROPERTY, strategy);
+	}
+	
+	/**
+	 * Start the correcting session.
+	 */
+	public void startCorrection () {
+		
 	}
 }

@@ -239,6 +239,14 @@ public final class TranslationKeys {
 		public String strategyLabel () {
 			return mainWindowKey + HIERARCHY_SEPARATOR + "strategyLabel";
 		}
+
+		/**
+		 * The translation for the start correcting button.
+		 * @return the start correcting button.
+		 */
+		public String startCorrectingButton () {
+			return mainWindowKey + HIERARCHY_SEPARATOR + "startCorrectingButton";
+		}
 		
 	}
 	

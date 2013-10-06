@@ -31,5 +31,6 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.mainwindow.subtitleLabel", KEYS.mainWindow().subtitleLabel());
 		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
 		assertEquals("subtitlecorrector.mainwindow.strategyLabel", KEYS.mainWindow().strategyLabel());
+		assertEquals("subtitlecorrector.mainwindow.startCorrectingButton", KEYS.mainWindow().startCorrectingButton());
 	}
 }
