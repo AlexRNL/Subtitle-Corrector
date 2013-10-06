@@ -21,7 +21,7 @@ public class MainWindowModel extends AbstractModel {
 	private Strategy		strategy;
 	
 	/**
-	 * Constructor #.<br />
+	 * Constructor #1.<br />
 	 */
 	public MainWindowModel () {
 		super();

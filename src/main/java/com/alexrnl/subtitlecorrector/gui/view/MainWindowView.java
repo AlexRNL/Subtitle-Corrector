@@ -56,7 +56,7 @@ public class MainWindowView extends AbstractFrame {
 	/** The controller in charge of the view */
 	private MainWindowController	controller;
 	/** The translator to use for the view */
-	private Translator		translator;
+	private Translator				translator;
 	
 	/**
 	 * Constructor #1.<br />
