@@ -56,6 +56,15 @@ public final class App {
 		controller.addModel(model);
 		controller.addView(view);
 		
+		synchronized (view) {
+			try {
+				while (!view.isReady()) {
+					view.wait();
+				}
+			} catch (final InterruptedException e) {
+				lg.warning("Main thread interrupted while waiting for GUI building: " + ExceptionUtils.display(e));
+			}
+		}
 		view.setVisible(true);
 		
 		lg.info("Subtitle Corrector running");
