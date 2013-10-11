@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
@@ -41,13 +42,15 @@ import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
  */
 public class MainWindowView extends AbstractFrame {
 	/** Logger */
-	private static Logger			lg					= Logger.getLogger(MainWindowView.class.getName());
+	private static Logger			lg						= Logger.getLogger(MainWindowView.class.getName());
 	
 	/** Serial version UID */
-	private static final long		serialVersionUID	= -6742939741527280064L;
+	private static final long		serialVersionUID		= -6742939741527280064L;
 	
 	/** The default insets to use in the window */
-	private static final Insets		DEFAULT_INSETS		= new Insets(5, 5, 5, 5);
+	private static final Insets		DEFAULT_INSETS			= new Insets(5, 5, 5, 5);
+	/** Minimum size for the text box */
+	private static final int		MINIMUM_TEXT_BOX_SIZE	= 18;
 	
 	// GUI elements
 	/** The field where the path of the subtitle will be displayed */
@@ -58,6 +61,8 @@ public class MainWindowView extends AbstractFrame {
 	private JComboBox<String>		strategyComboBox;
 	/** The button to start the correction */
 	private JButton					startCorrectingButton;
+	/** The panel with the parameters of the strategy */
+	private JPanel					strategyParameterPanel;
 	
 	/** The controller in charge of the view */
 	private MainWindowController	controller;
@@ -120,7 +125,7 @@ public class MainWindowView extends AbstractFrame {
 		yIndex = 0;
 		c.gridy = yIndex;
 		c.gridx = ++xIndex;
-		subtitleField = new JTextField();
+		subtitleField = new JTextField(MINIMUM_TEXT_BOX_SIZE);
 		add(subtitleField, c);
 		
 		c.gridx = ++xIndex;
@@ -132,6 +137,12 @@ public class MainWindowView extends AbstractFrame {
 		c.gridwidth = 2;
 		strategyComboBox = new JComboBox<>(strategies.keySet().toArray(new String[0]));
 		add(strategyComboBox, c);
+		
+		c.gridx = 0;
+		c.gridy = ++yIndex;
+		c.gridwidth = 3;
+		strategyParameterPanel = new JPanel();
+		add(strategyParameterPanel, c);
 		
 		c.gridx = 0;
 		c.gridy = ++yIndex;
@@ -192,6 +203,9 @@ public class MainWindowView extends AbstractFrame {
 	
 	@Override
 	public void dispose () {
+		if (lg.isLoggable(Level.INFO)) {
+			lg.info("Subtitle corrector exiting");
+		}
 		super.dispose();
 		controller.dispose();
 	}
@@ -216,6 +230,7 @@ public class MainWindowView extends AbstractFrame {
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();
 				strategyComboBox.setSelectedItem(translator.get(strategy.toString()));
+				// TODO change parameter panel
 				break;
 			default:
 				lg.info("Model property not handle by main window: " + evt);
