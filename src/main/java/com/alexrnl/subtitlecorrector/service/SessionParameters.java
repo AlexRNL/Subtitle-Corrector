@@ -1,5 +1,6 @@
 package com.alexrnl.subtitlecorrector.service;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -47,7 +48,7 @@ public class SessionParameters {
 	 * @return the attribute customDictionaries.
 	 */
 	public Set<String> getCustomDictionaries () {
-		return customDictionaries;
+		return Collections.unmodifiableSet(customDictionaries);
 	}
 	
 	/**
