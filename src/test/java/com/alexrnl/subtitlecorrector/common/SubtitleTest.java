@@ -1,9 +1,12 @@
 package com.alexrnl.subtitlecorrector.common;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
@@ -157,8 +160,8 @@ public class SubtitleTest {
 			beforeBegin.setBegin(beforeBegin.getBegin() - 1);
 			afterBegin.setBegin(afterBegin.getBegin() + 1);
 
-			assertTrue(beforeBegin.compareTo(subtitle) < 0);
-			assertTrue(afterBegin.compareTo(subtitle) > 0);
+			assertThat(beforeBegin.compareTo(subtitle), lessThan(0));
+			assertThat(afterBegin.compareTo(subtitle), greaterThan(0));
 			assertEquals(0, subtitle.compareTo(subtitle));
 			
 			final Subtitle beforeEnd = subtitle.clone();
@@ -166,12 +169,12 @@ public class SubtitleTest {
 			beforeEnd.setEnd(beforeEnd.getEnd() - 1);
 			afterEnd.setEnd(afterEnd.getEnd() + 1);
 
-			assertTrue(beforeEnd.compareTo(subtitle) < 0);
-			assertTrue(afterEnd.compareTo(subtitle) > 0);
+			assertThat(beforeEnd.compareTo(subtitle), lessThan(0));
+			assertThat(afterEnd.compareTo(subtitle), greaterThan(0));
 			assertEquals(0, subtitle.compareTo(subtitle));
 			
 			final Subtitle beforeContent = subtitle.clone();
-			final Subtitle afterContent= subtitle.clone();
+			final Subtitle afterContent = subtitle.clone();
 			beforeContent.setContent(beforeContent.getContent() != null ? beforeContent.getContent().substring(0, 1) : null);
 			afterContent.setContent(null);
 
@@ -179,8 +182,9 @@ public class SubtitleTest {
 				assertEquals(0, beforeContent.compareTo(subtitle));
 				assertEquals(0, afterContent.compareTo(subtitle));
 			} else {
-				assertTrue(beforeContent.compareTo(subtitle) < 0);
-				assertTrue(afterContent.compareTo(subtitle) > 0);
+				assertThat(beforeContent.compareTo(subtitle), lessThan(0));
+				assertThat(afterContent.compareTo(subtitle), greaterThan(0));
+				assertThat(subtitle.compareTo(afterContent), lessThan(0));
 			}
 			assertEquals(0, subtitle.compareTo(subtitle));
 			
