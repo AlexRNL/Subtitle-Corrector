@@ -43,9 +43,11 @@ public class DictionaryManagerTest {
 	@BeforeClass
 	public static void setUpBeforeClass () throws IOException {
 		pathToCustom = Files.createTempDirectory("customDictionaries");
-		pathToCustom.toFile().deleteOnExit();
 		pathToCustom1 = Files.createTempFile(pathToCustom, "custom1", DictionaryManager.DICTIONARY_EXTENSION);
 		pathToCustom2 = Files.createTempFile(pathToCustom, "custom2", DictionaryManager.DICTIONARY_EXTENSION);
+		pathToCustom.toFile().deleteOnExit();
+		pathToCustom1.toFile().deleteOnExit();
+		pathToCustom2.toFile().deleteOnExit();
 		final Dictionary customDictionary1 = new Dictionary(pathToCustom1, true);
 		final Dictionary customDictionary2 = new Dictionary(pathToCustom2, true);
 		customDictionary1.addWord("helloworld");
