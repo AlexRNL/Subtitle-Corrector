@@ -6,8 +6,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import com.alexrnl.commons.utils.CollectionUtils;
 
@@ -16,9 +14,6 @@ import com.alexrnl.commons.utils.CollectionUtils;
  * @author Alex
  */
 public class SubtitleFile extends TreeSet<Subtitle> {
-	/** Logger */
-	private static Logger		lg					= Logger.getLogger(SubtitleFile.class.getName());
-	
 	/** Serial Version UID */
 	private static final long	serialVersionUID	= -5783605599009372323L;
 	
@@ -33,10 +28,6 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 	public SubtitleFile (final Path file) {
 		super();
 		this.file = file == null ? null : file.toUri();
-		
-		if (lg.isLoggable(Level.FINE)) {
-			lg.fine(this.getClass().getSimpleName() + " created: " + toString());
-		}
 	}
 	
 	/**
