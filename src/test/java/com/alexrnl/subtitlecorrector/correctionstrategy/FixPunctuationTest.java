@@ -59,6 +59,22 @@ public class FixPunctuationTest {
 	}
 	
 	/**
+	 * Test method for {@link FixPunctuation#toString()}
+	 */
+	@Test
+	public void testToString () {
+		assertEquals("subtitlecorrector.strategy.fixpunctuation", fixPunctuation.toString());
+	}
+	
+	/**
+	 * Test method for {@link FixPunctuation#getDescription()}
+	 */
+	@Test
+	public void testGetDescription () {
+		assertEquals("subtitlecorrector.strategy.fixpunctuation.description", fixPunctuation.getDescription());
+	}
+	
+	/**
 	 * Test method for {@link FixPunctuation#correct(Subtitle)}.
 	 */
 	@Test

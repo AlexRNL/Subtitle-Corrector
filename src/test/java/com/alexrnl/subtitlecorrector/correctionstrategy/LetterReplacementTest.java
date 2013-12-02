@@ -22,6 +22,7 @@ import org.mockito.stubbing.Answer;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
@@ -94,6 +95,22 @@ public class LetterReplacementTest {
 	}
 	
 	/**
+	 * Test method for {@link FixPunctuation#toString()}
+	 */
+	@Test
+	public void testToString () {
+		assertEquals("subtitlecorrector.strategy.letterreplacement", letterReplacement.toString());
+	}
+	
+	/**
+	 * Test method for {@link FixPunctuation#getDescription()}
+	 */
+	@Test
+	public void testGetDescription () {
+		assertEquals("subtitlecorrector.strategy.letterreplacement.description", letterReplacement.getDescription());
+	}
+	
+	/**
 	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
 	 * Null original letter parameter.
 	 */
@@ -122,7 +139,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link LetterReplacement#startSession()}.
+	 * Test method for {@link LetterReplacement#startSession(SessionParameters)}.
 	 * Check that the start session throw an exception if the previous session was not properly
 	 * closed.
 	 */
@@ -145,7 +162,7 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link LetterReplacement#startSession()}.
+	 * Test method for {@link LetterReplacement#startSession(SessionParameters)}.
 	 * Check that a new session can be started after the previous one was stopped.
 	 */
 	public void testSessionState () {
