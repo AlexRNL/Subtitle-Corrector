@@ -91,7 +91,7 @@ public class DictionaryManagerTest {
 	}
 	
 	/**
-	 * Test method for {@link DictionaryManager#startSession(Locale, String[])},
+	 * Test method for {@link DictionaryManager#startSession(SessionParameters)},
 	 * {@link DictionaryManager#stopSession()}, and {@link DictionaryManager#contains(String)}.
 	 * @throws IOException
 	 *         if an IO operation fails.
@@ -134,6 +134,7 @@ public class DictionaryManagerTest {
 		assertTrue(manager.contains("abaldr"));
 		assertFalse(manager.contains("aba"));
 		assertTrue(manager.addWord(IOUtils.getFilename(pathToCustom2), "aba"));
+		assertFalse(manager.addWord("MAn", "aba"));
 		assertTrue(manager.contains("aba"));
 		manager.stopSession();
 		
