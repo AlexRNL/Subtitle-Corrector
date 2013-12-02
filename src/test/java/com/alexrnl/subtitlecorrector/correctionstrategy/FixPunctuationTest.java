@@ -7,6 +7,8 @@ import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.Locale;
@@ -38,6 +40,19 @@ public class FixPunctuationTest {
 		fixPunctuation = new FixPunctuation(Paths.get(FixPunctuation.class.getResource("/punctuation").toURI()));
 		locale = (Parameter<Locale>) fixPunctuation.getParameterByName(KEYS.strategy().fixPunctuation().locale());
 		assertNotNull(locale);
+	}
+	
+	/**
+	 * Check that the strategy cannot be created with a file as a parameter.
+	 * @throws IOException
+	 *         if there is an issue when loading the rules.
+	 */
+	@SuppressWarnings("unused")
+	@Test(expected = IllegalArgumentException.class)
+	public void createWithFile () throws IOException {
+		final Path tempFile = Files.createTempFile("punctuationRule", "txt");
+		tempFile.toFile().deleteOnExit();
+		new FixPunctuation(tempFile);
 	}
 	
 	/**
