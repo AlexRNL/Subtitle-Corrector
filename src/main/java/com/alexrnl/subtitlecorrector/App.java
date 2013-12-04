@@ -15,6 +15,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
+import com.alexrnl.subtitlecorrector.service.DictionaryManager;
 
 /**
  * Launcher class for the application.<br />
@@ -47,11 +48,16 @@ public final class App {
 	private void launch () throws IOException, URISyntaxException {
 		lg.info("Subtitle Corrector starting...");
 		
+		// Load services TODO load custom dictionaries from configuration
+		final DictionaryManager dictionariesManager = new DictionaryManager(Paths.get(App.class.getResource("/dictionary").toURI()),
+				Paths.get(App.class.getResource("/locale").toURI()));
+		final List<Strategy> strategies = new ArrayList<>();
+		strategies.add(new LetterReplacement(dictionariesManager, null));
+		strategies.add(new FixPunctuation(Paths.get(App.class.getResource("/punctuation").toURI())));
+		
+		// Load MVC
 		final MainWindowController controller = new MainWindowController();
 		final MainWindowModel model = new MainWindowModel();
-		final List<Strategy> strategies = new ArrayList<>();
-		strategies.add(new LetterReplacement(null, null));
-		strategies.add(new FixPunctuation(Paths.get(App.class.getResource("/punctuation").toURI())));
 		final MainWindowView view = new MainWindowView(null, controller, translator, strategies);
 		controller.addModel(model);
 		controller.addView(view);
@@ -79,7 +85,7 @@ public final class App {
 		try {
 			new App().launch();
 		} catch (final IOException | URISyntaxException e) {
-			lg.warning("Could not file: " + ExceptionUtils.display(e));
+			lg.warning("Could start subtitle corrector: " + ExceptionUtils.display(e));
 		}
 	}
 }
