@@ -12,7 +12,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -66,13 +65,6 @@ public class DictionaryManagerTest {
 	@Before
 	public void setUp () throws IOException, URISyntaxException {
 		manager = new DictionaryManager(Paths.get(DictionaryManager.class.getResource("/dictionary").toURI()), pathToCustom);
-	}
-	
-	/**
-	 * 
-	 */
-	@After
-	public void tearDown () {
 	}
 	
 	/**
