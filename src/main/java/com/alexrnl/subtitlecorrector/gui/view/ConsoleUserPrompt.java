@@ -1,11 +1,15 @@
 package com.alexrnl.subtitlecorrector.gui.view;
 
+import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
+
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
 import java.util.logging.Logger;
 
+import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys.UserPrompt.Console;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
@@ -17,7 +21,9 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 public class ConsoleUserPrompt implements UserPrompt {
 	/** Logger */
 	private static Logger		lg	= Logger.getLogger(ConsoleUserPrompt.class.getName());
-	
+
+	/** The translator to use */
+	private final Translator	translator;
 	/** The console input stream */
 	private final InputStream	input;
 	/** The scanner plugged on the console inputScanner */
@@ -27,13 +33,16 @@ public class ConsoleUserPrompt implements UserPrompt {
 	
 	/**
 	 * Constructor #1.<br />
+	 * @param translator
+	 *        the translator to use for the output.
 	 * @param input
 	 *        the input stream to use for reading the user's answers.
 	 * @param output
 	 *        the output to use for displaying information to the user.
 	 */
-	public ConsoleUserPrompt (final InputStream input, final PrintStream output) {
+	public ConsoleUserPrompt (final Translator translator, final InputStream input, final PrintStream output) {
 		super();
+		this.translator = translator;
 		this.input = input;
 		this.output = output;
 	}
@@ -41,9 +50,11 @@ public class ConsoleUserPrompt implements UserPrompt {
 	/**
 	 * Constructor #2.<br />
 	 * Build a {@link ConsoleUserPrompt} with the {@link System#in} and {@link System#out}.
+	 * @param translator
+	 *        the translator to use for the output.
 	 */
-	public ConsoleUserPrompt () {
-		this(System.in, System.out);
+	public ConsoleUserPrompt (final Translator translator) {
+		this(translator, System.in, System.out);
 	}
 	
 	@Override
@@ -74,26 +85,30 @@ public class ConsoleUserPrompt implements UserPrompt {
 		boolean cancelled = false;
 		boolean rememberChoice;
 		
-		// TODO translate
-		output.println("Replace '" + original + "' by '" + replacement + "'?");
+		final Console consoleKey = KEYS.userPrompt().console();
+		final String yes = translator.get(consoleKey.yes());
+		final String no = translator.get(consoleKey.no());
+		final String yesNoChoice = yes + "/" + no + " >";
+		
+		output.println(translator.get(consoleKey.replace(), original, replacement));
 		if (context != null) {
-			output.println("Context:\n\t");
+			output.println(translator.get(consoleKey.context()) + "\n\t");
 			output.println(context);
 		}
-		output.println("y/n >");
-		final boolean keep = 'y' == inputScanner.nextLine().charAt(0);
+		output.println(yesNoChoice);
+		final boolean keep = inputScanner.nextLine().startsWith(yes);
 		if (keep) {
 			answer = replacement;
 		} else {
-			output.println("Type the replacement:");
+			output.println(translator.get(consoleKey.changeReplacement()));
 			answer = inputScanner.nextLine();
 			if (answer.isEmpty()) {
 				cancelled = true;
 			}
 		}
-		output.println("Remember choice for the rest of the session?");
-		output.println("y/n >");
-		rememberChoice = 'y' == inputScanner.nextLine().charAt(0);
+		output.println(translator.get(consoleKey.rememberChoice()));
+		output.println(yesNoChoice);
+		rememberChoice = inputScanner.nextLine().startsWith(yes);
 		
 		return new UserPromptAnswer(answer, cancelled, rememberChoice);
 	}

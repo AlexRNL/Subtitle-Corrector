@@ -7,12 +7,15 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import com.alexrnl.commons.io.EditableInputStream;
+import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
@@ -22,6 +25,8 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  * @author Alex
  */
 public class ConsoleUserPromptTest {
+	/** The translator to use */
+	private Translator			translator;
 	/** The input used */
 	private EditableInputStream	input;
 	/** The mocked output */
@@ -32,16 +37,19 @@ public class ConsoleUserPromptTest {
 	
 	/**
 	 * Set up test attributes.
+	 * @throws URISyntaxException
+	 *         if there is a problem with the translation file path.
 	 */
 	@SuppressWarnings("unused")
 	@Before
-	public void setUp () {
+	public void setUp () throws URISyntaxException {
 		initMocks(this);
+		translator = new Translator(Paths.get(ConsoleUserPrompt.class.getResource("/locale/en.xml").toURI()));
 		input = new EditableInputStream("");
-		consolePrompt = new ConsoleUserPrompt(input, output);
+		consolePrompt = new ConsoleUserPrompt(translator, input, output);
 		
 		// Check that the default constructor is not throwing anything
-		new ConsoleUserPrompt();
+		new ConsoleUserPrompt(translator);
 	}
 	
 	/**
