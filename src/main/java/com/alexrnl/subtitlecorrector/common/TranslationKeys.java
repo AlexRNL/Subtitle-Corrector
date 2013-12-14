@@ -257,4 +257,123 @@ public final class TranslationKeys {
 	public MainWindow mainWindow () {
 		return new MainWindow(subtitleCorrectorKey);
 	}
+	
+	/**
+	 * The translation for the user prompt.
+	 * @author Alex
+	 */
+	public static final class UserPrompt {
+		/** The root key for the user prompt */
+		private static final String	USER_PROMPT_KEY	= "userprompt";
+		
+		/** The key for the user prompt translations */
+		private final String		userPromptKey;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param parentKey
+		 *        the key from the parent category.
+		 */
+		public UserPrompt (final String parentKey) {
+			super();
+			this.userPromptKey = parentKey + HIERARCHY_SEPARATOR + USER_PROMPT_KEY;
+		}
+		
+		@Override
+		public String toString () {
+			return userPromptKey;
+		}
+		
+		/**
+		 * The translation for the console user prompt.
+		 * @author Alex
+		 */
+		public static final class Console {
+			/** The root key for the console user prompt */
+			private static final String CONSOLE_KEY	= "console";
+			
+			/** The key for the console user prompt translations */
+			private final String		consoleKey;
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			public Console (final String parentKey) {
+				super();
+				consoleKey = parentKey + HIERARCHY_SEPARATOR + CONSOLE_KEY;
+			}
+			
+			@Override
+			public String toString () {
+				return consoleKey;
+			}
+			
+			/**
+			 * Return the abbreviation to use for "yes".
+			 * @return the translation for yes.
+			 */
+			public String yes () {
+				return consoleKey + HIERARCHY_SEPARATOR + "yes";
+			}
+			
+			/**
+			 * Return the abbreviation to use for "no".
+			 * @return the translation for no.
+			 */
+			public String no () {
+				return consoleKey + HIERARCHY_SEPARATOR + "no";
+			}
+
+			/**
+			 * Return the translation for the replace message.
+			 * @return the replace message.
+			 */
+			public String replace () {
+				return consoleKey + HIERARCHY_SEPARATOR + "replace";
+			}
+
+			/**
+			 * Return the translation for the context message.
+			 * @return the context message.
+			 */
+			public String context () {
+				return consoleKey + HIERARCHY_SEPARATOR + "context";
+			}
+
+			/**
+			 * Return the translation for the change replacement message.
+			 * @return the change replacement message.
+			 */
+			public String changeReplacement () {
+				return consoleKey + HIERARCHY_SEPARATOR + "changereplacement";
+			}
+
+			/**
+			 * Return the translation for the remember choice message.
+			 * @return the remember choice message.
+			 */
+			public String rememberChoice () {
+				return consoleKey + HIERARCHY_SEPARATOR + "rememberchoice";
+			}
+		}
+		
+		/**
+		 * The console user prompt translations.
+		 * @return the console translation.
+		 */
+		public Console console () {
+			return new Console(userPromptKey);
+		}
+		
+	}
+	
+	/**
+	 * The user prompt translations.
+	 * @return the user prompt translation.
+	 */
+	public UserPrompt userPrompt () {
+		return new UserPrompt(subtitleCorrectorKey);
+	}
 }

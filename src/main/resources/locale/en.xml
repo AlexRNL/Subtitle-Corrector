@@ -22,4 +22,12 @@
 	<entry key="subtitlecorrector.mainwindow.strategyLabel">Correction strategy</entry>
 	<entry key="subtitlecorrector.mainwindow.subtitleButton">Select subtitle...</entry>
 	<entry key="subtitlecorrector.mainwindow.startCorrectingButton">Start correction</entry>
+	
+	<!-- Translation for user prompt -->
+	<entry key="subtitlecorrector.userprompt.console.yes">y</entry>
+	<entry key="subtitlecorrector.userprompt.console.no">n</entry>
+	<entry key="subtitlecorrector.userprompt.console.replace">Replace '%0' by '%1'?</entry>
+	<entry key="subtitlecorrector.userprompt.console.context">Context:</entry>
+	<entry key="subtitlecorrector.userprompt.console.changereplacement">Type the replacement:</entry>
+	<entry key="subtitlecorrector.userprompt.console.rememberchoice">Remember choice for the rest of the session?</entry>
 </properties>

@@ -32,5 +32,14 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
 		assertEquals("subtitlecorrector.mainwindow.strategyLabel", KEYS.mainWindow().strategyLabel());
 		assertEquals("subtitlecorrector.mainwindow.startCorrectingButton", KEYS.mainWindow().startCorrectingButton());
+
+		assertEquals("subtitlecorrector.userprompt", KEYS.userPrompt().toString());
+		assertEquals("subtitlecorrector.userprompt.console", KEYS.userPrompt().console().toString());
+		assertEquals("subtitlecorrector.userprompt.console.yes", KEYS.userPrompt().console().yes());
+		assertEquals("subtitlecorrector.userprompt.console.no", KEYS.userPrompt().console().no());
+		assertEquals("subtitlecorrector.userprompt.console.replace", KEYS.userPrompt().console().replace());
+		assertEquals("subtitlecorrector.userprompt.console.context", KEYS.userPrompt().console().context());
+		assertEquals("subtitlecorrector.userprompt.console.changereplacement", KEYS.userPrompt().console().changeReplacement());
+		assertEquals("subtitlecorrector.userprompt.console.rememberchoice", KEYS.userPrompt().console().rememberChoice());
 	}
 }
