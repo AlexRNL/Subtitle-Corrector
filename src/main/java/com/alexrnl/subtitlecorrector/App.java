@@ -77,15 +77,20 @@ public final class App {
 	}
 	
 	/**
-	 * Entry point of the application.
+	 * Entry point of the application.<br />
+	 * If no arguments are provided, the GUI application will be launched.
 	 * @param args
 	 *        the arguments from the command line.
 	 */
 	public static void main (final String[] args) {
-		try {
-			new App().launch();
-		} catch (final IOException | URISyntaxException e) {
-			lg.warning("Could start subtitle corrector: " + ExceptionUtils.display(e));
+		if (args.length == 0) {
+			try {
+				new App().launch();
+			} catch (final IOException | URISyntaxException e) {
+				lg.warning("Could start subtitle corrector: " + ExceptionUtils.display(e));
+			}
+		} else {
+			new ConsoleApp(args).launch();
 		}
 	}
 }
