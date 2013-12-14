@@ -5,7 +5,6 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.logging.Logger;
 
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
@@ -19,9 +18,6 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  * @author Alex
  */
 public class ConsoleUserPrompt implements UserPrompt {
-	/** Logger */
-	private static Logger		lg	= Logger.getLogger(ConsoleUserPrompt.class.getName());
-
 	/** The translator to use */
 	private final Translator	translator;
 	/** The console input stream */
@@ -88,7 +84,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 		final Console consoleKey = KEYS.userPrompt().console();
 		final String yes = translator.get(consoleKey.yes());
 		final String no = translator.get(consoleKey.no());
-		final String yesNoChoice = yes + "/" + no + " >";
+		final String yesNoChoice = yes + "/" + no + " > ";
 		
 		output.println(translator.get(consoleKey.replace(), original, replacement));
 		if (context != null) {
