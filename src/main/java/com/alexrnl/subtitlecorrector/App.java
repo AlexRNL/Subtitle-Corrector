@@ -90,7 +90,11 @@ public final class App {
 				lg.warning("Could start subtitle corrector: " + ExceptionUtils.display(e));
 			}
 		} else {
-			new ConsoleApp(args).launch();
+			if (new ConsoleApp(args).launch()) {
+				System.out.println("Exit subtitle correction session with success!");
+			} else {
+				System.out.println("Exit subtitle correction session with failure...");
+			}
 		}
 	}
 }
