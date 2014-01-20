@@ -49,7 +49,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.alexrnl.App</mainClass>
+							<mainClass>com.alexrnl.subtitlecorrector.App</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
