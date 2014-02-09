@@ -39,7 +39,10 @@ public class SubtitleFormatManager {
 	 * @return <code>true</code> if a previous same format existed (and is thus override).
 	 */
 	public boolean registerFormat (final SubtitleFormat format) {
-		return formats.add(Objects.requireNonNull(format));
+		Objects.requireNonNull(format);
+		final boolean removed = formats.remove(format);
+		formats.add(format);
+		return removed;
 	}
 	
 	/**
