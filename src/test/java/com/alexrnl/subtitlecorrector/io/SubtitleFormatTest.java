@@ -34,8 +34,8 @@ public class SubtitleFormatTest {
 	@Before
 	public void setUp () {
 		initMocks(this);
-		subrip = new SubtitleFormat("subrip", Arrays.asList("srt"), reader, null);
-		ass = new SubtitleFormat("ass", null, writer, "ass", "ass2");
+		subrip = new SubtitleFormat("SubRip", Arrays.asList("srt"), reader, null);
+		ass = new SubtitleFormat("SubStation Alpha", null, writer, "ass", "ssa");
 	}
 	
 	/**
@@ -43,8 +43,8 @@ public class SubtitleFormatTest {
 	 */
 	@Test
 	public void testGetName () {
-		assertEquals("subrip", subrip.getName());
-		assertEquals("ass", ass.getName());
+		assertEquals("SubRip", subrip.getName());
+		assertEquals("SubStation Alpha", ass.getName());
 	}
 	
 	/**
@@ -53,7 +53,7 @@ public class SubtitleFormatTest {
 	@Test
 	public void testGetExtensions () {
 		assertEquals(new HashSet<>(Arrays.asList("srt")), subrip.getExtensions());
-		assertEquals(new HashSet<>(Arrays.asList("ass", "ass2")), ass.getExtensions());
+		assertEquals(new HashSet<>(Arrays.asList("ass", "ssa")), ass.getExtensions());
 	}
 	
 	/**
@@ -91,9 +91,9 @@ public class SubtitleFormatTest {
 	public void testEqualsObject () {
 		assertNotEquals(subrip, null);
 		assertNotEquals(subrip, ass);
-		assertEquals(subrip, new SubtitleFormat("subrip", null, null));
+		assertEquals(subrip, new SubtitleFormat("SubRip", null, null));
 		assertNotEquals(subrip, new SubtitleFormat("Subrip", null, null));
-		assertEquals(ass, new SubtitleFormat("ass", null, null));
+		assertEquals(ass, new SubtitleFormat("SubStation Alpha", null, null));
 		assertNotEquals(ass, new SubtitleFormat(".ass", null, null));
 	}
 	
@@ -102,7 +102,7 @@ public class SubtitleFormatTest {
 	 */
 	@Test
 	public void testToString () {
-		assertEquals("subrip [srt]", subrip.toString());
-		assertEquals("ass [ass, ass2]", ass.toString());
+		assertEquals("SubRip [srt]", subrip.toString());
+		assertEquals("SubStation Alpha [ass, ssa]", ass.toString());
 	}
 }
