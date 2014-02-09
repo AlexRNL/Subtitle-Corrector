@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.alexrnl.commons.utils.object.AutoCompare;
+import com.alexrnl.commons.utils.object.AutoHashCode;
+import com.alexrnl.commons.utils.object.Field;
+
 /**
  * Class defining a subtitle format.<br >/
  * @author Alex
@@ -60,6 +64,7 @@ public class SubtitleFormat {
 	 * Return the attribute name.
 	 * @return the attribute name.
 	 */
+	@Field
 	public String getName () {
 		return name;
 	}
@@ -86,6 +91,24 @@ public class SubtitleFormat {
 	 */
 	public SubtitleWriter getWriter () {
 		return writer;
+	}
+	
+	@Override
+	public int hashCode () {
+		return AutoHashCode.getInstance().hashCode(this);
+	}
+	
+	@Override
+	public boolean equals (final Object obj) {
+		if (!(obj instanceof SubtitleFormat)) {
+			return false;
+		}
+		return AutoCompare.getInstance().compare(this, (SubtitleFormat) obj);
+	}
+	
+	@Override
+	public String toString () {
+		return getName() + "[" + extensions + "]";
 	}
 	
 }
