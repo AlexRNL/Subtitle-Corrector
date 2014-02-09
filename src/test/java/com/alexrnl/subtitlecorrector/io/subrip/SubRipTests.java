@@ -9,7 +9,7 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ SubRipReaderTest.class, SubRipWriterTest.class })
+@SuiteClasses({ SubRipTest.class, SubRipReaderTest.class, SubRipWriterTest.class })
 public class SubRipTests {
 	
 }
