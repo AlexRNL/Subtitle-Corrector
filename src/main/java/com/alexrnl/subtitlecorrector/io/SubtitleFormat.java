@@ -108,7 +108,7 @@ public class SubtitleFormat {
 	
 	@Override
 	public String toString () {
-		return getName() + "[" + extensions + "]";
+		return getName() + " " + extensions;
 	}
 	
 }
