@@ -1,7 +1,9 @@
 package com.alexrnl.subtitlecorrector.io;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,7 +39,16 @@ public class SubtitleFormatManager {
 	 * @return <code>true</code> if a previous same format existed (and is thus override).
 	 */
 	public boolean registerFormat (final SubtitleFormat format) {
-		return formats.add(format);
+		return formats.add(Objects.requireNonNull(format));
+	}
+	
+	/**
+	 * Return the available {@link SubtitleFormat}.<br />
+	 * The set returned is not modifiable to avoid side effects.
+	 * @return the subtitle format available.
+	 */
+	public Set<SubtitleFormat> getAvailableFormats () {
+		return Collections.unmodifiableSet(formats);
 	}
 	
 	/**
