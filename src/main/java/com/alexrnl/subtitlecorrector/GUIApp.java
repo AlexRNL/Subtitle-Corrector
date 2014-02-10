@@ -10,7 +10,7 @@ import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
 
 /**
- * Launcher class for the application.<br />
+ * GUI application for correcting subtitles.<br />
  * @author Alex
  */
 public final class GUIApp extends AbstractApp {
@@ -20,10 +20,11 @@ public final class GUIApp extends AbstractApp {
 	/**
 	 * Constructor #1.<br />
 	 * @throws IOException
+	 *         if a resource cannot be loaded.
 	 * @throws URISyntaxException
 	 *         if the path of the translation file cannot be build.
 	 */
-	private GUIApp () throws IOException, URISyntaxException {
+	public GUIApp () throws IOException, URISyntaxException {
 		super();
 	}
 	
@@ -53,25 +54,4 @@ public final class GUIApp extends AbstractApp {
 		return true;
 	}
 	
-	/**
-	 * Entry point of the application.<br />
-	 * If no arguments are provided, the GUI application will be launched.
-	 * @param args
-	 *        the arguments from the command line.
-	 */
-	public static void main (final String[] args) {
-		if (args.length == 0) {
-			try {
-				new GUIApp().launch();
-			} catch (final IOException | URISyntaxException e) {
-				lg.warning("Could start subtitle corrector: " + ExceptionUtils.display(e));
-			}
-		} else {
-			if (new ConsoleApp(args).launch()) {
-				System.out.println("Exit subtitle correction session with success!");
-			} else {
-				System.out.println("Exit subtitle correction session with failure...");
-			}
-		}
-	}
 }
