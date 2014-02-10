@@ -95,9 +95,12 @@ public class SubtitleFormatManagerTest {
 		assertEquals(1, assResults.size());
 		assertEquals(ass, assResults.iterator().next());
 		
-		manager.registerFormat(new SubtitleFormat("SubRip2", null, null, "srt"));
+		final SubtitleFormat subrip2 = new SubtitleFormat("SubRip2", null, null, "srt");
+		manager.registerFormat(subrip2);
 		srtResults = manager.getFormatByExtension("srt");
 		assertEquals(2, srtResults.size());
+		assertTrue(srtResults.contains(subrip));
+		assertTrue(srtResults.contains(subrip2));
 	}
 	
 	/**
