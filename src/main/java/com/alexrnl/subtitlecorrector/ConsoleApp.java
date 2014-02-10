@@ -1,6 +1,8 @@
 package com.alexrnl.subtitlecorrector;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashSet;
@@ -17,7 +19,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
  * Console application for the subtitle corrector.<br />
  * @author Alex
  */
-public class ConsoleApp {
+public class ConsoleApp extends AbstractApp {
 	/** Logger */
 	private static Logger				lg				= Logger.getLogger(ConsoleApp.class.getName());
 	
@@ -37,8 +39,12 @@ public class ConsoleApp {
 	 * Constructor #1.<br />
 	 * @param args
 	 *        the arguments from the command line.
+	 * @throws IOException
+	 *         if a resource cannot be loaded.
+	 * @throws URISyntaxException
+	 *         if there is an error while building a Path.
 	 */
-	public ConsoleApp (final String[] args) {
+	public ConsoleApp (final String[] args) throws IOException, URISyntaxException {
 		super();
 		out = System.out;
 		final Arguments arguments = new Arguments(PROGRAM_NAME, this, out);
@@ -46,11 +52,7 @@ public class ConsoleApp {
 		arguments.parse(args);
 	}
 	
-	/**
-	 * Launch the subtitle correction.
-	 * @return <code>true</code> if the console application has been processing subtitles
-	 *         successfully.
-	 */
+	@Override
 	public boolean launch () {
 		final boolean exists = Files.exists(workingFiles);
 		final boolean reads = Files.isReadable(workingFiles);
