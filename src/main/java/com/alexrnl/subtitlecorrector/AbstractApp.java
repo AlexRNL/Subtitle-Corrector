@@ -47,12 +47,12 @@ public abstract class AbstractApp {
 		super();
 		translator = new Translator(Paths.get(AbstractApp.class.getResource("/locale/en.xml").toURI()));
 		// Load services TODO load custom dictionaries from configuration
-		dictionariesManager = new DictionaryManager(Paths.get(App.class.getResource("/locale").toURI()),
-				Paths.get(App.class.getResource("/dictionary").toURI()));
+		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
+				Paths.get(AbstractApp.class.getResource("/dictionary").toURI()));
 		
 		strategies = new ArrayList<>();
 		strategies.add(new LetterReplacement(dictionariesManager, null));
-		strategies.add(new FixPunctuation(Paths.get(App.class.getResource("/punctuation").toURI())));
+		strategies.add(new FixPunctuation(Paths.get(AbstractApp.class.getResource("/punctuation").toURI())));
 		
 		subtitleFormatManager = new SubtitleFormatManager();
 		subtitleFormatManager.registerFormat(new SubRip());
