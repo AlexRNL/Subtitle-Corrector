@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
-import com.alexrnl.commons.utils.object.AutoCompare;
+import com.alexrnl.commons.utils.object.AutoEquals;
 import com.alexrnl.commons.utils.object.AutoHashCode;
 import com.alexrnl.commons.utils.object.Field;
 
@@ -103,7 +103,7 @@ public class SubtitleFormat {
 		if (!(obj instanceof SubtitleFormat)) {
 			return false;
 		}
-		return AutoCompare.getInstance().compare(this, (SubtitleFormat) obj);
+		return AutoEquals.getInstance().compare(this, (SubtitleFormat) obj);
 	}
 	
 	@Override
