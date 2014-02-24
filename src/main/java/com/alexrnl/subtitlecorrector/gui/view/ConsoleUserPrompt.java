@@ -19,7 +19,7 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  */
 public class ConsoleUserPrompt implements UserPrompt {
 	/** The translator to use */
-	private final Translator	translator;
+	private Translator	translator;
 	/** The console input stream */
 	private final InputStream	input;
 	/** The scanner plugged on the console inputScanner */
@@ -29,16 +29,13 @@ public class ConsoleUserPrompt implements UserPrompt {
 	
 	/**
 	 * Constructor #1.<br />
-	 * @param translator
-	 *        the translator to use for the output.
 	 * @param input
 	 *        the input stream to use for reading the user's answers.
 	 * @param output
 	 *        the output to use for displaying information to the user.
 	 */
-	public ConsoleUserPrompt (final Translator translator, final InputStream input, final PrintStream output) {
+	public ConsoleUserPrompt (final InputStream input, final PrintStream output) {
 		super();
-		this.translator = translator;
 		this.input = input;
 		this.output = output;
 	}
@@ -46,15 +43,21 @@ public class ConsoleUserPrompt implements UserPrompt {
 	/**
 	 * Constructor #2.<br />
 	 * Build a {@link ConsoleUserPrompt} with the {@link System#in} and {@link System#out}.
-	 * @param translator
-	 *        the translator to use for the output.
 	 */
-	public ConsoleUserPrompt (final Translator translator) {
-		this(translator, System.in, System.out);
+	public ConsoleUserPrompt () {
+		this(System.in, System.out);
 	}
 	
 	@Override
+	public void setTranslator (final Translator translator) {
+		this.translator = translator;
+	}
+
+	@Override
 	public void startSession (final SessionParameters parameters) {
+		if (translator == null) {
+			throw new IllegalStateException("Cannot start session without translator set");
+		}
 		if (inputScanner != null) {
 			throw new IllegalStateException("Session was not properly stop, inputScanner was not null");
 		}

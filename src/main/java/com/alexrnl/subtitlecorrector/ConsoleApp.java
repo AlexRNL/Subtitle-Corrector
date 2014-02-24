@@ -8,8 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +19,10 @@ import com.alexrnl.commons.arguments.Arguments;
 import com.alexrnl.commons.arguments.Param;
 import com.alexrnl.commons.arguments.parsers.ClassParser;
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
+import com.alexrnl.subtitlecorrector.gui.view.ConsoleUserPrompt;
+import com.alexrnl.subtitlecorrector.io.SubtitleFormat;
 
 /**
  * Console application for the subtitle corrector.<br />
@@ -49,7 +54,7 @@ public class ConsoleApp extends AbstractApp {
 	 *         if there is an error while building a Path.
 	 */
 	public ConsoleApp (final String[] args) throws IOException, URISyntaxException {
-		super();
+		super(new ConsoleUserPrompt());
 		out = System.out;
 		final Arguments arguments = new Arguments(PROGRAM_NAME, this, out);
 		arguments.addParameterParser(new ClassParser(Strategy.class.getPackage()));
@@ -67,7 +72,7 @@ public class ConsoleApp extends AbstractApp {
 			return false;
 		}
 		
-		final Set<Path> files = new HashSet<>();
+		final Set<Path> files = new TreeSet<>();
 		if (Files.isDirectory(workingFiles)) {
 			try {
 				Files.walkFileTree(workingFiles, new SubtitleVisitor(files));
@@ -76,13 +81,38 @@ public class ConsoleApp extends AbstractApp {
 				lg.warning("Could not retrieve subtitles to process: " + ExceptionUtils.display(e));
 				return false;
 			}
-		} else if (Files.isRegularFile(workingFiles)) {
+		} else if (Files.exists(workingFiles)) {
 			files.add(workingFiles);
 		} else {
 			out.println("Path " + workingFiles + " is neither file nor directory");
 			lg.severe(workingFiles + " is not a directory or a file");
 			return false;
 		}
+		
+		final Map<SubtitleFile, SubtitleFormat> subtitles = new HashMap<>(files.size(), 1.0f);
+		for (final Path file : files) {
+			final Set<SubtitleFormat> readers = getSubtitleFormatManager().getFormatByPath(file);
+			final SubtitleFormat format;
+			
+			if (readers.isEmpty()) {
+				continue;
+			}
+			if (readers.size() == 1) {
+				format = readers.iterator().next();
+			} else {
+				// TODO select file format
+				throw new UnsupportedOperationException("Several format sharing an extension is not supported");
+			}
+			
+			try {
+				subtitles.put(format.getReader().readFile(file), format);
+			} catch (final IOException e) {
+				out.println("Subtitle " + file + " could not be properly read, it will not be corrected.");
+				lg.warning("Exception while parsing file " + file + ": " + ExceptionUtils.display(e));
+			}
+		}
+		
+		
 		
 		return true;
 	}

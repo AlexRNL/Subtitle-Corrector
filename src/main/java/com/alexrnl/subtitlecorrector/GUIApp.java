@@ -25,7 +25,7 @@ public final class GUIApp extends AbstractApp {
 	 *         if the path of the translation file cannot be build.
 	 */
 	public GUIApp () throws IOException, URISyntaxException {
-		super();
+		super(null);
 	}
 	
 	@Override

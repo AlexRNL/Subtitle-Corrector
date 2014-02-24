@@ -13,6 +13,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormatManager;
 import com.alexrnl.subtitlecorrector.io.subrip.SubRip;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.UserPrompt;
 
 /**
  * Abstract subtitle correction application.<br />
@@ -38,20 +39,23 @@ public abstract class AbstractApp {
 	 * <li>Strategies</li>
 	 * <li>Subtitle format manager</li>
 	 * </ul>
+	 * @param userPrompt
+	 *        the user prompt to use for initializing strategies.
 	 * @throws IOException
 	 *         if a resource cannot be loaded.
 	 * @throws URISyntaxException
 	 *         if there is an error while building a Path.
 	 */
-	public AbstractApp () throws IOException, URISyntaxException {
+	public AbstractApp (final UserPrompt userPrompt) throws IOException, URISyntaxException {
 		super();
 		translator = new Translator(Paths.get(AbstractApp.class.getResource("/locale/en.xml").toURI()));
+		userPrompt.setTranslator(translator);
 		// Load services TODO load custom dictionaries from configuration
 		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
 				Paths.get(AbstractApp.class.getResource("/dictionary").toURI()));
 		
 		strategies = new ArrayList<>();
-		strategies.add(new LetterReplacement(dictionariesManager, null));
+		strategies.add(new LetterReplacement(dictionariesManager, userPrompt));
 		strategies.add(new FixPunctuation(Paths.get(AbstractApp.class.getResource("/punctuation").toURI())));
 		
 		subtitleFormatManager = new SubtitleFormatManager();

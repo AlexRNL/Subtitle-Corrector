@@ -1,5 +1,6 @@
 package com.alexrnl.subtitlecorrector.service;
 
+import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
 
 /**
@@ -8,6 +9,13 @@ import com.alexrnl.commons.utils.Word;
  * @author Alex
  */
 public interface UserPrompt extends SessionStateListener {
+	
+	/**
+	 * Set the translator to use by the prompt.
+	 * @param translator
+	 *        the translator to use.
+	 */
+	void setTranslator (Translator translator);
 	
 	/**
 	 * Prompt the user to confirm a replacement of a {@link Word}.<br />

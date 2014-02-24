@@ -46,10 +46,20 @@ public class ConsoleUserPromptTest {
 		initMocks(this);
 		translator = new Translator(Paths.get(ConsoleUserPrompt.class.getResource("/locale/en.xml").toURI()));
 		input = new EditableInputStream("");
-		consolePrompt = new ConsoleUserPrompt(translator, input, output);
+		consolePrompt = new ConsoleUserPrompt(input, output);
+		consolePrompt.setTranslator(translator);
 		
 		// Check that the default constructor is not throwing anything
-		new ConsoleUserPrompt(translator);
+		new ConsoleUserPrompt();
+	}
+	
+	/**
+	 * Test that a session state cannot be started twice in a row.
+	 */
+	@Test(expected = IllegalStateException.class)
+	public void testStartSessionWithoutTranslator () {
+		consolePrompt.setTranslator(null);
+		consolePrompt.startSession(null);
 	}
 	
 	/**
