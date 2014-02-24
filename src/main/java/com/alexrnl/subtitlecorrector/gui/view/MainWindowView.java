@@ -15,8 +15,6 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,7 +81,7 @@ public class MainWindowView extends AbstractFrame {
 	 *        the strategies available.
 	 */
 	public MainWindowView (final Path iconFile, final MainWindowController controller,
-			final Translator translator, final List<Strategy> strategies) {
+			final Translator translator, final Map<String, Strategy> strategies) {
 		super(translator.get(KEYS.mainWindow().title()), iconFile, controller, translator, strategies);
 	}
 
@@ -91,11 +89,7 @@ public class MainWindowView extends AbstractFrame {
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
 		translator = (Translator) parameters[1];
-		strategies = new HashMap<>();
-		for (final Strategy strategy : (List<Strategy>) parameters[2]) {
-			strategies.put(translator.get(strategy.toString()), strategy);
-		}
-		
+		strategies = (Map<String, Strategy>) parameters[2];
 	}
 	
 	@Override

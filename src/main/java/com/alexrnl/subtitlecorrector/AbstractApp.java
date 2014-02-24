@@ -3,8 +3,9 @@ package com.alexrnl.subtitlecorrector;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.subtitlecorrector.correctionstrategy.FixPunctuation;
@@ -26,7 +27,7 @@ public abstract class AbstractApp {
 	/** The dictionary manager */
 	private final DictionaryManager		dictionariesManager;
 	/** The available strategies */
-	private final List<Strategy>		strategies;
+	private final Map<String, Strategy>		strategies;
 	/** The subtitle format manager */
 	private final SubtitleFormatManager	subtitleFormatManager;
 	
@@ -54,9 +55,9 @@ public abstract class AbstractApp {
 		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
 				Paths.get(AbstractApp.class.getResource("/dictionary").toURI()));
 		
-		strategies = new ArrayList<>();
-		strategies.add(new LetterReplacement(dictionariesManager, userPrompt));
-		strategies.add(new FixPunctuation(Paths.get(AbstractApp.class.getResource("/punctuation").toURI())));
+		strategies = new HashMap<>();
+		addStrategy(new LetterReplacement(dictionariesManager, userPrompt));
+		addStrategy(new FixPunctuation(Paths.get(AbstractApp.class.getResource("/punctuation").toURI())));
 		
 		subtitleFormatManager = new SubtitleFormatManager();
 		subtitleFormatManager.registerFormat(new SubRip());
@@ -69,7 +70,7 @@ public abstract class AbstractApp {
 	protected Translator getTranslator () {
 		return translator;
 	}
-
+	
 	/**
 	 * Return the attribute dictionariesManager.
 	 * @return the attribute dictionariesManager.
@@ -77,15 +78,27 @@ public abstract class AbstractApp {
 	protected DictionaryManager getDictionariesManager () {
 		return dictionariesManager;
 	}
-
+	
 	/**
 	 * Return the attribute strategies.
 	 * @return the attribute strategies.
 	 */
-	protected List<Strategy> getStrategies () {
-		return strategies;
+	protected Map<String, Strategy> getStrategies () {
+		return Collections.unmodifiableMap(strategies);
 	}
-
+	
+	/**
+	 * Add a strategy to the map.
+	 * @param strategy
+	 *        the strategy to add.
+	 * @return <code>true</code> if there was a previous strategy registered with the same
+	 *         translation.
+	 */
+	protected boolean addStrategy (final Strategy strategy) {
+		final String name = getTranslator().get(strategy.toString());
+		return strategies.put(name, strategy) != null;
+	}
+	
 	/**
 	 * Return the attribute subtitleFormatManager.
 	 * @return the attribute subtitleFormatManager.
@@ -93,7 +106,7 @@ public abstract class AbstractApp {
 	protected SubtitleFormatManager getSubtitleFormatManager () {
 		return subtitleFormatManager;
 	}
-
+	
 	/**
 	 * Launch the application.<br />
 	 * @return <code>true</code> if the application has been launched successfully.

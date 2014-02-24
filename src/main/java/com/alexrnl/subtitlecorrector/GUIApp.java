@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
+import com.alexrnl.subtitlecorrector.gui.view.ConsoleUserPrompt;
 import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
 
 /**
@@ -25,7 +26,8 @@ public final class GUIApp extends AbstractApp {
 	 *         if the path of the translation file cannot be build.
 	 */
 	public GUIApp () throws IOException, URISyntaxException {
-		super(null);
+		// TODO Change this later
+		super(new ConsoleUserPrompt());
 	}
 	
 	@Override
