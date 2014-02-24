@@ -11,7 +11,7 @@ import com.alexrnl.commons.utils.object.AutoHashCode;
 import com.alexrnl.commons.utils.object.Field;
 
 /**
- * Class defining a subtitle format.<br >/
+ * Class defining a subtitle format.<br />
  * @author Alex
  */
 public class SubtitleFormat {
