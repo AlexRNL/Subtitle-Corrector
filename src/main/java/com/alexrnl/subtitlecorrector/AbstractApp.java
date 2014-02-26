@@ -27,7 +27,7 @@ public abstract class AbstractApp {
 	/** The dictionary manager */
 	private final DictionaryManager		dictionariesManager;
 	/** The available strategies */
-	private final Map<String, Strategy>		strategies;
+	private final Map<String, Strategy>	strategies;
 	/** The subtitle format manager */
 	private final SubtitleFormatManager	subtitleFormatManager;
 	
