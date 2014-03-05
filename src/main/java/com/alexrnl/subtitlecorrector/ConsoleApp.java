@@ -10,6 +10,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -17,12 +18,15 @@ import java.util.logging.Logger;
 
 import com.alexrnl.commons.arguments.Arguments;
 import com.alexrnl.commons.arguments.Param;
-import com.alexrnl.commons.arguments.parsers.ClassParser;
+import com.alexrnl.commons.arguments.parsers.AbstractParser;
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.view.ConsoleUserPrompt;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormat;
+import com.alexrnl.subtitlecorrector.service.SessionParameters;
 
 /**
  * Console application for the subtitle corrector.<br />
@@ -30,19 +34,20 @@ import com.alexrnl.subtitlecorrector.io.SubtitleFormat;
  */
 public class ConsoleApp extends AbstractApp {
 	/** Logger */
-	private static Logger				lg				= Logger.getLogger(ConsoleApp.class.getName());
+	private static Logger		lg				= Logger.getLogger(ConsoleApp.class.getName());
 	
 	/** The name of the program */
-	private static final String			PROGRAM_NAME	= "subtitleCorrector";
+	private static final String	PROGRAM_NAME	= "subtitleCorrector";
 	
 	/** The print stream to use for interacting with the user */
-	private final PrintStream			out;
+	private final PrintStream	out;
 	// Command line parameters
 	/** The subtitle files to correct */
 	@Param(names = { "-i" }, description = "the subtitles file to correct", required = true)
-	private Path						workingFiles;
+	private Path				workingFiles;
+	/** The strategy to use to correct the subtitles */
 	@Param(names = { "-s" }, description = "the strategy to use for correcting subtitles", required = true)
-	private Class<? extends Strategy>	strategy;
+	private Strategy			strategy;
 	
 	/**
 	 * Constructor #1.<br />
@@ -57,7 +62,19 @@ public class ConsoleApp extends AbstractApp {
 		super(new ConsoleUserPrompt());
 		out = System.out;
 		final Arguments arguments = new Arguments(PROGRAM_NAME, this, out);
-		arguments.addParameterParser(new ClassParser(Strategy.class.getPackage()));
+		arguments.addParameterParser(new AbstractParser<Strategy>(Strategy.class) {
+			@Override
+			protected Strategy getValue (final String parameter) throws IllegalArgumentException {
+				final Strategy strategyParameter = getStrategies().get(parameter);
+				
+				if (strategyParameter == null) {
+					throw new IllegalArgumentException("No strategy with name " + parameter
+							+ ", available strategies are: " + getStrategies().keySet());
+				}
+				return strategyParameter;
+			}
+			
+		});
 		arguments.parse(args);
 	}
 	
@@ -72,6 +89,7 @@ public class ConsoleApp extends AbstractApp {
 			return false;
 		}
 		
+		// Gather files
 		final Set<Path> files = new TreeSet<>();
 		if (Files.isDirectory(workingFiles)) {
 			try {
@@ -89,6 +107,7 @@ public class ConsoleApp extends AbstractApp {
 			return false;
 		}
 		
+		// Read files
 		final Map<SubtitleFile, SubtitleFormat> subtitles = new HashMap<>(files.size(), 1.0f);
 		for (final Path file : files) {
 			final Set<SubtitleFormat> readers = getSubtitleFormatManager().getFormatByPath(file);
@@ -112,13 +131,49 @@ public class ConsoleApp extends AbstractApp {
 			}
 		}
 		
+		// Prepare strategy TODO
+		for (final Parameter<?> parameter : strategy.getParameters()) {
+			switch (parameter.getType()) {
+				case BOOLEAN:
+					break;
+				case FREE:
+					break;
+				case LIST:
+					break;
+				default:
+					break;
+			}
+		}
 		
+		final SessionParameters parameters = new SessionParameters();
+		// TODO set parameters
+		
+		// Actually correct subtitles
+		getSessionManager().startSession(parameters);
+		for (final SubtitleFile subtitleFile : subtitles.keySet()) {
+			for (final Subtitle subtitle : subtitleFile) {
+				strategy.correct(subtitle);
+			}
+		}
+		getSessionManager().stopSession();
+		
+		// Save subtitles
+		for (final Entry<SubtitleFile, SubtitleFormat> entry : subtitles.entrySet()) {
+			try {
+				entry.getValue().getWriter().writeFile(entry.getKey(), entry.getKey().getFile());
+			} catch (final IOException e) {
+				out.println("Subtitle " + entry.getKey().getFile() + " could not be properly write, issues may occur.");
+				// TODO restore a copy of the original file
+				lg.warning("Exception while writing file " + entry.getKey().getFile() + ": " + ExceptionUtils.display(e));
+			}
+		}
 		
 		return true;
 	}
 	
 	/**
 	 * Visitor which add the subtitle file whose format is known.
+	 * TODO externalize for re-usability
 	 * @author Alex
 	 */
 	private class SubtitleVisitor extends SimpleFileVisitor<Path> {
