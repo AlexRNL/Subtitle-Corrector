@@ -14,6 +14,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormatManager;
 import com.alexrnl.subtitlecorrector.io.subrip.SubRip;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.SessionManager;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 
 /**
@@ -24,6 +25,8 @@ import com.alexrnl.subtitlecorrector.service.UserPrompt;
 public abstract class AbstractApp {
 	/** The translator to use in the application */
 	private final Translator			translator;
+	/** The session manager to use */
+	private final SessionManager		sessionManager;
 	/** The dictionary manager */
 	private final DictionaryManager		dictionariesManager;
 	/** The available strategies */
@@ -51,9 +54,13 @@ public abstract class AbstractApp {
 		super();
 		translator = new Translator(Paths.get(AbstractApp.class.getResource("/locale/en.xml").toURI()));
 		userPrompt.setTranslator(translator);
+		
+		sessionManager = new SessionManager();
+		
 		// Load services TODO load custom dictionaries from configuration
 		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
 				Paths.get(AbstractApp.class.getResource("/dictionary").toURI()));
+		sessionManager.addSessionListener(dictionariesManager);
 		
 		strategies = new HashMap<>();
 		addStrategy(new LetterReplacement(dictionariesManager, userPrompt));
@@ -72,6 +79,14 @@ public abstract class AbstractApp {
 	}
 	
 	/**
+	 * Return the attribute sessionManager.
+	 * @return the attribute sessionManager.
+	 */
+	protected SessionManager getSessionManager () {
+		return sessionManager;
+	}
+
+	/**
 	 * Return the attribute dictionariesManager.
 	 * @return the attribute dictionariesManager.
 	 */
@@ -88,7 +103,8 @@ public abstract class AbstractApp {
 	}
 	
 	/**
-	 * Add a strategy to the map.
+	 * Add a strategy to the map.<br />
+	 * Also add the new strategy to the session manager, and remove the previously installed one.
 	 * @param strategy
 	 *        the strategy to add.
 	 * @return <code>true</code> if there was a previous strategy registered with the same
@@ -96,7 +112,10 @@ public abstract class AbstractApp {
 	 */
 	protected boolean addStrategy (final Strategy strategy) {
 		final String name = getTranslator().get(strategy.toString());
-		return strategies.put(name, strategy) != null;
+		getSessionManager().addSessionListener(strategy);
+		final Strategy previousStrategy = strategies.put(name, strategy);
+		getSessionManager().removeSessionListener(previousStrategy);
+		return previousStrategy != null;
 	}
 	
 	/**
