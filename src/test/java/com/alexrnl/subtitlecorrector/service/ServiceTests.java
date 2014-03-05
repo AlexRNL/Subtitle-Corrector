@@ -10,7 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ DictionaryManagerTest.class, SessionStateAdapterTest.class,
-		SessionParametersTest.class, UserPromptAnswerTest.class })
+		SessionManagerTest.class, SessionParametersTest.class, UserPromptAnswerTest.class })
 public class ServiceTests {
 	
 }
