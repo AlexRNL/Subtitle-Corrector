@@ -20,7 +20,9 @@ public class SessionManager implements SessionStateListener {
 	private static Logger	lg	= Logger.getLogger(SessionManager.class.getName());
 	
 	/** Flag indicating that a session is started and in progress */
-	private Boolean								inSession;
+	private boolean								inSession;
+	/** Lock for the {@link #inSession} flag */
+	private final Object						inSessionLock;
 	/** The session state listener list */
 	private final List<SessionStateListener>	sessionListeners;
 	
@@ -31,6 +33,7 @@ public class SessionManager implements SessionStateListener {
 		super();
 		sessionListeners = new LinkedList<>();
 		inSession = false;
+		inSessionLock = new Object();
 	}
 	
 	/**
@@ -82,14 +85,14 @@ public class SessionManager implements SessionStateListener {
 	 * @return <code>true</code> if the manager is in session.
 	 */
 	public boolean isInSession () {
-		synchronized (inSession) {
+		synchronized (inSessionLock) {
 			return inSession;
 		}
 	}
 	
 	@Override
 	public void startSession (final SessionParameters parameters) {
-		synchronized (inSession) {
+		synchronized (inSessionLock) {
 			if (inSession) {
 				throw new IllegalStateException("Session is already started");
 			}
@@ -105,7 +108,7 @@ public class SessionManager implements SessionStateListener {
 	
 	@Override
 	public void stopSession () {
-		synchronized (inSession) {
+		synchronized (inSessionLock) {
 			if (!inSession) {
 				throw new IllegalStateException("Session is not started");
 			}
