@@ -53,6 +53,17 @@ public abstract class SubtitleWriter {
 	}
 
 	/**
+	 * Write the generated subtitle file to the path specified in the {@link SubtitleFile} class.<br />
+	 * @param file
+	 *        the subtitle file to write.
+	 * @throws IOException
+	 *         if there was an issue while writing the subtitle.
+	 */
+	public void writeFile (final SubtitleFile file) throws IOException {
+		writeFile(file, file.getFile());
+	}
+
+	/**
 	 * Write the generated subtitle file to a specified file.<br />
 	 * This method is synchronized to avoid write files simultaneously.
 	 * @param file
