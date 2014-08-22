@@ -21,6 +21,7 @@ import com.alexrnl.commons.arguments.Arguments;
 import com.alexrnl.commons.arguments.Param;
 import com.alexrnl.commons.arguments.parsers.AbstractParser;
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
@@ -35,10 +36,12 @@ import com.alexrnl.subtitlecorrector.service.SessionParameters;
  */
 public class ConsoleApp extends AbstractApp {
 	/** Logger */
-	private static Logger		lg				= Logger.getLogger(ConsoleApp.class.getName());
+	private static Logger		lg					= Logger.getLogger(ConsoleApp.class.getName());
 	
 	/** The name of the program */
-	private static final String	PROGRAM_NAME	= "subtitleCorrector";
+	private static final String	PROGRAM_NAME		= "subtitleCorrector";
+	/** The prefix to indicate that the file was corrected (in non-overwrite mode) */
+	private static final String	CORRECTED_EXTENSION	= "corrected";
 	
 	/** The print stream to use for interacting with the user */
 	private final PrintStream	out;
@@ -52,6 +55,10 @@ public class ConsoleApp extends AbstractApp {
 	/** The locale to use */
 	@Param(names = { "-l" }, description = "the language of the subtitle")
 	private Locale				locale;
+	/** Flag to indicate to overwrite original subtitles file */
+	@Param(names = { "-o" }, description = "overwrite subtitle file while correcting", required = false)
+	private boolean				overwrite;
+	
 	
 	/**
 	 * Constructor #1.<br />
@@ -158,7 +165,8 @@ public class ConsoleApp extends AbstractApp {
 		}
 		
 		final SessionParameters parameters = new SessionParameters();
-		// TODO set parameters
+		parameters.setLocale(locale);
+		// TODO set custom dictionaries
 		
 		// Actually correct subtitles
 		getSessionManager().startSession(parameters);
@@ -172,7 +180,13 @@ public class ConsoleApp extends AbstractApp {
 		// Save subtitles
 		for (final Entry<SubtitleFile, SubtitleFormat> entry : subtitles.entrySet()) {
 			try {
-				entry.getValue().getWriter().writeFile(entry.getKey(), entry.getKey().getFile());
+				Path target = entry.getKey().getFile();
+				if (!overwrite) {
+					target = target.getParent().resolve(IOUtils.getFilename(target)
+									+ IOUtils.FILE_EXTENSION_SEPARATOR + CORRECTED_EXTENSION
+									+ IOUtils.FILE_EXTENSION_SEPARATOR + IOUtils.getFileExtension(target));
+				}
+				entry.getValue().getWriter().writeFile(entry.getKey(), target);
 			} catch (final IOException e) {
 				out.println("Subtitle " + entry.getKey().getFile() + " could not be properly write, issues may occur.");
 				// TODO restore a copy of the original file
