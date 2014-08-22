@@ -9,9 +9,11 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -22,6 +24,7 @@ import com.alexrnl.commons.arguments.Param;
 import com.alexrnl.commons.arguments.parsers.AbstractParser;
 import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.io.IOUtils;
+import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
@@ -151,18 +154,37 @@ public class ConsoleApp extends AbstractApp {
 		}
 		
 		// Prepare strategy TODO
-		for (final Parameter<?> parameter : strategy.getParameters()) {
+		final Scanner input = new Scanner(System.in);
+		final List<Parameter<?>> strategyParameters = strategy.getParameters();
+		if (!strategyParameters.isEmpty()) {
+			out.println("Enter the configuration for the " + strategy.getName() + " strategy:");
+		}
+		for (final Parameter<?> parameter : strategyParameters) {
+			String prompt = "";
 			switch (parameter.getType()) {
 				case BOOLEAN:
+					prompt = " (y/n)";
 					break;
 				case FREE:
+					prompt = "";
 					break;
 				case LIST:
-					break;
-				default:
+					prompt = "(" + StringUtils.separateWith("|", parameter.getPossibleValues()) + ")";
 					break;
 			}
+			boolean success = false;
+			while (!success) {
+				out.print("\t" + getTranslator().get(parameter.getDescription()) + prompt + " > ");
+				try {
+					parameter.setValue(input.nextLine());
+					success = true;
+				} catch (final IllegalArgumentException e) {
+					out.print("Invalid value for parameter: " + e.getMessage());
+				}
+				
+			}
 		}
+		input.close();
 		
 		final SessionParameters parameters = new SessionParameters();
 		parameters.setLocale(locale);
