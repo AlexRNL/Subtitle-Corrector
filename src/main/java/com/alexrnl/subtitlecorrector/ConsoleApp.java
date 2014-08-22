@@ -9,6 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -48,6 +49,9 @@ public class ConsoleApp extends AbstractApp {
 	/** The strategy to use to correct the subtitles */
 	@Param(names = { "-s" }, description = "the strategy to use for correcting subtitles", required = true)
 	private Strategy			strategy;
+	/** The locale to use */
+	@Param(names = { "-l" }, description = "the language of the subtitle")
+	private Locale				locale;
 	
 	/**
 	 * Constructor #1.<br />
@@ -61,10 +65,13 @@ public class ConsoleApp extends AbstractApp {
 	public ConsoleApp (final String[] args) throws IOException, URISyntaxException {
 		super(new ConsoleUserPrompt());
 		out = System.out;
+		locale = Locale.getDefault();
+		
+		// Parse arguments
 		final Arguments arguments = new Arguments(PROGRAM_NAME, this, out);
 		arguments.addParameterParser(new AbstractParser<Strategy>(Strategy.class) {
 			@Override
-			protected Strategy getValue (final String parameter) throws IllegalArgumentException {
+			public Strategy getValue (final String parameter) throws IllegalArgumentException {
 				final Strategy strategyParameter = getStrategies().get(parameter);
 				
 				if (strategyParameter == null) {
@@ -73,7 +80,12 @@ public class ConsoleApp extends AbstractApp {
 				}
 				return strategyParameter;
 			}
-			
+		});
+		arguments.addParameterParser(new AbstractParser<Locale>(Locale.class) {
+			@Override
+			public Locale getValue (final String parameter) throws IllegalArgumentException {
+				return Locale.forLanguageTag(parameter);
+			}
 		});
 		arguments.parse(args);
 	}
