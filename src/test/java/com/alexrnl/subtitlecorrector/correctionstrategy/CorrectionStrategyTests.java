@@ -9,7 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ FixPunctuationTest.class, LetterReplacementTest.class, ParameterTest.class })
+@SuiteClasses({ FixPunctuationTest.class, LetterReplacementTest.class, ParameterTest.class,
+		StandardParameterParsersTest.class })
 public class CorrectionStrategyTests {
 	
 }
