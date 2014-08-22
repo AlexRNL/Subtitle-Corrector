@@ -95,7 +95,7 @@ public class FixPunctuationTest {
 	@Test
 	public void testCorrectFrenchRules1 () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Bonjour,comment allez vous?");
-		locale.setValue(Locale.FRENCH);
+		locale.setValue(Locale.FRENCH.toString());
 		fixPunctuation.correct(subtitleToCorrect);
 		assertEquals("Bonjour, comment allez vous ?", subtitleToCorrect.getContent());
 	}
@@ -106,7 +106,7 @@ public class FixPunctuationTest {
 	@Test
 	public void testCorrectFrenchRules2 () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Bonjour;comment allez vous!");
-		locale.setValue(Locale.FRENCH);
+		locale.setValue(Locale.FRENCH.toString());
 		fixPunctuation.correct(subtitleToCorrect);
 		assertEquals("Bonjour ; comment allez vous !", subtitleToCorrect.getContent());
 	}
@@ -117,7 +117,7 @@ public class FixPunctuationTest {
 	@Test
 	public void testCorrectEnglishRules1 () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Bonjour,comment allez vous?Hey:you");
-		locale.setValue(Locale.ENGLISH);
+		locale.setValue(Locale.ENGLISH.toString());
 		fixPunctuation.correct(subtitleToCorrect);
 		assertEquals("Bonjour, comment allez vous? Hey: you", subtitleToCorrect.getContent());
 	}
@@ -128,7 +128,7 @@ public class FixPunctuationTest {
 	@Test
 	public void testCorrectEnglishRules2 () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Bonjour;comment allez vous!");
-		locale.setValue(Locale.ENGLISH);
+		locale.setValue(Locale.ENGLISH.toString());
 		fixPunctuation.correct(subtitleToCorrect);
 		assertEquals("Bonjour; comment allez vous!", subtitleToCorrect.getContent());
 	}
@@ -139,7 +139,7 @@ public class FixPunctuationTest {
 	@Test
 	public void testCorrectNewLine () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Bonjour;\ncomment allez vous! Bien");
-		locale.setValue(Locale.ENGLISH);
+		locale.setValue(Locale.ENGLISH.toString());
 		fixPunctuation.correct(subtitleToCorrect);
 		assertEquals("Bonjour;\ncomment allez vous! Bien", subtitleToCorrect.getContent());
 	}

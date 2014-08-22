@@ -17,7 +17,27 @@ public class Parameter<T> {
 	private final boolean		required;
 	/** The value of the parameter */
 	private T					value;
-
+	/** The parser for the parameter */
+	private final Parser<T>		parser;
+	
+	/**
+	 * Interface for parsing String into the parameter type.
+	 * @author Alex
+	 * @param <U>
+	 *        the target parameter type.
+	 */
+	public static interface Parser<U> {
+		/**
+		 * Parse the string value specified into the target type.
+		 * @param value
+		 *        the value to parse.
+		 * @return the actual value of the parameter to use.
+		 * @throws IllegalArgumentException
+		 *         if the parsing could not be completed.
+		 */
+		U parse (String value) throws IllegalArgumentException;
+	}
+	
 	/**
 	 * Constructor #1.<br />
 	 * @param type
@@ -26,15 +46,18 @@ public class Parameter<T> {
 	 *        the description of the parameter.
 	 * @param required
 	 *        <code>true</code> if the parameter is required.
+	 * @param parser
+	 *        the parser to convert a string into the parameter type.
 	 * @param defaultValue
 	 *        the default value of the parameter.
 	 */
 	public Parameter (final ParameterType type, final String description, final boolean required,
-			final T defaultValue) {
+			final Parser<T> parser, final T defaultValue) {
 		super();
 		this.type = type;
 		this.description = description;
 		this.required = required;
+		this.parser = parser;
 		this.value = defaultValue;
 	}
 	
@@ -45,9 +68,11 @@ public class Parameter<T> {
 	 *        the type of the parameter.
 	 * @param description
 	 *        the description of the parameter.
+	 * @param parser
+	 *        the parser to convert a string into the parameter type.
 	 */
-	public Parameter (final ParameterType type, final String description) {
-		this(type, description, true, null);
+	public Parameter (final ParameterType type, final String description, final Parser<T> parser) {
+		this(type, description, true, parser, null);
 	}
 
 	/**
@@ -86,8 +111,8 @@ public class Parameter<T> {
 	 * Set the attribute value.
 	 * @param value the attribute value.
 	 */
-	public void setValue (final T value) {
-		this.value = value;
+	public void setValue (final String value) {
+		this.value = parser.parse(value);
 	}
 	
 }

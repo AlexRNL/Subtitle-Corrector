@@ -52,10 +52,10 @@ public class LetterReplacement implements Strategy {
 		this.dictionaryManager = dictionaryManager;
 		this.prompt = prompt;
 		savedChoices = new HashMap<>();
-		originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter());
-		newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter());
-		onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, true);
-		promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().promptBeforeCorrecting(), false, true);
+		originalLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().originalLetter(), StandardParameterParsers.character());
+		newLetter = new Parameter<>(ParameterType.FREE, KEYS.strategy().letterReplacement().newLetter(), StandardParameterParsers.character());
+		onlyMissingFromDictionary = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().onlyMissingFromDictionary(), false, StandardParameterParsers.bool(), true);
+		promptBeforeCorrecting = new Parameter<>(ParameterType.BOOLEAN, KEYS.strategy().letterReplacement().promptBeforeCorrecting(), false, StandardParameterParsers.bool(), true);
 	}
 
 	@Override

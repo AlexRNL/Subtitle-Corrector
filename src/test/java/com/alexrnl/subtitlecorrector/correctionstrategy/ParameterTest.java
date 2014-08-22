@@ -23,8 +23,8 @@ public class ParameterTest {
 	 */
 	@Before
 	public void setUp () {
-		requiredParameter = new Parameter<>(ParameterType.BOOLEAN, "ldr/rnr");
-		otherParameter = new Parameter<>(ParameterType.LIST, "aba/gta", false, "snow");
+		requiredParameter = new Parameter<>(ParameterType.BOOLEAN, "ldr/rnr", StandardParameterParsers.bool());
+		otherParameter = new Parameter<>(ParameterType.LIST, "aba/gta", false, StandardParameterParsers.string(), "snow");
 	}
 	
 	/**
@@ -64,11 +64,11 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link Parameter#setValue(Object)}.
+	 * Test method for {@link Parameter#setValue(String)}.
 	 */
 	@Test
 	public void testSetValue () {
-		requiredParameter.setValue(true);
+		requiredParameter.setValue("y");
 		otherParameter.setValue("ls lights");
 		
 		assertTrue(requiredParameter.getValue());

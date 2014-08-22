@@ -125,7 +125,7 @@ public class LetterReplacementTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testCorrectReplacementParameterNPE () {
-		originalLetter.setValue('l');
+		originalLetter.setValue("l");
 		letterReplacement.correct(new Subtitle(0, 2000, "ldr"));
 	}
 	
@@ -146,10 +146,10 @@ public class LetterReplacementTest {
 	@Test(expected = IllegalStateException.class)
 	public void testBadSessionState () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(true);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
 		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
 			@Override
 			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
@@ -167,10 +167,10 @@ public class LetterReplacementTest {
 	 */
 	public void testSessionState () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(true);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
 		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
 			@Override
 			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
@@ -190,8 +190,8 @@ public class LetterReplacementTest {
 	@Test
 	public void testCorrectNoRelevantLetter () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('a');
-		replacementLetter.setValue('x');
+		originalLetter.setValue("a");
+		replacementLetter.setValue("x");
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hello everyone!", subtitleToCorrect.getContent());
 	}
@@ -203,10 +203,10 @@ public class LetterReplacementTest {
 	@Test
 	public void testCorrectNoPromptNoDictionary () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(false);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("false");
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hxllo xvxryonx!", subtitleToCorrect.getContent());
 	}
@@ -218,10 +218,10 @@ public class LetterReplacementTest {
 	@Test
 	public void testCorrectNoPromptWithDictionary () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(true);
-		promptBeforeCorrecting.setValue(false);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("true");
+		promptBeforeCorrecting.setValue("false");
 		when(dictionary.contains("Hello")).thenReturn(true);
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hello xvxryonx!", subtitleToCorrect.getContent());
@@ -234,10 +234,10 @@ public class LetterReplacementTest {
 	@Test
 	public void testCorrectWithPromptNoDictionary () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(true);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
 		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
 			@Override
 			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
@@ -256,10 +256,10 @@ public class LetterReplacementTest {
 	@Test
 	public void testCorrectWithPromptCancelNoDictionary () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(true);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
 		when(prompt.confirm(anyString(),  any(Word.class), anyString())).thenReturn(new UserPromptAnswer(null, true, false));
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hello everyone!", subtitleToCorrect.getContent());
@@ -272,10 +272,10 @@ public class LetterReplacementTest {
 	@Test
 	public void testComplexCorrection () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 200, "Becaune it's not\ngoing up there now.");
-		originalLetter.setValue('n');
-		replacementLetter.setValue('s');
-		onlyMissingFromDictionary.setValue(true);
-		promptBeforeCorrecting.setValue(false);
+		originalLetter.setValue("n");
+		replacementLetter.setValue("s");
+		onlyMissingFromDictionary.setValue("true");
+		promptBeforeCorrecting.setValue("false");
 		when(dictionary.contains(anyString())).thenReturn(true);
 		when(dictionary.contains("Becaune")).thenReturn(false);
 		letterReplacement.correct(subtitleToCorrect);
@@ -290,10 +290,10 @@ public class LetterReplacementTest {
 	public void testRememberChoices () {
 		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
 		final Subtitle subtitleToCheck = new Subtitle(0, 2000, "Hello Lucie,\nhow are you doin'?");
-		originalLetter.setValue('e');
-		replacementLetter.setValue('x');
-		onlyMissingFromDictionary.setValue(false);
-		promptBeforeCorrecting.setValue(true);
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
 		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
 			@Override
 			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {

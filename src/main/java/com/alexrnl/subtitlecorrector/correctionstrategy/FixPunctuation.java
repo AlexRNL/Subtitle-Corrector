@@ -26,6 +26,7 @@ import com.alexrnl.commons.error.ExceptionUtils;
 import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter.Parser;
 
 /**
  * Correction strategy which fix the punctuation in the subtitles.
@@ -61,7 +62,12 @@ public class FixPunctuation extends AbstractStrategy {
 			throw new IllegalArgumentException("The path must refer to a folder with the punctuation rules");
 		}
 		
-		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale());
+		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale(), new Parser<Locale>() {
+			@Override
+			public Locale parse (final String value) throws IllegalArgumentException {
+				return Locale.forLanguageTag(value);
+			}
+		});
 		hasSpaceAfter = new HashMap<>();
 		hasSpaceBefore = new HashMap<>();
 		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
