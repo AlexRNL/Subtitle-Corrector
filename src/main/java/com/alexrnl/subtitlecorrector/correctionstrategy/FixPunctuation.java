@@ -62,15 +62,15 @@ public class FixPunctuation extends AbstractStrategy {
 			throw new IllegalArgumentException("The path must refer to a folder with the punctuation rules");
 		}
 		
+		hasSpaceAfter = new HashMap<>();
+		hasSpaceBefore = new HashMap<>();
+		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
 		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale(), new Parser<Locale>() {
 			@Override
 			public Locale parse (final String value) throws IllegalArgumentException {
 				return Locale.forLanguageTag(value);
 			}
-		});
-		hasSpaceAfter = new HashMap<>();
-		hasSpaceBefore = new HashMap<>();
-		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
+		}, hasSpaceAfter.keySet());
 	}
 	
 	@Override
