@@ -29,8 +29,7 @@ public interface Strategy extends SessionStateListener {
 	 * Return the name of the strategy.
 	 * @return the name of the strategy.
 	 */
-	@Override
-	String toString ();
+	String getName ();
 	
 	/**
 	 * Return the description of the strategy.

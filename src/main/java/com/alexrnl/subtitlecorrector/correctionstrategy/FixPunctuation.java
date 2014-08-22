@@ -85,7 +85,7 @@ public class FixPunctuation extends AbstractStrategy {
 	}
 
 	@Override
-	public String toString () {
+	public String getName () {
 		return KEYS.strategy().fixPunctuation().toString();
 	}
 	

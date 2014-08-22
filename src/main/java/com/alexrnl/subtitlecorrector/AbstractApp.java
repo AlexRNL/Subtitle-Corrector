@@ -111,7 +111,7 @@ public abstract class AbstractApp {
 	 *         translation.
 	 */
 	protected boolean addStrategy (final Strategy strategy) {
-		final String name = getTranslator().get(strategy.toString());
+		final String name = getTranslator().get(strategy.getName());
 		getSessionManager().addSessionListener(strategy);
 		final Strategy previousStrategy = strategies.put(name, strategy);
 		getSessionManager().removeSessionListener(previousStrategy);

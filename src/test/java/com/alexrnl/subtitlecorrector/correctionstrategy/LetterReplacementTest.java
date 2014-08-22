@@ -95,11 +95,11 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link FixPunctuation#toString()}
+	 * Test method for {@link FixPunctuation#getName()}
 	 */
 	@Test
-	public void testToString () {
-		assertEquals("subtitlecorrector.strategy.letterreplacement", letterReplacement.toString());
+	public void testGetName () {
+		assertEquals("subtitlecorrector.strategy.letterreplacement", letterReplacement.getName());
 	}
 	
 	/**
