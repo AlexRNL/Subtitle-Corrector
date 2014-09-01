@@ -72,8 +72,9 @@ public class DictionaryManagerTest {
 	 */
 	@Test
 	public void testGetLocaleDictionaries () {
-		assertEquals(1, manager.getLocaleDictionaries().size());
+		assertEquals(2, manager.getLocaleDictionaries().size());
 		assertNotNull(manager.getLocaleDictionaries().get(Locale.FRENCH));
+		assertNotNull(manager.getLocaleDictionaries().get(Locale.ENGLISH));
 	}
 	
 	/**
