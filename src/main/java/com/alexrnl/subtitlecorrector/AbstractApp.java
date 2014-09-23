@@ -60,8 +60,8 @@ public abstract class AbstractApp {
 		sessionManager.addSessionListener(userPrompt);
 		
 		// Load services TODO load custom dictionaries from configuration
-		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
-				Paths.get(AbstractApp.class.getResource("/dictionary").toURI()));
+		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/dictionary").toURI()),
+				Paths.get(AbstractApp.class.getResource("/locale").toURI()));
 		sessionManager.addSessionListener(dictionariesManager);
 		
 		strategies = new HashMap<>();
