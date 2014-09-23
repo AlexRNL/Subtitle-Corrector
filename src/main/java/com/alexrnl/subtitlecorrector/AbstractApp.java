@@ -52,10 +52,12 @@ public abstract class AbstractApp {
 	 */
 	public AbstractApp (final UserPrompt userPrompt) throws IOException, URISyntaxException {
 		super();
+		
 		translator = new Translator(Paths.get(AbstractApp.class.getResource("/locale/en.xml").toURI()));
 		userPrompt.setTranslator(translator);
 		
 		sessionManager = new SessionManager();
+		sessionManager.addSessionListener(userPrompt);
 		
 		// Load services TODO load custom dictionaries from configuration
 		dictionariesManager = new DictionaryManager(Paths.get(AbstractApp.class.getResource("/locale").toURI()),
