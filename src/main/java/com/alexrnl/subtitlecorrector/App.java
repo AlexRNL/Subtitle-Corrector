@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.io.UncloseableInputStream;
 
 /**
  * Launcher class for the application.<br />
@@ -21,6 +22,7 @@ public final class App {
 	 *        the arguments from the command line.
 	 */
 	public static void main (final String[] args) {
+		System.setIn(new UncloseableInputStream(System.in));
 		try {
 			final AbstractApp app = args.length == 0 ? new GUIApp() : new ConsoleApp(args);
 			if (!app.launch()) {
