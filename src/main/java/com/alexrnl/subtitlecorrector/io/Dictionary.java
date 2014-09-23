@@ -111,7 +111,8 @@ public class Dictionary {
 			}
 		} catch (final EOFException e) {
 			if (lg.isLoggable(Level.INFO)) {
-				lg.info("Finished reading dictionary file " + dictionaryFile);
+				lg.info("Finished reading dictionary file " + dictionaryFile
+						+ " (" + dictionary.size() + " words)");
 			}
 		} catch (final IOException e) {
 			lg.warning("Exception while reading dictionary file " + dictionaryFile + ": "
