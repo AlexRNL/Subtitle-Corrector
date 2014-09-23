@@ -91,10 +91,10 @@ public class ConsoleUserPrompt implements UserPrompt {
 		
 		output.println(translator.get(consoleKey.replace(), original, replacement));
 		if (context != null) {
-			output.println(translator.get(consoleKey.context()) + "\n\t");
+			output.println(translator.get(consoleKey.context()));
 			output.println(context);
 		}
-		output.println(yesNoChoice);
+		output.print(yesNoChoice);
 		final boolean keep = inputScanner.nextLine().startsWith(yes);
 		if (keep) {
 			answer = replacement;
@@ -106,7 +106,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 			}
 		}
 		output.println(translator.get(consoleKey.rememberChoice()));
-		output.println(yesNoChoice);
+		output.print(yesNoChoice);
 		rememberChoice = inputScanner.nextLine().startsWith(yes);
 		
 		return new UserPromptAnswer(answer, cancelled, rememberChoice);
