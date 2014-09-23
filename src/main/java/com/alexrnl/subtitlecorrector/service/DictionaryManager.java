@@ -145,8 +145,11 @@ public class DictionaryManager implements SessionStateListener {
 			lg.info("Activating locale dictionary " + parameters.getLocale() + " and customs "
 					+ parameters.getCustomDictionaries() + " for next session");
 		}
-		if (parameters.getLocale() != null) {
+		if (localeDictionaries.containsKey(parameters.getLocale())) {
 			activeDictionaries.add(localeDictionaries.get(parameters.getLocale()));
+		} else {
+			lg.warning("No dictionnary found for locale " + parameters.getLocale()
+					+ "; available locales are " + localeDictionaries.keySet());
 		}
 		for (final String customDictionary : parameters.getCustomDictionaries()) {
 			activeDictionaries.add(customDictionaries.get(customDictionary));
