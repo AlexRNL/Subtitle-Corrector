@@ -191,6 +191,7 @@ public class ConsoleApp extends AbstractApp {
 		// TODO set custom dictionaries
 		
 		// Actually correct subtitles
+		getSessionManager().addSessionListener(strategy);
 		getSessionManager().startSession(parameters);
 		for (final SubtitleFile subtitleFile : subtitles.keySet()) {
 			for (final Subtitle subtitle : subtitleFile) {
@@ -198,6 +199,7 @@ public class ConsoleApp extends AbstractApp {
 			}
 		}
 		getSessionManager().stopSession();
+		getSessionManager().removeSessionListener(strategy);
 		
 		// Save subtitles
 		for (final Entry<SubtitleFile, SubtitleFormat> entry : subtitles.entrySet()) {
