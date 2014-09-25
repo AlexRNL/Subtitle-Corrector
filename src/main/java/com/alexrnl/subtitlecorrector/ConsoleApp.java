@@ -153,11 +153,11 @@ public class ConsoleApp extends AbstractApp {
 			}
 		}
 		
-		// Prepare strategy TODO
+		// Prepare strategy
 		final Scanner input = new Scanner(System.in);
 		final List<Parameter<?>> strategyParameters = strategy.getParameters();
 		if (!strategyParameters.isEmpty()) {
-			out.println("Enter the configuration for the " + strategy.getName() + " strategy:");
+			out.println("Enter the configuration for the " + getTranslator().get(strategy.getName()) + " strategy:");
 		}
 		for (final Parameter<?> parameter : strategyParameters) {
 			String prompt = "";
