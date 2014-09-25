@@ -53,6 +53,7 @@ public abstract class AbstractApp {
 	public AbstractApp (final UserPrompt userPrompt) throws IOException, URISyntaxException {
 		super();
 		
+		// TODO load language dynamically
 		translator = new Translator(Paths.get(AbstractApp.class.getResource("/locale/en.xml").toURI()));
 		userPrompt.setTranslator(translator);
 		
