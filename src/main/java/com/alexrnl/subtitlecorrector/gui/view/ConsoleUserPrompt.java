@@ -99,7 +99,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 		if (keep) {
 			answer = replacement;
 		} else {
-			output.println(translator.get(consoleKey.changeReplacement()));
+			output.print(translator.get(consoleKey.changeReplacement()));
 			answer = inputScanner.nextLine();
 			if (answer.isEmpty()) {
 				cancelled = true;
