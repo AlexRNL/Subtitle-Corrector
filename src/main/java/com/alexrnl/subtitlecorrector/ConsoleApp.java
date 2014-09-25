@@ -136,6 +136,7 @@ public class ConsoleApp extends AbstractApp {
 			final SubtitleFormat format;
 			
 			if (readers.isEmpty()) {
+				// TODO display error?
 				continue;
 			}
 			if (readers.size() == 1) {
@@ -151,6 +152,11 @@ public class ConsoleApp extends AbstractApp {
 				out.println("Subtitle " + file + " could not be properly read, it will not be corrected.");
 				lg.warning("Exception while parsing file " + file + ": " + ExceptionUtils.display(e));
 			}
+		}
+		
+		if (subtitles.isEmpty()) {
+			out.println("No subtitle file to correct found, check available format and extensions");
+			return false;
 		}
 		
 		// Prepare strategy
@@ -212,7 +218,7 @@ public class ConsoleApp extends AbstractApp {
 				}
 				entry.getValue().getWriter().writeFile(entry.getKey(), target);
 			} catch (final IOException e) {
-				out.println("Subtitle " + entry.getKey().getFile() + " could not be properly write, issues may occur.");
+				out.println("Subtitle " + entry.getKey().getFile() + " could not be properly write, issues may occur: " + e.getMessage());
 				// TODO restore a copy of the original file
 				lg.warning("Exception while writing file " + entry.getKey().getFile() + ": " + ExceptionUtils.display(e));
 			}
