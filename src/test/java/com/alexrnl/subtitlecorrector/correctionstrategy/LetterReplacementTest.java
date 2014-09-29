@@ -222,7 +222,7 @@ public class LetterReplacementTest {
 		replacementLetter.setValue("x");
 		onlyMissingFromDictionary.setValue("true");
 		promptBeforeCorrecting.setValue("false");
-		when(dictionary.contains("Hello")).thenReturn(true);
+		when(dictionary.contains("hello")).thenReturn(true);
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Hello xvxryonx!", subtitleToCorrect.getContent());
 	}
@@ -277,7 +277,7 @@ public class LetterReplacementTest {
 		onlyMissingFromDictionary.setValue("true");
 		promptBeforeCorrecting.setValue("false");
 		when(dictionary.contains(anyString())).thenReturn(true);
-		when(dictionary.contains("Becaune")).thenReturn(false);
+		when(dictionary.contains("becaune")).thenReturn(false);
 		letterReplacement.correct(subtitleToCorrect);
 		assertEquals("Because it's not\ngoing up there now.", subtitleToCorrect.getContent());
 	}

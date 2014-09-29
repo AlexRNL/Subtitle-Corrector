@@ -39,6 +39,8 @@ public class LetterReplacement implements Strategy {
 	private final Parameter<Boolean>	onlyMissingFromDictionary;
 	/** Flag indicating to prompt user each time before replacing the letter */
 	private final Parameter<Boolean>	promptBeforeCorrecting;
+	
+	// TODO add case-sensitive parameter
 
 	/**
 	 * Constructor #1.<br />
@@ -136,7 +138,7 @@ public class LetterReplacement implements Strategy {
 				continue;
 			}
 			
-			if (onlyMissingFromDictionary.getValue() && dictionaryManager.contains(currentWord.getWord())) {
+			if (onlyMissingFromDictionary.getValue() && dictionaryManager.contains(currentWord.getWord().toLowerCase())) {
 				// The current word is in the dictionary
 				newContent.append(currentWord);
 				continue;
@@ -151,6 +153,7 @@ public class LetterReplacement implements Strategy {
 					newContent.append(currentWord);
 					continue;
 				}
+				// TODO remember cancelled choices?
 				if (answer.isRememberChoice()) {
 					savedChoices.put(currentWord.getWord(), answer.getAnswer());
 				}
