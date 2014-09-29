@@ -23,11 +23,23 @@
 	<entry key="subtitlecorrector.mainwindow.subtitleButton">Select subtitle...</entry>
 	<entry key="subtitlecorrector.mainwindow.startCorrectingButton">Start correction</entry>
 	
-	<!-- Translation for user prompt -->
-	<entry key="subtitlecorrector.userprompt.console.yes">y</entry>
-	<entry key="subtitlecorrector.userprompt.console.no">n</entry>
-	<entry key="subtitlecorrector.userprompt.console.replace">Replace '%0' by '%1'?</entry>
-	<entry key="subtitlecorrector.userprompt.console.context">Context:</entry>
-	<entry key="subtitlecorrector.userprompt.console.changereplacement">Type the replacement:</entry>
-	<entry key="subtitlecorrector.userprompt.console.rememberchoice">Remember choice for the rest of the session?</entry>
+	<!-- Translations for console mode -->
+	<!-- Generic translations -->
+	<entry key="subtitlecorrector.console.yes">y</entry>
+	<entry key="subtitlecorrector.console.no">n</entry>
+	<entry key="subtitlecorrector.console.yesnoprompt">§subtitlecorrector.console.yes/§subtitlecorrector.console.no > </entry>
+	<!-- Translations for console user prompt -->
+	<entry key="subtitlecorrector.console.userprompt.replace">Replace '%0' by '%1'?</entry>
+	<entry key="subtitlecorrector.console.userprompt.context">Context:</entry>
+	<entry key="subtitlecorrector.console.userprompt.changereplacement">Type the replacement: </entry>
+	<entry key="subtitlecorrector.console.userprompt.rememberchoice">Remember choice for the rest of the session?</entry>
+	<!-- Translations for console application -->
+	<entry key="subtitlecorrector.console.app.noaccess">Cannot access files at %0</entry>
+	<entry key="subtitlecorrector.console.app.foldervisiterror">Could not retrieve subtitles in folder %0</entry>
+	<entry key="subtitlecorrector.console.app.notfilenotdirectory">Path %0 is neither file nor directory</entry>
+	<entry key="subtitlecorrector.console.app.subtitlefilereaderror">Subtitle %0 could not be properly read, it will not be corrected</entry>
+	<entry key="subtitlecorrector.console.app.nosubtitletocorrect">No subtitle file to correct found, check available format and extensions</entry>
+	<entry key="subtitlecorrector.console.app.strategyparametersinput">Enter the configuration for the %0 strategy:</entry>
+	<entry key="subtitlecorrector.console.app.strategyparametersinvalidvalue">Invalid value for parameter: %0</entry>
+	<entry key="subtitlecorrector.console.app.subtitlewriteerror">Corrected subtitle %0 could not be properly saved: %1</entry>
 </properties>

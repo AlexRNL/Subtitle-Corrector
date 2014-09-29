@@ -27,6 +27,8 @@ import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys.Console.App;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.view.ConsoleUserPrompt;
@@ -102,10 +104,12 @@ public class ConsoleApp extends AbstractApp {
 	
 	@Override
 	public boolean launch () {
+		final App appKey = TranslationKeys.KEYS.console().app();
+		
 		final boolean exists = Files.exists(workingFiles);
 		final boolean reads = Files.isReadable(workingFiles);
 		if (!exists || !reads) {
-			out.println("Cannot access files at " + workingFiles);
+			out.println(getTranslator().get(appKey.noAccess(), workingFiles));
 			lg.severe("Path " + workingFiles + " does " + (exists ? "" : "not") + " exist and can"
 					+ (reads ? "" : "not") + " be read");
 			return false;
@@ -117,14 +121,14 @@ public class ConsoleApp extends AbstractApp {
 			try {
 				Files.walkFileTree(workingFiles, new SubtitleVisitor(files));
 			} catch (final IOException e) {
-				out.println("Could not retrieve subtitles in folder " + workingFiles);
+				out.println(getTranslator().get(appKey.folderVisitError(), workingFiles));
 				lg.warning("Could not retrieve subtitles to process: " + ExceptionUtils.display(e));
 				return false;
 			}
 		} else if (Files.exists(workingFiles)) {
 			files.add(workingFiles);
 		} else {
-			out.println("Path " + workingFiles + " is neither file nor directory");
+			out.println(getTranslator().get(appKey.notFileNotDirectory(), workingFiles));
 			lg.severe(workingFiles + " is not a directory or a file");
 			return false;
 		}
@@ -149,7 +153,7 @@ public class ConsoleApp extends AbstractApp {
 			try {
 				subtitles.put(format.getReader().readFile(file), format);
 			} catch (final IOException e) {
-				out.println("Subtitle " + file + " could not be properly read, it will not be corrected.");
+				out.println(getTranslator().get(appKey.subtitleFileReadError(), file));
 				lg.warning("Exception while parsing file " + file + ": " + ExceptionUtils.display(e));
 			}
 		}
@@ -163,16 +167,16 @@ public class ConsoleApp extends AbstractApp {
 		final Scanner input = new Scanner(System.in);
 		final List<Parameter<?>> strategyParameters = strategy.getParameters();
 		if (!strategyParameters.isEmpty()) {
-			out.println("Enter the configuration for the " + getTranslator().get(strategy.getName()) + " strategy:");
+			out.println(getTranslator().get(appKey.strategyParametersInput(), getTranslator().get(strategy.getName())));
 		}
 		for (final Parameter<?> parameter : strategyParameters) {
 			String prompt = "";
 			switch (parameter.getType()) {
+				// TODO translate this
 				case BOOLEAN:
 					prompt = " (y/n)";
 					break;
 				case FREE:
-					prompt = "";
 					break;
 				case LIST:
 					prompt = "(" + StringUtils.separateWith("|", parameter.getPossibleValues()) + ")";
@@ -185,7 +189,7 @@ public class ConsoleApp extends AbstractApp {
 					parameter.setValue(input.nextLine());
 					success = true;
 				} catch (final IllegalArgumentException e) {
-					out.print("Invalid value for parameter: " + e.getMessage());
+					out.print(getTranslator().get(appKey.strategyParametersInvalidValue(), e.getMessage()));
 				}
 				
 			}
@@ -218,7 +222,7 @@ public class ConsoleApp extends AbstractApp {
 				}
 				entry.getValue().getWriter().writeFile(entry.getKey(), target);
 			} catch (final IOException e) {
-				out.println("Subtitle " + entry.getKey().getFile() + " could not be properly write, issues may occur: " + e.getMessage());
+				out.println(getTranslator().get(appKey.subtitleWriteError(), entry.getKey().getFile(), e.getMessage()));
 				// TODO restore a copy of the original file
 				lg.warning("Exception while writing file " + entry.getKey().getFile() + ": " + ExceptionUtils.display(e));
 			}

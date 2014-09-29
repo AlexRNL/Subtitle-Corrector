@@ -32,14 +32,23 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
 		assertEquals("subtitlecorrector.mainwindow.strategyLabel", KEYS.mainWindow().strategyLabel());
 		assertEquals("subtitlecorrector.mainwindow.startCorrectingButton", KEYS.mainWindow().startCorrectingButton());
-
-		assertEquals("subtitlecorrector.userprompt", KEYS.userPrompt().toString());
-		assertEquals("subtitlecorrector.userprompt.console", KEYS.userPrompt().console().toString());
-		assertEquals("subtitlecorrector.userprompt.console.yes", KEYS.userPrompt().console().yes());
-		assertEquals("subtitlecorrector.userprompt.console.no", KEYS.userPrompt().console().no());
-		assertEquals("subtitlecorrector.userprompt.console.replace", KEYS.userPrompt().console().replace());
-		assertEquals("subtitlecorrector.userprompt.console.context", KEYS.userPrompt().console().context());
-		assertEquals("subtitlecorrector.userprompt.console.changereplacement", KEYS.userPrompt().console().changeReplacement());
-		assertEquals("subtitlecorrector.userprompt.console.rememberchoice", KEYS.userPrompt().console().rememberChoice());
+		
+		assertEquals("subtitlecorrector.console.yes", KEYS.console().yes());
+		assertEquals("subtitlecorrector.console.no", KEYS.console().no());
+		assertEquals("subtitlecorrector.console.yesnoprompt", KEYS.console().yesNoPrompt());
+		assertEquals("subtitlecorrector.console.userprompt", KEYS.console().userPrompt().toString());
+		assertEquals("subtitlecorrector.console.userprompt.replace", KEYS.console().userPrompt().replace());
+		assertEquals("subtitlecorrector.console.userprompt.context", KEYS.console().userPrompt().context());
+		assertEquals("subtitlecorrector.console.userprompt.changereplacement", KEYS.console().userPrompt().changeReplacement());
+		assertEquals("subtitlecorrector.console.userprompt.rememberchoice", KEYS.console().userPrompt().rememberChoice());
+		assertEquals("subtitlecorrector.console.app", KEYS.console().app().toString());
+		assertEquals("subtitlecorrector.console.app.noaccess", KEYS.console().app().noAccess());
+		assertEquals("subtitlecorrector.console.app.foldervisiterror", KEYS.console().app().folderVisitError());
+		assertEquals("subtitlecorrector.console.app.notfilenotdirectory", KEYS.console().app().notFileNotDirectory());
+		assertEquals("subtitlecorrector.console.app.subtitlefilereaderror", KEYS.console().app().subtitleFileReadError());
+		assertEquals("subtitlecorrector.console.app.nosubtitletocorrect", KEYS.console().app().noSubtitleToCorrect());
+		assertEquals("subtitlecorrector.console.app.strategyparametersinput", KEYS.console().app().strategyParametersInput());
+		assertEquals("subtitlecorrector.console.app.strategyparametersinvalidvalue", KEYS.console().app().strategyParametersInvalidValue());
+		assertEquals("subtitlecorrector.console.app.subtitlewriteerror", KEYS.console().app().subtitleWriteError());
 	}
 }

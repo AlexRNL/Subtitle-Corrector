@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
-import com.alexrnl.subtitlecorrector.common.TranslationKeys.UserPrompt.Console;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys.Console;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
@@ -84,14 +84,14 @@ public class ConsoleUserPrompt implements UserPrompt {
 		boolean cancelled = false;
 		boolean rememberChoice;
 		
-		final Console consoleKey = KEYS.userPrompt().console();
+		final Console consoleKey = KEYS.console();
+		final com.alexrnl.subtitlecorrector.common.TranslationKeys.Console.UserPrompt userPromptKey = consoleKey.userPrompt();
 		final String yes = translator.get(consoleKey.yes());
-		final String no = translator.get(consoleKey.no());
-		final String yesNoChoice = yes + "/" + no + " > ";
+		final String yesNoChoice = translator.get(consoleKey.yesNoPrompt());
 		
-		output.println(translator.get(consoleKey.replace(), original, replacement));
+		output.println(translator.get(userPromptKey.replace(), original, replacement));
 		if (context != null) {
-			output.println(translator.get(consoleKey.context()));
+			output.println(translator.get(userPromptKey.context()));
 			output.println(context);
 		}
 		output.print(yesNoChoice);
@@ -99,13 +99,13 @@ public class ConsoleUserPrompt implements UserPrompt {
 		if (keep) {
 			answer = replacement;
 		} else {
-			output.print(translator.get(consoleKey.changeReplacement()));
+			output.print(translator.get(userPromptKey.changeReplacement()));
 			answer = inputScanner.nextLine();
 			if (answer.isEmpty()) {
 				cancelled = true;
 			}
 		}
-		output.println(translator.get(consoleKey.rememberChoice()));
+		output.println(translator.get(userPromptKey.rememberChoice()));
 		output.print(yesNoChoice);
 		rememberChoice = inputScanner.nextLine().startsWith(yes);
 		

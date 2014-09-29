@@ -259,121 +259,222 @@ public final class TranslationKeys {
 	}
 	
 	/**
-	 * The translation for the user prompt.
+	 * The translation for the console.
 	 * @author Alex
 	 */
-	public static final class UserPrompt {
-		/** The root key for the user prompt */
-		private static final String	USER_PROMPT_KEY	= "userprompt";
+	public static final class Console {
+		/** The root key for the console */
+		private static final String	CONSOLE_KEY	= "console";
 		
-		/** The key for the user prompt translations */
-		private final String		userPromptKey;
+		/** The key for the console translations */
+		private final String		consoleKey;
 		
 		/**
 		 * Constructor #1.<br />
 		 * @param parentKey
 		 *        the key from the parent category.
 		 */
-		public UserPrompt (final String parentKey) {
+		public Console (final String parentKey) {
 			super();
-			this.userPromptKey = parentKey + HIERARCHY_SEPARATOR + USER_PROMPT_KEY;
-		}
-		
-		@Override
-		public String toString () {
-			return userPromptKey;
+			this.consoleKey = parentKey + HIERARCHY_SEPARATOR + CONSOLE_KEY;
 		}
 		
 		/**
-		 * The translation for the console user prompt.
+		 * Return the abbreviation to use for "yes".
+		 * @return the translation for yes.
+		 */
+		public String yes () {
+			return consoleKey + HIERARCHY_SEPARATOR + "yes";
+		}
+		
+		/**
+		 * Return the abbreviation to use for "no".
+		 * @return the translation for no.
+		 */
+		public String no () {
+			return consoleKey + HIERARCHY_SEPARATOR + "no";
+		}
+		
+		/**
+		 * Return the yes/no prompt for the console.
+		 * @return the translation for the yes/no prompt.
+		 */
+		public String yesNoPrompt () {
+			return consoleKey + HIERARCHY_SEPARATOR + "yesnoprompt";
+		}
+		
+		/**
+		 * The translation for the user prompt.
 		 * @author Alex
 		 */
-		public static final class Console {
-			/** The root key for the console user prompt */
-			private static final String CONSOLE_KEY	= "console";
+		public static final class UserPrompt {
+			/** The root key for the user prompt */
+			private static final String	USER_PROMPT_KEY	= "userprompt";
 			
-			/** The key for the console user prompt translations */
-			private final String		consoleKey;
+			/** The key for the user prompt translations */
+			private final String		userPromptKey;
 			
 			/**
 			 * Constructor #1.<br />
 			 * @param parentKey
 			 *        the key from the parent category.
 			 */
-			public Console (final String parentKey) {
+			public UserPrompt (final String parentKey) {
 				super();
-				consoleKey = parentKey + HIERARCHY_SEPARATOR + CONSOLE_KEY;
+				this.userPromptKey = parentKey + HIERARCHY_SEPARATOR + USER_PROMPT_KEY;
 			}
 			
 			@Override
 			public String toString () {
-				return consoleKey;
+				return userPromptKey;
 			}
 			
-			/**
-			 * Return the abbreviation to use for "yes".
-			 * @return the translation for yes.
-			 */
-			public String yes () {
-				return consoleKey + HIERARCHY_SEPARATOR + "yes";
-			}
-			
-			/**
-			 * Return the abbreviation to use for "no".
-			 * @return the translation for no.
-			 */
-			public String no () {
-				return consoleKey + HIERARCHY_SEPARATOR + "no";
-			}
-
 			/**
 			 * Return the translation for the replace message.
 			 * @return the replace message.
 			 */
 			public String replace () {
-				return consoleKey + HIERARCHY_SEPARATOR + "replace";
+				return userPromptKey + HIERARCHY_SEPARATOR + "replace";
 			}
-
+			
 			/**
 			 * Return the translation for the context message.
 			 * @return the context message.
 			 */
 			public String context () {
-				return consoleKey + HIERARCHY_SEPARATOR + "context";
+				return userPromptKey + HIERARCHY_SEPARATOR + "context";
 			}
-
+			
 			/**
 			 * Return the translation for the change replacement message.
 			 * @return the change replacement message.
 			 */
 			public String changeReplacement () {
-				return consoleKey + HIERARCHY_SEPARATOR + "changereplacement";
+				return userPromptKey + HIERARCHY_SEPARATOR + "changereplacement";
 			}
-
+			
 			/**
 			 * Return the translation for the remember choice message.
 			 * @return the remember choice message.
 			 */
 			public String rememberChoice () {
-				return consoleKey + HIERARCHY_SEPARATOR + "rememberchoice";
+				return userPromptKey + HIERARCHY_SEPARATOR + "rememberchoice";
 			}
 		}
 		
 		/**
-		 * The console user prompt translations.
-		 * @return the console translation.
+		 * The user prompt translations.
+		 * @return the user prompt translation.
 		 */
-		public Console console () {
-			return new Console(userPromptKey);
+		public UserPrompt userPrompt () {
+			return new UserPrompt(consoleKey);
 		}
 		
+		/**
+		 * The translation for the console application.
+		 * @author Alex
+		 */
+		public static final class App {
+			/** The root key for the user prompt */
+			private static final String	APP_KEY	= "app";
+			
+			/** The key for the user prompt translations */
+			private final String		appKey;
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			public App (final String parentKey) {
+				super();
+				this.appKey = parentKey + HIERARCHY_SEPARATOR + APP_KEY;
+			}
+			
+			@Override
+			public String toString () {
+				return appKey;
+			}
+			
+			/**
+			 * Return the translation for the lack of access to files.
+			 * @return the translation for no access message.
+			 */
+			public String noAccess () {
+				return appKey + HIERARCHY_SEPARATOR + "noaccess";
+			}
+			
+			/**
+			 * Return the translation for the folder visit error.
+			 * @return the translation for the folder visit error.
+			 */
+			public String folderVisitError () {
+				return appKey + HIERARCHY_SEPARATOR + "foldervisiterror";
+			}
+			
+			/**
+			 * Return the translation for the
+			 * @return the translation for the
+			 */
+			public String notFileNotDirectory () {
+				return appKey + HIERARCHY_SEPARATOR + "notfilenotdirectory";
+			}
+			
+			/**
+			 * Return the translation for the subtitle file read error.
+			 * @return the translation for the the subtitle file read error.
+			 */
+			public String subtitleFileReadError () {
+				return appKey + HIERARCHY_SEPARATOR + "subtitlefilereaderror";
+			}
+			
+			/**
+			 * Return the translation for the no subtitle to correct message.
+			 * @return the translation for the no subtitle to correct message.
+			 */
+			public String noSubtitleToCorrect () {
+				return appKey + HIERARCHY_SEPARATOR + "nosubtitletocorrect";
+			}
+			
+			/**
+			 * Return the translation for the strategy parameters input message.
+			 * @return the translation for the strategy parameters input message.
+			 */
+			public String strategyParametersInput () {
+				return appKey + HIERARCHY_SEPARATOR + "strategyparametersinput";
+			}
+			
+			/**
+			 * Return the translation for the invalid parameter in strategy input.
+			 * @return the translation for the invalid parameter in strategy input.
+			 */
+			public String strategyParametersInvalidValue () {
+				return appKey + HIERARCHY_SEPARATOR + "strategyparametersinvalidvalue";
+			}
+			
+			/**
+			 * Return the translation for the subtitle write error.
+			 * @return the translation for the subtitle write error.
+			 */
+			public String subtitleWriteError () {
+				return appKey + HIERARCHY_SEPARATOR + "subtitlewriteerror";
+			}
+		}
+		
+		/**
+		 * The console application translations.
+		 * @return the console application translation.
+		 */
+		public App app () {
+			return new App(consoleKey);
+		}
 	}
 	
 	/**
-	 * The user prompt translations.
-	 * @return the user prompt translation.
+	 * The console translations.
+	 * @return the console translation.
 	 */
-	public UserPrompt userPrompt () {
-		return new UserPrompt(subtitleCorrectorKey);
+	public Console console () {
+		return new Console(subtitleCorrectorKey);
 	}
 }

@@ -23,11 +23,23 @@
 	<entry key="subtitlecorrector.mainwindow.subtitleButton">Sélection du sous titre...</entry>
 	<entry key="subtitlecorrector.mainwindow.startCorrectingButton">Commencer la correction</entry>
 	
-	<!-- Translation for user prompt -->
-	<entry key="subtitlecorrector.userprompt.console.yes">o</entry>
-	<entry key="subtitlecorrector.userprompt.console.no">n</entry>
-	<entry key="subtitlecorrector.userprompt.console.replace">Remplacer '%0' par '%1' ?</entry>
-	<entry key="subtitlecorrector.userprompt.console.context">Contexte :</entry>
-	<entry key="subtitlecorrector.userprompt.console.changereplacement">Remplacer par :</entry>
-	<entry key="subtitlecorrector.userprompt.console.rememberchoice">Mémoriser ce remplacement pour le reste de la session ?</entry>
+	<!-- Translations for console mode -->
+	<!-- Generic translations -->
+	<entry key="subtitlecorrector.console.yes">o</entry>
+	<entry key="subtitlecorrector.console.no">n</entry>
+	<entry key="subtitlecorrector.console.yesnoprompt">§subtitlecorrector.console.yes/§subtitlecorrector.console.no > </entry>
+	<!-- Translations for console user prompt -->
+	<entry key="subtitlecorrector.console.userprompt.replace">Remplacer '%0' par '%1' ?</entry>
+	<entry key="subtitlecorrector.console.userprompt.context">Contexte :</entry>
+	<entry key="subtitlecorrector.console.userprompt.changereplacement">Remplacer par : </entry>
+	<entry key="subtitlecorrector.console.userprompt.rememberchoice">Mémoriser ce remplacement pour le reste de la session ?</entry>
+	<!-- Translations for console application -->
+	<entry key="subtitlecorrector.console.app.noaccess">Impossible d'accédder aux fichiers %0</entry>
+	<entry key="subtitlecorrector.console.app.foldervisiterror">Impossible de récupérer les sous-titres dans le dossier %0</entry>
+	<entry key="subtitlecorrector.console.app.notfilenotdirectory">Le chemin %0 n'est ni un fichier ni un dossier</entry>
+	<entry key="subtitlecorrector.console.app.subtitlefilereaderror">Le sous-titre %0 n'a pas pu être lu correctement, il ne sera pas corrigé</entry>
+	<entry key="subtitlecorrector.console.app.nosubtitletocorrect">Pas de fichier de sous-titre à corriger trouvés, vérifiez les formats de sous-titres disponibles ainsi que les extensions de fichiers.</entry>
+	<entry key="subtitlecorrector.console.app.strategyparametersinput">Entrez la configuration pour la stratégie %0 :</entry>
+	<entry key="subtitlecorrector.console.app.strategyparametersinvalidvalue">Valeur non valide pour le paramètre : %0</entry>
+	<entry key="subtitlecorrector.console.app.subtitlewriteerror">Le sous-titre corrigé %0 n'a pas pu être correctement sauvegardé : %1</entry>
 </properties>
