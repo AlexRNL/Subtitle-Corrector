@@ -15,7 +15,8 @@ import com.alexrnl.subtitlecorrector.service.ServiceTests;
  * @author Alex
  */
 @RunWith(Suite.class)
-@SuiteClasses({ CommonTests.class, CorrectionStrategyTests.class, GuiTests.class, IOTests.class, ServiceTests.class })
+@SuiteClasses({ AbstractAppTest.class, CommonTests.class, CorrectionStrategyTests.class,
+		GuiTests.class, IOTests.class, ServiceTests.class })
 public class AllTests {
 	
 }
