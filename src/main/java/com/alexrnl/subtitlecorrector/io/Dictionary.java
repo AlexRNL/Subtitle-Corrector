@@ -8,6 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,7 +22,9 @@ import com.alexrnl.commons.io.IOUtils;
  * This class represent a dictionary.<br />
  * A dictionary is a {@link Set} of words ({@link String Strings}) which can be loaded or saved from
  * the disk.<br />
- * A valid dictionary file is composed of one word per line, each word will be an entry of the set.
+ * A valid dictionary file is composed of one word per line, each word will be an entry of the set.<br />
+ * A dictionary can be case sensitive, or case insensitive: when the case insensitive mode is used,
+ * a provided {@link Locale} is used to make all words loaded lower case.
  * @author Alex
  */
 public class Dictionary {
@@ -36,6 +39,8 @@ public class Dictionary {
 	private final Charset		charSet;
 	/** <code>true</code> if word can be added to the dictionary */
 	private final boolean		editable;
+	/** <code>true</code> if the dictionary is case sensitive */
+	private final Locale		caseInsensitive;
 	/** <code>true</code> if the dictionary has been updated with new words since the last save/load */
 	private boolean				updated;
 	
@@ -52,7 +57,7 @@ public class Dictionary {
 	}
 	
 	/**
-	 * Constructor #.<br />
+	 * Constructor #2.<br />
 	 * Load the word from the specified file, using UTF-8 character set.
 	 * @param dictionaryFile
 	 *        the file to read.
@@ -65,9 +70,8 @@ public class Dictionary {
 		this(dictionaryFile, StandardCharsets.UTF_8, editable);
 	}
 	
-
 	/**
-	 * Constructor #2.<br />
+	 * Constructor #3.<br />
 	 * @param dictionaryFile
 	 *        the file to read.
 	 * @param charSet
@@ -78,6 +82,24 @@ public class Dictionary {
 	 *         if there was an issue while reading the file.
 	 */
 	public Dictionary (final Path dictionaryFile, final Charset charSet, final boolean editable) throws IOException {
+		this(dictionaryFile, charSet, editable, null);
+	}
+	
+	/**
+	 * Constructor #4.<br />
+	 * @param dictionaryFile
+	 *        the file to read.
+	 * @param charSet
+	 *        the character set to use for reading the file.
+	 * @param editable
+	 *        <code>true</code> if the dictionary can be updated with new words.
+	 * @param caseInsensitive
+	 *        if non-<code>null</code>, then the dictionary will be case insensitive; using the
+	 *        locale defined.
+	 * @throws IOException
+	 *         if there was an issue while reading the file.
+	 */
+	public Dictionary (final Path dictionaryFile, final Charset charSet, final boolean editable, final Locale caseInsensitive) throws IOException {
 		super();
 		Objects.requireNonNull(dictionaryFile);
 		Objects.requireNonNull(charSet);
@@ -92,6 +114,7 @@ public class Dictionary {
 		
 		this.dictionary = new TreeSet<>();
 		this.editable = editable;
+		this.caseInsensitive = caseInsensitive;
 		this.dictionaryFile = dictionaryFile;
 		this.charSet = charSet;
 		load();
@@ -107,7 +130,7 @@ public class Dictionary {
 		dictionary.clear();
 		try (BufferedReader reader = Files.newBufferedReader(dictionaryFile, charSet)) {
 			for (;;) {
-				dictionary.add(IOUtils.readLine(reader).trim());
+				dictionary.add(getLowerCaseWord(IOUtils.readLine(reader).trim()));
 			}
 		} catch (final EOFException e) {
 			if (lg.isLoggable(Level.INFO)) {
@@ -120,6 +143,16 @@ public class Dictionary {
 			throw e;
 		}
 		updated = false;
+	}
+	
+	/**
+	 * Return the word to use, depending if the dictionary is case insensitive or not.
+	 * @param word
+	 *        the actual word.
+	 * @return the lower case version of the word, if the dictionary is case sensitive.
+	 */
+	private String getLowerCaseWord (final String word) {
+		return isCaseSensitive() ? word : word.toLowerCase(caseInsensitive);
 	}
 	
 	/**
@@ -144,7 +177,7 @@ public class Dictionary {
 		}
 		updated = false;
 	}
-
+	
 	/**
 	 * Return the attribute editable.
 	 * @return the attribute editable.
@@ -152,7 +185,7 @@ public class Dictionary {
 	public boolean isEditable () {
 		return editable;
 	}
-
+	
 	/**
 	 * Return the attribute updated.
 	 * @return the attribute updated.
@@ -160,7 +193,15 @@ public class Dictionary {
 	public boolean isUpdated () {
 		return updated;
 	}
-
+	
+	/**
+	 * Return <code>true</code> if the dictionary is case sensitive.
+	 * @return <code>true</code> if the dictionary is case sensitive.
+	 */
+	public boolean isCaseSensitive () {
+		return caseInsensitive == null;
+	}
+	
 	/**
 	 * Return the number of words in the dictionary.
 	 * @return the number of words.
@@ -179,7 +220,7 @@ public class Dictionary {
 		if (word == null) {
 			return false;
 		}
-		return dictionary.contains(word);
+		return dictionary.contains(getLowerCaseWord(word));
 	}
 	
 	/**
@@ -190,8 +231,7 @@ public class Dictionary {
 	 *         world was already in it.
 	 */
 	public boolean addWord (final String word) {
-		Objects.requireNonNull(word);
-		final String wordToAdd = word.trim();
+		final String wordToAdd = getLowerCaseWord(Objects.requireNonNull(word).trim());
 		if (dictionary.contains(wordToAdd)) {
 			return false;
 		}

@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -159,6 +160,15 @@ public class DictionaryTest {
 	}
 	
 	/**
+	 * Test method for {@link Dictionary#isCaseSensitive()}.
+	 */
+	@Test
+	public void testIsCaseSensitive () {
+		assertTrue(dictionary.isCaseSensitive());
+		assertTrue(editableDictionary.isCaseSensitive());
+	}
+	
+	/**
 	 * Test method for {@link Dictionary#size()}.
 	 * @throws IOException
 	 *         if there was an error while saving the dictionary.
@@ -192,5 +202,18 @@ public class DictionaryTest {
 		assertFalse(dictionary.contains("zedzfrgtlermforopfz"));
 		assertTrue(dictionary.addWord("zedzfrgtlermforopfz"));
 		assertTrue(dictionary.contains("zedzfrgtlermforopfz"));
+	}
+	
+	/**
+	 * Test method for a case insensitive dictionary.
+	 * @throws IOException
+	 *         if the dictionary file cannot be read.
+	 */
+	@Test
+	public void testCaseInsensitiveDictionnary () throws IOException {
+		final Dictionary caseInsensitiveDictionary = new Dictionary(dictionaryFile, StandardCharsets.UTF_8, false, Locale.FRENCH);
+		assertFalse(caseInsensitiveDictionary.isCaseSensitive());
+		assertTrue(caseInsensitiveDictionary.contains("mot"));
+		assertTrue(caseInsensitiveDictionary.contains("MOT"));
 	}
 }
