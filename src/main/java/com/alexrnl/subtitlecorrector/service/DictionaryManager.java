@@ -2,6 +2,7 @@ package com.alexrnl.subtitlecorrector.service;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -205,7 +206,7 @@ public class DictionaryManager implements SessionStateListener {
 				if (lg.isLoggable(Level.INFO)) {
 					lg.info("Adding dictionary " + key + " from file " + file);
 				}
-				dictionaryMap.put(key, new Dictionary(file, isEditable()));
+				dictionaryMap.put(key, buildDictionary(file));
 			}
 			return FileVisitResult.CONTINUE;
 		}
@@ -225,10 +226,14 @@ public class DictionaryManager implements SessionStateListener {
 		protected abstract T getDictionaryKey (Path file);
 		
 		/**
-		 * Return <code>true</code> if the dictionary should be editable.
-		 * @return <code>true</code> for an editable dictionary.
+		 * Build the dictionary to add to the map.
+		 * @param file
+		 *        the path of the dictionary.
+		 * @return the dictionary to use.
+		 * @throws IOException
+		 *         if there was an error while buildign the dictionary.
 		 */
-		protected abstract boolean isEditable ();
+		protected abstract Dictionary buildDictionary (Path file) throws IOException;
 	}
 	
 	/**
@@ -236,23 +241,23 @@ public class DictionaryManager implements SessionStateListener {
 	 * @author Alex
 	 */
 	private class LocaleDictionaryFileVisitor extends DictionaryFileVisitor<Locale> {
-
 		/**
 		 * Constructor #1.<br />
 		 */
 		public LocaleDictionaryFileVisitor () {
 			super(localeDictionaries);
 		}
-
+		
 		@Override
 		protected Locale getDictionaryKey (final Path file) {
 			return Locale.forLanguageTag(IOUtils.getFilename(file));
 		}
-
+		
 		@Override
-		protected boolean isEditable () {
-			return false;
+		protected Dictionary buildDictionary (final Path file) throws IOException {
+			return new Dictionary(file, StandardCharsets.UTF_8, false, getDictionaryKey(file));
 		}
+		
 	}
 	
 	/**
@@ -260,22 +265,21 @@ public class DictionaryManager implements SessionStateListener {
 	 * @author Alex
 	 */
 	private class CustomDictionaryFileVisitor extends DictionaryFileVisitor<String> {
-
 		/**
 		 * Constructor #1.<br />
 		 */
 		public CustomDictionaryFileVisitor () {
 			super(customDictionaries);
 		}
-
+		
 		@Override
 		protected String getDictionaryKey (final Path file) {
 			return IOUtils.getFilename(file);
 		}
-
+		
 		@Override
-		protected boolean isEditable () {
-			return true;
+		protected Dictionary buildDictionary (final Path file) throws IOException {
+			return new Dictionary(file, true);
 		}
 	}
 }
