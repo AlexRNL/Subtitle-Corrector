@@ -18,6 +18,33 @@ public interface UserPrompt extends SessionStateListener {
 	void setTranslator (Translator translator);
 	
 	/**
+	 * Display an information message to the user.
+	 * @param translationKey
+	 *        the translation key matching the message.
+	 * @param parameters
+	 *        the parameters of the translation message.
+	 */
+	void information (String translationKey, Object... parameters);
+	
+	/**
+	 * Display a warning message to the user.
+	 * @param translationKey
+	 *        the translation key matching the message.
+	 * @param parameters
+	 *        the parameters of the translation message.
+	 */
+	void warning (String translationKey, Object... parameters);
+	
+	/**
+	 * Display an error message to the user.
+	 * @param translationKey
+	 *        the translation key matching the message.
+	 * @param parameters
+	 *        the parameters of the translation message.
+	 */
+	void error (String translationKey, Object... parameters);
+	
+	/**
 	 * Prompt the user to confirm a replacement of a {@link Word}.<br />
 	 * Ask the user to confirm the replacement of the <code>original</code> {@link Word} by the
 	 * <code>replacement</code> String.

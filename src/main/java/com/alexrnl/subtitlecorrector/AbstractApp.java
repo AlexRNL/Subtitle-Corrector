@@ -15,6 +15,7 @@ import com.alexrnl.subtitlecorrector.io.SubtitleFormatManager;
 import com.alexrnl.subtitlecorrector.io.subrip.SubRip;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
 import com.alexrnl.subtitlecorrector.service.SessionManager;
+import com.alexrnl.subtitlecorrector.service.SubtitleProvider;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
 
 /**
@@ -33,6 +34,8 @@ public abstract class AbstractApp {
 	private final Map<String, Strategy>	strategies;
 	/** The subtitle format manager */
 	private final SubtitleFormatManager	subtitleFormatManager;
+	/** The subtitle provider */
+	private final SubtitleProvider		subtitleProvider;
 	
 	/**
 	 * Default constructor.<br />
@@ -71,6 +74,8 @@ public abstract class AbstractApp {
 		
 		subtitleFormatManager = new SubtitleFormatManager();
 		subtitleFormatManager.registerFormat(new SubRip());
+		
+		subtitleProvider = new SubtitleProvider(subtitleFormatManager, userPrompt);
 	}
 	
 	/**
@@ -128,6 +133,14 @@ public abstract class AbstractApp {
 		return subtitleFormatManager;
 	}
 	
+	/**
+	 * Return the attribute subtitleProvider.
+	 * @return the attribute subtitleProvider.
+	 */
+	protected SubtitleProvider getSubtitleProvider () {
+		return subtitleProvider;
+	}
+
 	/**
 	 * Launch the application.<br />
 	 * @return <code>true</code> if the application has been launched successfully.

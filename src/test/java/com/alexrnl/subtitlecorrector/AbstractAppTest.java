@@ -134,4 +134,12 @@ public class AbstractAppTest {
 		assertEquals(1, subtitleFormatManager.getAvailableFormats().size());
 		assertNotNull(subtitleFormatManager.getFormatByName(SubRip.SUBRIP_NAME));
 	}
+	
+	/**
+	 * Test method for {@link AbstractApp#getSubtitleProvider()}.
+	 */
+	@Test
+	public void testGetSubtitleProvider () {
+		assertNotNull(app.getSubtitleProvider());
+	}
 }

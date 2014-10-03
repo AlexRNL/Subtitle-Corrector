@@ -19,7 +19,7 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  */
 public class ConsoleUserPrompt implements UserPrompt {
 	/** The translator to use */
-	private Translator	translator;
+	private Translator			translator;
 	/** The console input stream */
 	private final InputStream	input;
 	/** The scanner plugged on the console inputScanner */
@@ -52,18 +52,18 @@ public class ConsoleUserPrompt implements UserPrompt {
 	public void setTranslator (final Translator translator) {
 		this.translator = translator;
 	}
-
+	
 	@Override
 	public void startSession (final SessionParameters parameters) {
 		if (translator == null) {
-			throw new IllegalStateException("Cannot start session without translator set");
+			throw new IllegalStateException("Cannot start session without translator");
 		}
 		if (inputScanner != null) {
 			throw new IllegalStateException("Session was not properly stop, inputScanner was not null");
 		}
 		inputScanner = new Scanner(input);
 	}
-
+	
 	@Override
 	public void stopSession () {
 		if (inputScanner == null) {
@@ -72,6 +72,23 @@ public class ConsoleUserPrompt implements UserPrompt {
 		inputScanner.close();
 		inputScanner = null;
 		
+	}
+	
+	@Override
+	public void information (final String translationKey, final Object... parameters) {
+		output.println(translator.get(translationKey, parameters));
+	}
+	
+	@Override
+	public void warning (final String translationKey, final Object... parameters) {
+		// TODO add WARN in front
+		output.println(translator.get(translationKey, parameters));
+	}
+	
+	@Override
+	public void error (final String translationKey, final Object... parameters) {
+		// TODO add ERROR in front
+		output.println(translator.get(translationKey, parameters));
 	}
 
 	@Override

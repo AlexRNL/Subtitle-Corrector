@@ -188,16 +188,86 @@ public final class TranslationKeys {
 	}
 	
 	/**
+	 * The translations for the subtitle provider.
+	 * @author Alex
+	 */
+	public static final class SubtitleProvider {
+		/** The root key for the subtitle provider translations */
+		private static final String	SUBTITLE_PROVIDER_KEY	= "subtitleprovider";
+		
+		/** The key for the subtitle provider translation */
+		private final String		subtitleProviderKey;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param parentKey
+		 *        the key from the parent category.
+		 */
+		private SubtitleProvider (final String parentKey) {
+			super();
+			subtitleProviderKey = parentKey + HIERARCHY_SEPARATOR + SUBTITLE_PROVIDER_KEY;
+		}
+
+		/**
+		 * Return the translation for the lack of access to files.
+		 * @return the translation for no access message.
+		 */
+		public String noAccess () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "noaccess";
+		}
+
+		/**
+		 * Return the translation for the folder visit error.
+		 * @return the translation for the folder visit error.
+		 */
+		public String folderVisitError () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "foldervisiterror";
+		}
+
+		/**
+		 * Return the translation for the
+		 * @return the translation for the
+		 */
+		public String notFileNotDirectory () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "notfilenotdirectory";
+		}
+
+		/**
+		 * Return the translation for the subtitle file read error.
+		 * @return the translation for the the subtitle file read error.
+		 */
+		public String subtitleFileReadError () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "subtitlefilereaderror";
+		}
+
+		/**
+		 * Return the translation for the no subtitle to correct message.
+		 * @return the translation for the no subtitle to correct message.
+		 */
+		public String noSubtitleToCorrect () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "nosubtitletocorrect";
+		}
+	}
+	
+	/**
+	 * The subtitle provider translations.
+	 * @return the translations for the subtitle provider.
+	 */
+	public SubtitleProvider subtitleProvider () {
+		return new SubtitleProvider(subtitleCorrectorKey);
+	}
+	
+	/**
 	 * The translation for the main window.
 	 * @author Alex
 	 */
 	public static final class MainWindow {
 		/** The root key for the main window translations */
-		private static final String MAIN_WINDOW_KEY	= "mainwindow";
+		private static final String	MAIN_WINDOW_KEY	= "mainwindow";
 		
 		/** The key for the main window translation */
-		private final String mainWindowKey;
-		
+		private final String		mainWindowKey;
+
 		/**
 		 * Constructor #1.<br />
 		 * @param parentKey
@@ -274,7 +344,7 @@ public final class TranslationKeys {
 		 * @param parentKey
 		 *        the key from the parent category.
 		 */
-		public Console (final String parentKey) {
+		private Console (final String parentKey) {
 			super();
 			this.consoleKey = parentKey + HIERARCHY_SEPARATOR + CONSOLE_KEY;
 		}
@@ -319,7 +389,7 @@ public final class TranslationKeys {
 			 * @param parentKey
 			 *        the key from the parent category.
 			 */
-			public UserPrompt (final String parentKey) {
+			private UserPrompt (final String parentKey) {
 				super();
 				this.userPromptKey = parentKey + HIERARCHY_SEPARATOR + USER_PROMPT_KEY;
 			}
@@ -386,7 +456,7 @@ public final class TranslationKeys {
 			 * @param parentKey
 			 *        the key from the parent category.
 			 */
-			public App (final String parentKey) {
+			private App (final String parentKey) {
 				super();
 				this.appKey = parentKey + HIERARCHY_SEPARATOR + APP_KEY;
 			}
@@ -394,46 +464,6 @@ public final class TranslationKeys {
 			@Override
 			public String toString () {
 				return appKey;
-			}
-			
-			/**
-			 * Return the translation for the lack of access to files.
-			 * @return the translation for no access message.
-			 */
-			public String noAccess () {
-				return appKey + HIERARCHY_SEPARATOR + "noaccess";
-			}
-			
-			/**
-			 * Return the translation for the folder visit error.
-			 * @return the translation for the folder visit error.
-			 */
-			public String folderVisitError () {
-				return appKey + HIERARCHY_SEPARATOR + "foldervisiterror";
-			}
-			
-			/**
-			 * Return the translation for the
-			 * @return the translation for the
-			 */
-			public String notFileNotDirectory () {
-				return appKey + HIERARCHY_SEPARATOR + "notfilenotdirectory";
-			}
-			
-			/**
-			 * Return the translation for the subtitle file read error.
-			 * @return the translation for the the subtitle file read error.
-			 */
-			public String subtitleFileReadError () {
-				return appKey + HIERARCHY_SEPARATOR + "subtitlefilereaderror";
-			}
-			
-			/**
-			 * Return the translation for the no subtitle to correct message.
-			 * @return the translation for the no subtitle to correct message.
-			 */
-			public String noSubtitleToCorrect () {
-				return appKey + HIERARCHY_SEPARATOR + "nosubtitletocorrect";
 			}
 			
 			/**

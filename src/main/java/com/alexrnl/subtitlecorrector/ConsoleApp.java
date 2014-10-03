@@ -3,20 +3,12 @@ package com.alexrnl.subtitlecorrector;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.arguments.Arguments;
@@ -106,60 +98,8 @@ public class ConsoleApp extends AbstractApp {
 	public boolean launch () {
 		final App appKey = TranslationKeys.KEYS.console().app();
 		
-		final boolean exists = Files.exists(workingFiles);
-		final boolean reads = Files.isReadable(workingFiles);
-		if (!exists || !reads) {
-			out.println(getTranslator().get(appKey.noAccess(), workingFiles));
-			lg.severe("Path " + workingFiles + " does " + (exists ? "" : "not") + " exist and can"
-					+ (reads ? "" : "not") + " be read");
-			return false;
-		}
-		
-		// Gather files
-		final Set<Path> files = new TreeSet<>();
-		if (Files.isDirectory(workingFiles)) {
-			try {
-				Files.walkFileTree(workingFiles, new SubtitleVisitor(files));
-			} catch (final IOException e) {
-				out.println(getTranslator().get(appKey.folderVisitError(), workingFiles));
-				lg.warning("Could not retrieve subtitles to process: " + ExceptionUtils.display(e));
-				return false;
-			}
-		} else if (Files.exists(workingFiles)) {
-			files.add(workingFiles);
-		} else {
-			out.println(getTranslator().get(appKey.notFileNotDirectory(), workingFiles));
-			lg.severe(workingFiles + " is not a directory or a file");
-			return false;
-		}
-		
-		// Read files
-		final Map<SubtitleFile, SubtitleFormat> subtitles = new HashMap<>(files.size(), 1.0f);
-		for (final Path file : files) {
-			final Set<SubtitleFormat> readers = getSubtitleFormatManager().getFormatByPath(file);
-			final SubtitleFormat format;
-			
-			if (readers.isEmpty()) {
-				// TODO display error?
-				continue;
-			}
-			if (readers.size() == 1) {
-				format = readers.iterator().next();
-			} else {
-				// TODO select file format
-				throw new UnsupportedOperationException("Several format sharing an extension is not supported");
-			}
-			
-			try {
-				subtitles.put(format.getReader().readFile(file), format);
-			} catch (final IOException e) {
-				out.println(getTranslator().get(appKey.subtitleFileReadError(), file));
-				lg.warning("Exception while parsing file " + file + ": " + ExceptionUtils.display(e));
-			}
-		}
-		
+		final Map<SubtitleFile, SubtitleFormat> subtitles = getSubtitleProvider().loadSubtitles(workingFiles);
 		if (subtitles.isEmpty()) {
-			out.println("No subtitle file to correct found, check available format and extensions");
 			return false;
 		}
 		
@@ -231,45 +171,4 @@ public class ConsoleApp extends AbstractApp {
 		return true;
 	}
 	
-	/**
-	 * Visitor which add the subtitle file whose format is known.
-	 * TODO externalize for re-usability
-	 * @author Alex
-	 */
-	private class SubtitleVisitor extends SimpleFileVisitor<Path> {
-		/** The set of files to populate */
-		private final Set<Path>	files;
-		
-		/**
-		 * Constructor #1.<br />
-		 * @param files
-		 *        the set to populate with the subtitle files.
-		 */
-		public SubtitleVisitor (final Set<Path> files) {
-			super();
-			this.files = files;
-		}
-
-		@Override
-		public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs) throws IOException {
-			// TODO allow custom extensions?
-			if (!getSubtitleFormatManager().getFormatByPath(file).isEmpty()) {
-				if (files.add(file)) {
-					if (lg.isLoggable(Level.INFO)) {
-						lg.info("File " + file + " added to subtitles to process.");
-					}
-				} else {
-					lg.warning("Could not add file " + file + " to set because it is already present.");
-				}
-			}
-			return FileVisitResult.CONTINUE;
-		}
-
-		@Override
-		public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
-			lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
-			return FileVisitResult.CONTINUE;
-		}
-		
-	}
 }

@@ -16,6 +16,13 @@
 	<entry key="subtitlecorrector.strategy.fixpunctuation.description">Cette correction permet d'ajuster les espaces autour des caractères de ponctuation dans les sous-titres.</entry>
 	<entry key="subtitlecorrector.strategy.fixpunctuation.locale">Le type de correction à appliquer sur les ponctuations</entry>
 	
+	<!-- Translations for the subtitle provider -->
+	<entry key="subtitlecorrector.subtitleprovider.noaccess">Impossible d'accédder aux fichiers %0</entry>
+	<entry key="subtitlecorrector.subtitleprovider.foldervisiterror">Impossible de récupérer les sous-titres dans le dossier %0</entry>
+	<entry key="subtitlecorrector.subtitleprovider.notfilenotdirectory">Le chemin %0 n'est ni un fichier ni un dossier</entry>
+	<entry key="subtitlecorrector.subtitleprovider.subtitlefilereaderror">Le sous-titre %0 n'a pas pu être lu correctement, il ne sera pas corrigé</entry>
+	<entry key="subtitlecorrector.subtitleprovider.nosubtitletocorrect">Pas de fichier de sous-titre à corriger trouvés, vérifiez les formats de sous-titres disponibles ainsi que les extensions de fichiers.</entry>
+	
 	<!-- Translations for the main window -->
 	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>
 	<entry key="subtitlecorrector.mainwindow.subtitleLabel">Sous titre à corriger</entry>
@@ -34,11 +41,6 @@
 	<entry key="subtitlecorrector.console.userprompt.changereplacement">Remplacer par : </entry>
 	<entry key="subtitlecorrector.console.userprompt.rememberchoice">Mémoriser ce remplacement pour le reste de la session ?</entry>
 	<!-- Translations for console application -->
-	<entry key="subtitlecorrector.console.app.noaccess">Impossible d'accédder aux fichiers %0</entry>
-	<entry key="subtitlecorrector.console.app.foldervisiterror">Impossible de récupérer les sous-titres dans le dossier %0</entry>
-	<entry key="subtitlecorrector.console.app.notfilenotdirectory">Le chemin %0 n'est ni un fichier ni un dossier</entry>
-	<entry key="subtitlecorrector.console.app.subtitlefilereaderror">Le sous-titre %0 n'a pas pu être lu correctement, il ne sera pas corrigé</entry>
-	<entry key="subtitlecorrector.console.app.nosubtitletocorrect">Pas de fichier de sous-titre à corriger trouvés, vérifiez les formats de sous-titres disponibles ainsi que les extensions de fichiers.</entry>
 	<entry key="subtitlecorrector.console.app.strategyparametersinput">Entrez la configuration pour la stratégie %0 :</entry>
 	<entry key="subtitlecorrector.console.app.strategyparametersinvalidvalue">Valeur non valide pour le paramètre : %0</entry>
 	<entry key="subtitlecorrector.console.app.subtitlewriteerror">Le sous-titre corrigé %0 n'a pas pu être correctement sauvegardé : %1</entry>

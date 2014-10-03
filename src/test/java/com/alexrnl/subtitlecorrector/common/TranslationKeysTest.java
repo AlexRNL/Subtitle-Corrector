@@ -27,6 +27,12 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.strategy.fixpunctuation.description", KEYS.strategy().fixPunctuation().description());
 		assertEquals("subtitlecorrector.strategy.fixpunctuation.locale", KEYS.strategy().fixPunctuation().locale());
 		
+		assertEquals("subtitlecorrector.subtitleprovider.noaccess", KEYS.subtitleProvider().noAccess());
+		assertEquals("subtitlecorrector.subtitleprovider.foldervisiterror", KEYS.subtitleProvider().folderVisitError());
+		assertEquals("subtitlecorrector.subtitleprovider.notfilenotdirectory", KEYS.subtitleProvider().notFileNotDirectory());
+		assertEquals("subtitlecorrector.subtitleprovider.subtitlefilereaderror", KEYS.subtitleProvider().subtitleFileReadError());
+		assertEquals("subtitlecorrector.subtitleprovider.nosubtitletocorrect", KEYS.subtitleProvider().noSubtitleToCorrect());
+		
 		assertEquals("subtitlecorrector.mainwindow.title", KEYS.mainWindow().title());
 		assertEquals("subtitlecorrector.mainwindow.subtitleLabel", KEYS.mainWindow().subtitleLabel());
 		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
@@ -42,11 +48,6 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.console.userprompt.changereplacement", KEYS.console().userPrompt().changeReplacement());
 		assertEquals("subtitlecorrector.console.userprompt.rememberchoice", KEYS.console().userPrompt().rememberChoice());
 		assertEquals("subtitlecorrector.console.app", KEYS.console().app().toString());
-		assertEquals("subtitlecorrector.console.app.noaccess", KEYS.console().app().noAccess());
-		assertEquals("subtitlecorrector.console.app.foldervisiterror", KEYS.console().app().folderVisitError());
-		assertEquals("subtitlecorrector.console.app.notfilenotdirectory", KEYS.console().app().notFileNotDirectory());
-		assertEquals("subtitlecorrector.console.app.subtitlefilereaderror", KEYS.console().app().subtitleFileReadError());
-		assertEquals("subtitlecorrector.console.app.nosubtitletocorrect", KEYS.console().app().noSubtitleToCorrect());
 		assertEquals("subtitlecorrector.console.app.strategyparametersinput", KEYS.console().app().strategyParametersInput());
 		assertEquals("subtitlecorrector.console.app.strategyparametersinvalidvalue", KEYS.console().app().strategyParametersInvalidValue());
 		assertEquals("subtitlecorrector.console.app.subtitlewriteerror", KEYS.console().app().subtitleWriteError());
