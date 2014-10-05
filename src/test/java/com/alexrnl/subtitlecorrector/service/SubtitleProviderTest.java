@@ -2,13 +2,13 @@ package com.alexrnl.subtitlecorrector.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -59,10 +59,33 @@ public class SubtitleProviderTest {
 	
 	/**
 	 * Test method for {@link SubtitleProvider#loadSubtitles(Path)}.
+	 * Check that multiple subtitles are loaded.
+	 * @throws IOException
+	 *         if there was an I/O error.
 	 */
 	@Test
-	public void testLoadSubtitles () {
-		fail("Not yet implemented"); // TODO
+	public void testLoadSubtitles () throws IOException {
+		System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
+		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
+		final SubtitleReader subtitleReader = mock(SubtitleReader.class);
+		final SubtitleFile subtitleFile = mock(SubtitleFile.class);
+		final SubtitleFile secondSubtitle = mock(SubtitleFile.class);
+		final Path folder = subtitleFolder.newFolder().toPath();
+		final Path file = folder.resolve("single.srt");
+		final Path second = folder.resolve("other.srt");
+		Files.createFile(file);
+		Files.createFile(second);
+
+		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
+		when(subtitleFormatManager.getFormatByPath(second)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
+		when(subtitleFormat.getReader()).thenReturn(subtitleReader);
+		when(subtitleReader.readFile(file)).thenReturn(subtitleFile);
+		when(subtitleReader.readFile(second)).thenReturn(secondSubtitle);
+		final Map<SubtitleFile, SubtitleFormat> subtitles = subtitleProvider.loadSubtitles(folder);
+		assertEquals(2, subtitles.size());
+//		final Entry<SubtitleFile, SubtitleFormat> loaded = subtitles.entrySet().iterator().next();
+//		assertEquals(subtitleFile, loaded.getKey());
+//		assertEquals(subtitleFormat, loaded.getValue());
 	}
 	
 	/**
@@ -106,5 +129,32 @@ public class SubtitleProviderTest {
 		final Entry<SubtitleFile, SubtitleFormat> loaded = subtitles.entrySet().iterator().next();
 		assertEquals(subtitleFile, loaded.getKey());
 		assertEquals(subtitleFormat, loaded.getValue());
+	}
+	
+	/**
+	 * Test with a subtitle which has no proper format to read.
+	 * @throws IOException
+	 *         if there was an I/O error.
+	 */
+	@Test
+	public void testSingleSubtitleWithBadFormat () throws IOException {
+		final Path file = subtitleFolder.newFile("single.srt").toPath();
+		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<SubtitleFormat>());
+		final Map<SubtitleFile, SubtitleFormat> subtitles = subtitleProvider.loadSubtitles(file);
+		assertTrue(subtitles.isEmpty());
+	}
+	
+	/**
+	 * Test with a subtitle which multiple format to read.
+	 * @throws IOException
+	 *         if there was an I/O error.
+	 */
+	@Test(expected = UnsupportedOperationException.class)
+	public void testMultipleFormatSubtitle () throws IOException {
+		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
+		final Path file = subtitleFolder.newFile("single.srt").toPath();
+		
+		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat, mock(SubtitleFormat.class))));
+		subtitleProvider.loadSubtitles(file);
 	}
 }
