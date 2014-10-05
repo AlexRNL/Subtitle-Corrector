@@ -77,7 +77,7 @@ public class SubtitleProvider {
 				LG.warning("Could not retrieve subtitles to process: " + ExceptionUtils.display(e));
 				return Collections.emptyMap();
 			}
-		} else if (Files.exists(workingFiles)) {
+		} else if (Files.isRegularFile(workingFiles)) {
 			files.add(workingFiles);
 		} else {
 			userPrompt.error(TRANSLATION_KEY.notFileNotDirectory(), workingFiles);
