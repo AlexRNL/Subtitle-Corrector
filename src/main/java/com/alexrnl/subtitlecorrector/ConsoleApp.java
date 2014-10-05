@@ -53,7 +53,7 @@ public class ConsoleApp extends AbstractApp {
 	@Param(names = { "-l" }, description = "the language of the subtitle")
 	private Locale				locale;
 	/** Flag to indicate to overwrite original subtitles file */
-	@Param(names = { "-o" }, description = "overwrite subtitle file while correcting", required = false)
+	@Param(names = { "-o" }, description = "overwrite subtitle file while correcting")
 	private boolean				overwrite;
 	
 	
