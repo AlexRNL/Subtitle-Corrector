@@ -4,6 +4,9 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 import com.alexrnl.commons.translation.Translator;
@@ -89,6 +92,40 @@ public class ConsoleUserPrompt implements UserPrompt {
 	public void error (final String translationKey, final Object... parameters) {
 		// TODO add ERROR in front
 		output.println(translator.get(translationKey, parameters));
+	}
+	
+	@Override
+	public <T> T askChoice (final Collection<T> choices, final String translationKey, final Object... parameters) {
+		if (inputScanner == null) {
+			throw new IllegalStateException("Session was not properly started, inputScanner is null, " +
+					"cannot ask choice");
+		}
+		
+		final List<T> arrayChoices = new ArrayList<>(choices.size());
+		arrayChoices.add(null);
+		int choiceIndex = 0;
+		final StringBuilder question = new StringBuilder(translator.get(translationKey, parameters));
+		for (final T choice : choices) {
+			question.append('\n').append('\t').append(++choiceIndex).append('\t')
+				.append(translator.get(choice.toString()));
+			arrayChoices.add(choice);
+		}
+		
+		boolean valid = false;
+		int choice = -1;
+		while (!valid) {
+			output.println(question);
+			output.print(" > ");
+			choice = inputScanner.nextInt();
+			if (choice >= 0 && choice < arrayChoices.size()) {
+				valid = true;
+			} else {
+				// TODO display error
+				inputScanner.nextLine();
+			}
+		}
+		
+		return arrayChoices.get(choice);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector.service;
 
+import java.util.Collection;
+
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
 
@@ -43,6 +45,15 @@ public interface UserPrompt extends SessionStateListener {
 	 *        the parameters of the translation message.
 	 */
 	void error (String translationKey, Object... parameters);
+	
+	/**
+	 * Ask the user to choose between several options.
+	 * @param choices the available choices.
+	 * @param translationKey the translation key of the message to the user.
+	 * @param parameters the parameters of the translation.
+	 * @return the option chosen, or <code>null</code> if the user cancelled its choice.
+	 */
+	<T> T askChoice (Collection<T> choices, String translationKey, Object... parameters);
 	
 	/**
 	 * Prompt the user to confirm a replacement of a {@link Word}.<br />

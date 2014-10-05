@@ -91,15 +91,18 @@ public class SubtitleProvider {
 			final Set<SubtitleFormat> readers = subtitleFormatManager.getFormatByPath(file);
 			final SubtitleFormat format;
 			
-			if (readers.isEmpty()) {
-				// TODO display error?
-				continue;
-			}
 			if (readers.size() == 1) {
 				format = readers.iterator().next();
 			} else {
-				// TODO select file format
-				throw new UnsupportedOperationException("Several format sharing an extension is not supported");
+				if (readers.isEmpty()) {
+					readers.addAll(subtitleFormatManager.getAvailableFormats());
+				}
+				
+				format = userPrompt.askChoice(readers, TRANSLATION_KEY.chooseSubtitleFormat(), file);
+			}
+			
+			if (format == null) {
+				continue;
 			}
 			
 			try {

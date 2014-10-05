@@ -225,13 +225,21 @@ public final class TranslationKeys {
 		}
 
 		/**
-		 * Return the translation for the
-		 * @return the translation for the
+		 * Return the translation for the not file neither directory error.
+		 * @return the translation for the not file/not directory error.
 		 */
 		public String notFileNotDirectory () {
 			return subtitleProviderKey + HIERARCHY_SEPARATOR + "notfilenotdirectory";
 		}
-
+		
+		/**
+		 * Return the translation for the chooser for the subtitle format.
+		 * @return the translation for the chooser.
+		 */
+		public String chooseSubtitleFormat () {
+			return subtitleProviderKey + HIERARCHY_SEPARATOR + "choosesubtitleformat";
+		}
+		
 		/**
 		 * Return the translation for the subtitle file read error.
 		 * @return the translation for the the subtitle file read error.

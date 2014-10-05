@@ -30,6 +30,7 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.subtitleprovider.noaccess", KEYS.subtitleProvider().noAccess());
 		assertEquals("subtitlecorrector.subtitleprovider.foldervisiterror", KEYS.subtitleProvider().folderVisitError());
 		assertEquals("subtitlecorrector.subtitleprovider.notfilenotdirectory", KEYS.subtitleProvider().notFileNotDirectory());
+		assertEquals("subtitlecorrector.subtitleprovider.choosesubtitleformat", KEYS.subtitleProvider().chooseSubtitleFormat());
 		assertEquals("subtitlecorrector.subtitleprovider.subtitlefilereaderror", KEYS.subtitleProvider().subtitleFileReadError());
 		assertEquals("subtitlecorrector.subtitleprovider.nosubtitletocorrect", KEYS.subtitleProvider().noSubtitleToCorrect());
 		

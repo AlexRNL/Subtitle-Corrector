@@ -20,6 +20,7 @@
 	<entry key="subtitlecorrector.subtitleprovider.noaccess">Impossible d'accédder aux fichiers %0</entry>
 	<entry key="subtitlecorrector.subtitleprovider.foldervisiterror">Impossible de récupérer les sous-titres dans le dossier %0</entry>
 	<entry key="subtitlecorrector.subtitleprovider.notfilenotdirectory">Le chemin %0 n'est ni un fichier ni un dossier</entry>
+	<entry key="subtitlecorrector.subtitleprovider.choosesubtitleformat">Sélectionnez le format du fichier %0</entry>
 	<entry key="subtitlecorrector.subtitleprovider.subtitlefilereaderror">Le sous-titre %0 n'a pas pu être lu correctement, il ne sera pas corrigé</entry>
 	<entry key="subtitlecorrector.subtitleprovider.nosubtitletocorrect">Pas de fichier de sous-titre à corriger trouvés, vérifiez les formats de sous-titres disponibles ainsi que les extensions de fichiers.</entry>
 	
