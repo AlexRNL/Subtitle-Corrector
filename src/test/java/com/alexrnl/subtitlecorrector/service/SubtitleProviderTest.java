@@ -2,6 +2,8 @@ package com.alexrnl.subtitlecorrector.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyCollectionOf;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -142,19 +144,30 @@ public class SubtitleProviderTest {
 		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<SubtitleFormat>());
 		final Map<SubtitleFile, SubtitleFormat> subtitles = subtitleProvider.loadSubtitles(file);
 		assertTrue(subtitles.isEmpty());
+		verify(userPrompt).askChoice(anyCollectionOf(SubtitleFormat.class), eq(TRANSLATION_KEY.chooseSubtitleFormat()), eq(file));
 	}
 	
 	/**
-	 * Test with a subtitle which multiple format to read.
+	 * Test with a subtitle with multiple format to read.
 	 * @throws IOException
 	 *         if there was an I/O error.
 	 */
-	@Test(expected = UnsupportedOperationException.class)
+	@Test
 	public void testMultipleFormatSubtitle () throws IOException {
 		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
+		final SubtitleReader subtitleReader = mock(SubtitleReader.class);
+		final SubtitleFile subtitleFile = mock(SubtitleFile.class);
 		final Path file = subtitleFolder.newFile("single.srt").toPath();
 		
 		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat, mock(SubtitleFormat.class))));
-		subtitleProvider.loadSubtitles(file);
+		when(userPrompt.askChoice(anyCollectionOf(SubtitleFormat.class), eq(TRANSLATION_KEY.chooseSubtitleFormat()), eq(file))).thenReturn(subtitleFormat);
+		when(subtitleFormat.getReader()).thenReturn(subtitleReader);
+		when(subtitleReader.readFile(file)).thenReturn(subtitleFile);
+		final Map<SubtitleFile, SubtitleFormat> subtitles = subtitleProvider.loadSubtitles(file);
+		assertEquals(1, subtitles.size());
+		final Entry<SubtitleFile, SubtitleFormat> loaded = subtitles.entrySet().iterator().next();
+		assertEquals(subtitleFile, loaded.getKey());
+		assertEquals(subtitleFormat, loaded.getValue());
+		verify(userPrompt).askChoice(anyCollectionOf(SubtitleFormat.class), eq(TRANSLATION_KEY.chooseSubtitleFormat()), eq(file));
 	}
 }
