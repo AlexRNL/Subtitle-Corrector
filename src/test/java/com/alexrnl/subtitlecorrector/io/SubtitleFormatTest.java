@@ -102,7 +102,7 @@ public class SubtitleFormatTest {
 	 */
 	@Test
 	public void testToString () {
-		assertEquals("SubRip [srt]", subrip.toString());
-		assertEquals("SubStation Alpha [ass, ssa]", ass.toString());
+		assertEquals("SubRip", subrip.toString());
+		assertEquals("SubStation Alpha", ass.toString());
 	}
 }
