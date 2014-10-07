@@ -67,7 +67,6 @@ public class SubtitleProviderTest {
 	 */
 	@Test
 	public void testLoadSubtitles () throws IOException {
-		System.out.println("XXXXXXXXXXXXXXXXXXXXXXX");
 		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
 		final SubtitleReader subtitleReader = mock(SubtitleReader.class);
 		final SubtitleFile subtitleFile = mock(SubtitleFile.class);
