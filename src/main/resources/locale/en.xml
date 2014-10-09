@@ -20,7 +20,7 @@
 	<entry key="subtitlecorrector.subtitleprovider.noaccess">Cannot access files at %0</entry>
 	<entry key="subtitlecorrector.subtitleprovider.foldervisiterror">Could not retrieve subtitles in folder %0</entry>
 	<entry key="subtitlecorrector.subtitleprovider.notfilenotdirectory">Path %0 is neither file nor directory</entry>
-	<entry key="subtitlecorrector.subtitleprovider.choosesubtitleformat">Select the format of file %0</entry>
+	<entry key="subtitlecorrector.subtitleprovider.choosesubtitleformat">Select the format of file %0:</entry>
 	<entry key="subtitlecorrector.subtitleprovider.subtitlefilereaderror">Subtitle %0 could not be properly read, it will not be corrected</entry>
 	<entry key="subtitlecorrector.subtitleprovider.nosubtitletocorrect">No subtitle file to correct found, check available format and extensions</entry>
 	
@@ -35,8 +35,10 @@
 	<!-- Generic translations -->
 	<entry key="subtitlecorrector.console.yes">y</entry>
 	<entry key="subtitlecorrector.console.no">n</entry>
-	<entry key="subtitlecorrector.console.yesnoprompt">§subtitlecorrector.console.yes/§subtitlecorrector.console.no > </entry>
+	<entry key="subtitlecorrector.console.promptmark">> </entry>
+	<entry key="subtitlecorrector.console.yesnoprompt">§subtitlecorrector.console.yes/§subtitlecorrector.console.no §subtitlecorrector.console.promptmark</entry>
 	<!-- Translations for console user prompt -->
+	<entry key="subtitlecorrector.console.userprompt.invalidchoice">Value '%0' could not be parsed as a valid integer between 0 and %1.</entry>
 	<entry key="subtitlecorrector.console.userprompt.replace">Replace '%0' by '%1'?</entry>
 	<entry key="subtitlecorrector.console.userprompt.context">Context:</entry>
 	<entry key="subtitlecorrector.console.userprompt.changereplacement">Type the replacement: </entry>

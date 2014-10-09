@@ -2,13 +2,17 @@ package com.alexrnl.subtitlecorrector.gui.view;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +21,7 @@ import org.mockito.Mock;
 import com.alexrnl.commons.io.EditableInputStream;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
@@ -77,6 +82,95 @@ public class ConsoleUserPromptTest {
 	@Test(expected = IllegalStateException.class)
 	public void testBadStopSession () {
 		consolePrompt.stopSession();
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#information(String, Object...)}.
+	 */
+	@Test
+	public void testInformation () {
+		consolePrompt.information(TranslationKeys.KEYS.subtitleProvider().noAccess(), "myFile");
+		verify(output).println("Cannot access files at myFile");
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#warning(String, Object...)}.
+	 */
+	@Test
+	public void testWarning () {
+		consolePrompt.warning(TranslationKeys.KEYS.subtitleProvider().noAccess(), "myFile");
+		verify(output).println("Cannot access files at myFile");
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#error(String, Object...)}.
+	 */
+	@Test
+	public void testError () {
+		consolePrompt.error(TranslationKeys.KEYS.subtitleProvider().noAccess(), "myFile");
+		verify(output).println("Cannot access files at myFile");
+	}
+	
+	/**
+	 * Test that a <code>null</code> list is not allowed.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAskChoiceNullList () {
+		consolePrompt.askChoice(null, "");
+	}
+	
+	/**
+	 * Test that an empty list is not allowed.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAskChoiceEmptyList () {
+		consolePrompt.askChoice(Collections.emptyList(), "");
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.
+	 * @throws IOException
+	 *         if there is an IO issue.
+	 */
+	@Test
+	public void testAskChoice () throws IOException {
+		input.updateStream("1\n");
+		assertEquals("Aba", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		verify(output).print("unknown\n\t1\tAba\n\t2\tHjo\n\t3\tLdr\n\t> ");
+		
+		// Check choice 0 => cancelled input
+		input.updateStream("0\n");
+		assertNull(consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.
+	 * Out of range integer.
+	 * @throws IOException
+	 *         if there is an IO issue.
+	 */
+	@Test
+	public void testAskChoiceOutOfRangeInteger () throws IOException {
+		input.updateStream("8\n2\n");
+		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		verify(output).println("Value '8' could not be parsed as a valid integer between 0 and 3.");
+		
+		input.updateStream("-1\n2\n");
+		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		verify(output).println("Value '-1' could not be parsed as a valid integer between 0 and 3.");
+	}
+	
+	/**
+	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.<br />
+	 * Invalid integer case.
+	 * @throws IOException
+	 *         if there is an IO issue.
+	 */
+	@Test
+	public void testAskChoiceInvalidInteger () throws IOException {
+		input.updateStream("aba\n2\n");
+		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		verify(output).println("Value 'aba' could not be parsed as a valid integer between 0 and 3.");
 	}
 	
 	/**

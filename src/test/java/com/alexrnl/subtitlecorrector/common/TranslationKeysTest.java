@@ -42,8 +42,10 @@ public class TranslationKeysTest {
 		
 		assertEquals("subtitlecorrector.console.yes", KEYS.console().yes());
 		assertEquals("subtitlecorrector.console.no", KEYS.console().no());
+		assertEquals("subtitlecorrector.console.promptmark", KEYS.console().promptMark());
 		assertEquals("subtitlecorrector.console.yesnoprompt", KEYS.console().yesNoPrompt());
 		assertEquals("subtitlecorrector.console.userprompt", KEYS.console().userPrompt().toString());
+		assertEquals("subtitlecorrector.console.userprompt.invalidchoice", KEYS.console().userPrompt().invalidChoice());
 		assertEquals("subtitlecorrector.console.userprompt.replace", KEYS.console().userPrompt().replace());
 		assertEquals("subtitlecorrector.console.userprompt.context", KEYS.console().userPrompt().context());
 		assertEquals("subtitlecorrector.console.userprompt.changereplacement", KEYS.console().userPrompt().changeReplacement());

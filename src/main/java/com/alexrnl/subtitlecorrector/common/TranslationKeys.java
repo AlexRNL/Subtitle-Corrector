@@ -374,6 +374,14 @@ public final class TranslationKeys {
 		}
 		
 		/**
+		 * Return the prompt mark to use.
+		 * @return the translation for the prompt mark.
+		 */
+		public String promptMark () {
+			return consoleKey + HIERARCHY_SEPARATOR + "promptmark";
+		}
+		
+		/**
 		 * Return the yes/no prompt for the console.
 		 * @return the translation for the yes/no prompt.
 		 */
@@ -405,6 +413,14 @@ public final class TranslationKeys {
 			@Override
 			public String toString () {
 				return userPromptKey;
+			}
+			
+			/**
+			 * Return the translation for the invalid choice message.
+			 * @return the invalid choice message.
+			 */
+			public String invalidChoice () {
+				return userPromptKey + HIERARCHY_SEPARATOR + "invalidchoice";
 			}
 			
 			/**

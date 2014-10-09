@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys.Console;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
@@ -96,38 +97,45 @@ public class ConsoleUserPrompt implements UserPrompt {
 	
 	@Override
 	public <T> T askChoice (final Collection<T> choices, final String translationKey, final Object... parameters) {
-		if (inputScanner == null) {
-			throw new IllegalStateException("Session was not properly started, inputScanner is null, " +
-					"cannot ask choice");
+		if (choices == null || choices.isEmpty()) {
+			throw new IllegalArgumentException("Cannot propose choices with an empty list");
 		}
 		
 		final List<T> arrayChoices = new ArrayList<>(choices.size());
+		// For canceling choice
 		arrayChoices.add(null);
 		int choiceIndex = 0;
-		final StringBuilder question = new StringBuilder(translator.get(translationKey, parameters));
+		final StringBuilder questionBuilder = new StringBuilder(translator.get(translationKey, parameters));
 		for (final T choice : choices) {
-			question.append('\n').append('\t').append(++choiceIndex).append('\t')
+			questionBuilder.append('\n').append('\t').append(++choiceIndex).append('\t')
 				.append(translator.get(choice.toString()));
 			arrayChoices.add(choice);
 		}
+		questionBuilder.append('\n').append('\t').append(translator.get(TranslationKeys.KEYS.console().promptMark()));
+		final String question = questionBuilder.toString();
 		
+		final Scanner scanner = new Scanner(input);
 		boolean valid = false;
 		int choice = -1;
 		while (!valid) {
-			output.println(question);
-			output.print(" > ");
-			choice = inputScanner.nextInt();
-			if (choice >= 0 && choice < arrayChoices.size()) {
-				valid = true;
-			} else {
-				// TODO display error
-				inputScanner.nextLine();
+			output.print(question);
+			final String userInput = scanner.nextLine();
+			try {
+				choice = Integer.parseInt(userInput);
+			} catch (final NumberFormatException e) {
+				// Do nothing, choice is already invalid
+			}
+			valid = choice >= 0 && choice < arrayChoices.size();
+			if (!valid) {
+				output.println(translator.get(TranslationKeys.KEYS.console().userPrompt().invalidChoice(),
+						userInput, arrayChoices.size() - 1));
 			}
 		}
+		scanner.close();
 		
 		return arrayChoices.get(choice);
 	}
-
+	
 	@Override
 	public UserPromptAnswer confirm (final String context, final Word original, final String replacement) {
 		if (inputScanner == null) {
