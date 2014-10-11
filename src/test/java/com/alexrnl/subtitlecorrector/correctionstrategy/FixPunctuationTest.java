@@ -74,11 +74,11 @@ public class FixPunctuationTest {
 	}
 	
 	/**
-	 * Test method for {@link FixPunctuation#getName()}
+	 * Test method for {@link FixPunctuation#getTranslationKey()}
 	 */
 	@Test
-	public void testGetName () {
-		assertEquals("subtitlecorrector.strategy.fixpunctuation", fixPunctuation.getName());
+	public void testGetTranslationKey () {
+		assertEquals("subtitlecorrector.strategy.fixpunctuation", fixPunctuation.getTranslationKey());
 	}
 	
 	/**

@@ -119,7 +119,7 @@ public abstract class AbstractApp {
 	 *         translation.
 	 */
 	protected boolean addStrategy (final Strategy strategy) {
-		final String name = getTranslator().get(strategy.getName());
+		final String name = getTranslator().get(strategy.getTranslationKey());
 		final Strategy previousStrategy = strategies.put(name, strategy);
 		getSessionManager().removeSessionListener(previousStrategy);
 		return previousStrategy != null;

@@ -223,7 +223,7 @@ public class MainWindowView extends AbstractFrame {
 				break;
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();
-				strategyComboBox.setSelectedItem(translator.get(strategy.getName()));
+				strategyComboBox.setSelectedItem(translator.get(strategy.getTranslationKey()));
 				// TODO change parameter panel
 				break;
 			default:

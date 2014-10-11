@@ -91,7 +91,7 @@ public class FixPunctuation extends AbstractStrategy {
 	}
 
 	@Override
-	public String getName () {
+	public String getTranslationKey () {
 		return KEYS.strategy().fixPunctuation().toString();
 	}
 	

@@ -81,7 +81,7 @@ public class LetterReplacement implements Strategy {
 	}
 
 	@Override
-	public String getName () {
+	public String getTranslationKey () {
 		return KEYS.strategy().letterReplacement().toString();
 	}
 	

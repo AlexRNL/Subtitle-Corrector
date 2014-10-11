@@ -95,11 +95,11 @@ public class LetterReplacementTest {
 	}
 	
 	/**
-	 * Test method for {@link FixPunctuation#getName()}
+	 * Test method for {@link FixPunctuation#getTranslationKey()}
 	 */
 	@Test
-	public void testGetName () {
-		assertEquals("subtitlecorrector.strategy.letterreplacement", letterReplacement.getName());
+	public void testGetTranslationKey () {
+		assertEquals("subtitlecorrector.strategy.letterreplacement", letterReplacement.getTranslationKey());
 	}
 	
 	/**

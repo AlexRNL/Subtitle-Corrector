@@ -107,7 +107,7 @@ public class ConsoleApp extends AbstractApp {
 		final Scanner input = new Scanner(System.in);
 		final List<Parameter<?>> strategyParameters = strategy.getParameters();
 		if (!strategyParameters.isEmpty()) {
-			out.println(getTranslator().get(appKey.strategyParametersInput(), getTranslator().get(strategy.getName())));
+			out.println(getTranslator().get(appKey.strategyParametersInput(), getTranslator().get(strategy.getTranslationKey())));
 		}
 		for (final Parameter<?> parameter : strategyParameters) {
 			String prompt = "";
