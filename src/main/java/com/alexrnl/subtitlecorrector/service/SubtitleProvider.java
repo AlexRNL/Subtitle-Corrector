@@ -141,12 +141,9 @@ public class SubtitleProvider {
 		public FileVisitResult visitFile (final Path file, final BasicFileAttributes attrs) throws IOException {
 			// TODO allow custom extensions?
 			if (!subtitleFormatManager.getFormatByPath(file).isEmpty()) {
-				if (files.add(file)) {
-					if (LG.isLoggable(Level.INFO)) {
-						LG.info("File " + file + " added to subtitles to process.");
-					}
-				} else {
-					LG.warning("Could not add file " + file + " to set because it is already present.");
+				files.add(file);
+				if (LG.isLoggable(Level.INFO)) {
+					LG.info("File " + file + " added to subtitles to process.");
 				}
 			}
 			return FileVisitResult.CONTINUE;

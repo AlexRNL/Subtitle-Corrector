@@ -76,7 +76,8 @@ public class SubtitleProviderTest {
 		final Path second = folder.resolve("other.srt");
 		Files.createFile(file);
 		Files.createFile(second);
-
+		Files.createFile(folder.resolve("test.sub"));
+		
 		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
 		when(subtitleFormatManager.getFormatByPath(second)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
 		when(subtitleFormat.getReader()).thenReturn(subtitleReader);
@@ -87,6 +88,26 @@ public class SubtitleProviderTest {
 //		final Entry<SubtitleFile, SubtitleFormat> loaded = subtitles.entrySet().iterator().next();
 //		assertEquals(subtitleFile, loaded.getKey());
 //		assertEquals(subtitleFormat, loaded.getValue());
+	}
+	
+	/**
+	 * Test when a {@link SubtitleReader} throws an exception.
+	 * @throws IOException
+	 *         if there is an I/O error.
+	 */
+	@Test
+	public void testLoadSubtitleReaderError () throws IOException {
+		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
+		final SubtitleReader subtitleReader = mock(SubtitleReader.class);
+		final SubtitleFile subtitleFile = mock(SubtitleFile.class);
+		final Path file = subtitleFolder.newFile("readexception.srt").toPath();
+		
+		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
+		when(subtitleFormat.getReader()).thenReturn(subtitleReader);
+		when(subtitleReader.readFile(file)).thenThrow(IOException.class);
+		final Map<SubtitleFile, SubtitleFormat> subtitles = subtitleProvider.loadSubtitles(file);
+		assertTrue(subtitles.isEmpty());
+		verify(userPrompt).warning(TRANSLATION_KEY.subtitleFileReadError(), file);
 	}
 	
 	/**
