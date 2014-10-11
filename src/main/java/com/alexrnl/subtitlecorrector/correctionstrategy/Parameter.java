@@ -117,8 +117,8 @@ public class Parameter<T> {
 	 */
 	public Parameter (final ParameterType type, final String description, final boolean required,
 			final Parser<T> parser, final T defaultValue) {
-				this(type, description, required, parser, defaultValue, null);
-			}
+		this(type, description, required, parser, defaultValue, null);
+	}
 
 	/**
 	 * Constructor #3.<br />
