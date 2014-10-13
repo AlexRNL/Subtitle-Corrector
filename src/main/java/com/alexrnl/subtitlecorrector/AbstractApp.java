@@ -24,6 +24,9 @@ import com.alexrnl.subtitlecorrector.service.UserPrompt;
  * @author Alex
  */
 public abstract class AbstractApp {
+	/** The name of the program */
+	public static final String			PROGRAM_NAME	= "subtitleCorrector";
+	
 	/** The translator to use in the application */
 	private final Translator			translator;
 	/** The session manager to use */

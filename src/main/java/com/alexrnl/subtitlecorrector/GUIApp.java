@@ -2,6 +2,7 @@ package com.alexrnl.subtitlecorrector;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.alexrnl.commons.error.ExceptionUtils;
@@ -20,12 +21,14 @@ public final class GUIApp extends AbstractApp {
 	
 	/**
 	 * Constructor #1.<br />
+	 * @param args
+	 *        the arguments from the command line.
 	 * @throws IOException
 	 *         if a resource cannot be loaded.
 	 * @throws URISyntaxException
 	 *         if the path of the translation file cannot be build.
 	 */
-	public GUIApp () throws IOException, URISyntaxException {
+	public GUIApp (final List<String> args) throws IOException, URISyntaxException {
 		// TODO Change this later
 		super(new ConsoleUserPrompt());
 	}

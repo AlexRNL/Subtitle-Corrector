@@ -35,8 +35,6 @@ public class ConsoleApp extends AbstractApp {
 	/** Logger */
 	private static Logger		lg					= Logger.getLogger(ConsoleApp.class.getName());
 	
-	/** The name of the program */
-	private static final String	PROGRAM_NAME		= "subtitleCorrector";
 	/** The prefix to indicate that the file was corrected (in non-overwrite mode) */
 	private static final String	CORRECTED_EXTENSION	= "corrected";
 	
@@ -66,7 +64,7 @@ public class ConsoleApp extends AbstractApp {
 	 * @throws URISyntaxException
 	 *         if there is an error while building a Path.
 	 */
-	public ConsoleApp (final String[] args) throws IOException, URISyntaxException {
+	public ConsoleApp (final List<String> args) throws IOException, URISyntaxException {
 		super(new ConsoleUserPrompt());
 		out = System.out;
 		locale = Locale.getDefault();
