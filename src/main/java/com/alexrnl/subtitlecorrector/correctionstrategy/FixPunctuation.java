@@ -81,16 +81,6 @@ public class FixPunctuation extends AbstractStrategy {
 	}
 	
 	@Override
-	public Parameter<?> getParameterByName (final String name) {
-		Objects.requireNonNull(name);
-		// TODO factorise between strategies
-		if (name.equals(locale.getDescription())) {
-			return locale;
-		}
-		return null;
-	}
-
-	@Override
 	public String getTranslationKey () {
 		return KEYS.strategy().fixPunctuation().toString();
 	}
@@ -99,7 +89,7 @@ public class FixPunctuation extends AbstractStrategy {
 	public String getDescription () {
 		return KEYS.strategy().fixPunctuation().description();
 	}
-
+	
 	@Override
 	public void correct (final Subtitle subtitle) {
 		final StringBuilder newContent = new StringBuilder();

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +20,7 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  * Strategy for replacing a letter by an other in subtitles.
  * @author Alex
  */
-public class LetterReplacement implements Strategy {
+public class LetterReplacement extends AbstractStrategy {
 	/** Logger */
 	private static Logger				lg	= Logger.getLogger(LetterReplacement.class.getName());
 	
@@ -69,18 +68,6 @@ public class LetterReplacement implements Strategy {
 	}
 	
 	@Override
-	public Parameter<?> getParameterByName (final String name) {
-		Objects.requireNonNull(name);
-		for (final Parameter<?> parameter : getParameters()) {
-			if (parameter.getDescription().equals(name)) {
-				return parameter;
-			}
-		}
-		lg.info("No parameter with name " + name + " found");
-		return null;
-	}
-
-	@Override
 	public String getTranslationKey () {
 		return KEYS.strategy().letterReplacement().toString();
 	}
@@ -105,7 +92,7 @@ public class LetterReplacement implements Strategy {
 		}
 		savedChoices.clear();
 	}
-
+	
 	@Override
 	public void correct (final Subtitle subtitle) {
 		if (!subtitle.getContent().contains(originalLetter.getValue().toString())) {
