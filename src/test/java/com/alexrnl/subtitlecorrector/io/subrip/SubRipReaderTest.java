@@ -38,14 +38,15 @@ public class SubRipReaderTest {
 	 */
 	@Test
 	public void testReadFile () throws IOException, URISyntaxException {
+		final String line = System.lineSeparator();
 		final SubtitleFile subtitles = reader.readFile(Paths.get(getClass().getResource("/Suits.S03E01.srt").toURI()));
 		assertEquals(1122, subtitles.size());
 		assertEquals(-3597953, subtitles.first().getBegin());
 		assertEquals(-3593916, subtitles.first().getEnd());
-		assertEquals("You lose,\r\nwe don't merge.\r\n", subtitles.first().getContent());
+		assertEquals("You lose," + line + "we don't merge." + line, subtitles.first().getContent());
 		assertEquals(-761302, subtitles.last().getBegin());
 		assertEquals(-756302, subtitles.last().getEnd());
-		assertEquals("== sync, corrected by <font color=#00FF00>elderman</font> ==\r\n<font color=#00FFFF>@elder_man</font>\r\n", subtitles.last().getContent());
+		assertEquals("== sync, corrected by <font color=#00FF00>elderman</font> ==" + line + "<font color=#00FFFF>@elder_man</font>" + line, subtitles.last().getContent());
 	}
 	
 	/**
