@@ -66,8 +66,8 @@ public class SubRipReader extends SubtitleReader {
 			lg.warning("Could not parse '" + currentLine + "' as a number: " + ExceptionUtils.display(e));
 			throw new IOException("Could not parse a subtitle number properly", e);
 		}
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Reading subtitle#" + subtitleIndex);
+		if (lg.isLoggable(Level.FINE)) {
+			lg.fine("Reading subtitle#" + subtitleIndex);
 		}
 		
 		// Get the begin and end dates of the subtitle
@@ -79,9 +79,9 @@ public class SubRipReader extends SubtitleReader {
 		try {
 			begin = dateFormatter.parse(dates[0]).getTime();
 			end = dateFormatter.parse(dates[1]).getTime();
-			if (lg.isLoggable(Level.FINE)) {
-				lg.fine("Begin date=" + dateFormatter.format(new Date(begin)));
-				lg.fine("End date=" + dateFormatter.format(new Date(end)));
+			if (lg.isLoggable(Level.FINER)) {
+				lg.finer("Begin date=" + dateFormatter.format(new Date(begin)));
+				lg.finer("End date=" + dateFormatter.format(new Date(end)));
 			}
 		} catch (final ParseException e) {
 			lg.warning("Could not parse either " + dates[0] + " or " + dates[1] + " as a date");
