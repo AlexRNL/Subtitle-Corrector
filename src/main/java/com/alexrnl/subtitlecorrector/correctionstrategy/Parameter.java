@@ -40,7 +40,7 @@ public class Parameter<T> {
 		 * @throws IllegalArgumentException
 		 *         if the parsing could not be completed.
 		 */
-		U parse (String value) throws IllegalArgumentException;
+		U parse (String value);
 	}
 	
 	/**

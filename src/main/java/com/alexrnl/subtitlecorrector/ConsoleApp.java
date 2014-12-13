@@ -73,7 +73,7 @@ public class ConsoleApp extends AbstractApp {
 		final Arguments arguments = new Arguments(PROGRAM_NAME, this, out);
 		arguments.addParameterParser(new AbstractParser<Strategy>(Strategy.class) {
 			@Override
-			public Strategy getValue (final String parameter) throws IllegalArgumentException {
+			public Strategy getValue (final String parameter) {
 				final Strategy strategyParameter = getStrategies().get(parameter);
 				
 				if (strategyParameter == null) {
@@ -85,7 +85,7 @@ public class ConsoleApp extends AbstractApp {
 		});
 		arguments.addParameterParser(new AbstractParser<Locale>(Locale.class) {
 			@Override
-			public Locale getValue (final String parameter) throws IllegalArgumentException {
+			public Locale getValue (final String parameter) {
 				return Locale.forLanguageTag(parameter);
 			}
 		});

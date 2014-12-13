@@ -10,7 +10,7 @@ public final class StandardParameterParsers {
 	/** Parser for character parameters */
 	private static final Parser<Character> charParser = new Parser<Character>() {
 		@Override
-		public Character parse (final String value) throws IllegalArgumentException {
+		public Character parse (final String value) {
 			try {
 				return value.charAt(0);
 			} catch (final IndexOutOfBoundsException e) {
@@ -21,7 +21,7 @@ public final class StandardParameterParsers {
 	/** Parser for boolean parameters */
 	private static final Parser<Boolean> boolParser = new Parser<Boolean>() {
 		@Override
-		public Boolean parse (final String value) throws IllegalArgumentException {
+		public Boolean parse (final String value) {
 			// TODO replace with translation
 			return value.startsWith("y") || value.startsWith("true");
 		}
@@ -29,7 +29,7 @@ public final class StandardParameterParsers {
 	/** Parser for string parameters */
 	private static final Parser<String> stringParser = new Parser<String>() {
 		@Override
-		public String parse (final String value) throws IllegalArgumentException {
+		public String parse (final String value) {
 			return value;
 		}
 	};

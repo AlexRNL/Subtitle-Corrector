@@ -67,7 +67,7 @@ public class FixPunctuation extends AbstractStrategy {
 		Files.walkFileTree(punctuationRuleFolder, new HashSet<FileVisitOption>(), 1, new PunctuationFileVisitor());
 		locale = new Parameter<>(ParameterType.LIST, KEYS.strategy().fixPunctuation().locale(), new Parser<Locale>() {
 			@Override
-			public Locale parse (final String value) throws IllegalArgumentException {
+			public Locale parse (final String value) {
 				return Locale.forLanguageTag(value);
 			}
 		}, hasSpaceAfter.keySet());
