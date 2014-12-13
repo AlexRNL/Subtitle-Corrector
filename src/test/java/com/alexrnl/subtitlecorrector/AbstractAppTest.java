@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -19,7 +20,6 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.Spy;
 
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormatManager;
@@ -33,7 +33,6 @@ import com.alexrnl.subtitlecorrector.service.UserPrompt;
  */
 public class AbstractAppTest {
 	/** The abstract application to test */
-	@Spy
 	private AbstractApp app;
 	/** The (mocked) user prompt */
 	@Mock
@@ -48,7 +47,7 @@ public class AbstractAppTest {
 	 */
 	@Before
 	public void setUp () throws IOException, URISyntaxException {
-		userPrompt = mock(UserPrompt.class);
+		initMocks(this);
 		app = spy(new AbstractApp(userPrompt) {
 			@Override
 			public boolean launch () {
