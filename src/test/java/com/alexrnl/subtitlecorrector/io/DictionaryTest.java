@@ -3,6 +3,7 @@ package com.alexrnl.subtitlecorrector.io;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,7 +14,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Locale;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -32,7 +32,6 @@ public class DictionaryTest {
 	/** An editable dictionary */
 	private Dictionary editableDictionary;
 	
-
 	/**
 	 * Copy the dictionary to a temporary file so it can be safely edited.
 	 * @throws IOException
@@ -49,16 +48,25 @@ public class DictionaryTest {
 	}
 	
 	/**
-	 * Set up test attributes.
-	 * @throws IOException
-	 *         if there is a problem when loading the file.
-	 * @throws URISyntaxException
-	 *         if the the path is badly formatted.
+	 * Load the regular dictionary for the tests.
 	 */
-	@Before
-	public void setUp () throws IOException, URISyntaxException {
-		dictionary = new Dictionary(dictionaryFile);
-		editableDictionary = new Dictionary(dictionaryCopy, true);
+	private void loadDictionary () {
+		try {
+			dictionary = new Dictionary(dictionaryFile);
+		} catch (final IOException e) {
+			fail(e.getMessage());
+		}
+	}
+	
+	/**
+	 * Load the editable dictionary for the tests.
+	 */
+	private void loadEditableDictionary () {
+		try {
+			editableDictionary = new Dictionary(dictionaryCopy, true);
+		} catch (final IOException e) {
+			fail(e.getMessage());
+		}
 	}
 	
 	/**
@@ -115,6 +123,7 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testSave () throws IOException {
+		loadEditableDictionary();
 		assertFalse(editableDictionary.contains("zedzfrgtlermforopfz"));
 		assertTrue(editableDictionary.addWord("zedzfrgtlermforopfz"));
 		editableDictionary.save();
@@ -129,6 +138,7 @@ public class DictionaryTest {
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testSaveIllegalStateExcetion () throws IOException {
+		loadDictionary();
 		dictionary.save();
 	}
 	
@@ -137,6 +147,8 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testIsEditable () {
+		loadDictionary();
+		loadEditableDictionary();
 		assertFalse(dictionary.isEditable());
 		assertTrue(editableDictionary.isEditable());
 	}
@@ -148,6 +160,8 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testIsUpdated () throws IOException {
+		loadDictionary();
+		loadEditableDictionary();
 		assertFalse(dictionary.isUpdated());
 		assertTrue(dictionary.addWord("zedzfrgtforopfz"));
 		assertTrue(dictionary.isUpdated());
@@ -164,6 +178,8 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testIsCaseSensitive () {
+		loadDictionary();
+		loadEditableDictionary();
 		assertTrue(dictionary.isCaseSensitive());
 		assertTrue(editableDictionary.isCaseSensitive());
 	}
@@ -175,6 +191,8 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testSize () throws IOException {
+		loadDictionary();
+		loadEditableDictionary();
 		assertEquals(336531, dictionary.size());
 		final int beforeAdd = editableDictionary.size();
 		editableDictionary.addWord("ldraba");
@@ -187,6 +205,7 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testContains () {
+		loadDictionary();
 		assertFalse(dictionary.contains("zedzfrgtlermforo"));
 		assertFalse(dictionary.contains(null));
 		assertFalse(dictionary.contains(""));
@@ -198,6 +217,7 @@ public class DictionaryTest {
 	 */
 	@Test
 	public void testAddWord () {
+		loadDictionary();
 		assertFalse(dictionary.addWord("mot"));
 		assertFalse(dictionary.contains("zedzfrgtlermforopfz"));
 		assertTrue(dictionary.addWord("zedzfrgtlermforopfz"));
