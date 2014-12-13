@@ -154,9 +154,10 @@ public final class TranslationKeys {
 			
 			/**
 			 * The translation for the description of the strategy.
+			 * TODO factorise?
 			 * @return the description of the strategy.
 			 */
-			public String description () { // TODO factorise
+			public String description () {
 				return fixPunctuationKey + HIERARCHY_SEPARATOR + "description";
 			}
 
