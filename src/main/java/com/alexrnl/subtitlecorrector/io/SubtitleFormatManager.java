@@ -18,7 +18,7 @@ import com.alexrnl.subtitlecorrector.common.SubtitleFile;
  */
 public class SubtitleFormatManager {
 	/** Logger */
-	private static Logger				lg	= Logger.getLogger(SubtitleFormatManager.class.getName());
+	private static final Logger			LG	= Logger.getLogger(SubtitleFormatManager.class.getName());
 	
 	/** The registered format of subtitles */
 	private final Set<SubtitleFormat>	formats;
@@ -71,8 +71,8 @@ public class SubtitleFormatManager {
 			}
 		}
 		
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("No matching format found for name " + name);
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("No matching format found for name " + name);
 		}
 		return null;
 	}
@@ -95,8 +95,8 @@ public class SubtitleFormatManager {
 			}
 		}
 		
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Subtitle format matching extension " + extension + " are: " + candidates);
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Subtitle format matching extension " + extension + " are: " + candidates);
 		}
 		return candidates;
 	}

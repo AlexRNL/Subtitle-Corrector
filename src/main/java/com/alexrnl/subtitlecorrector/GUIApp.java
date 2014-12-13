@@ -17,7 +17,7 @@ import com.alexrnl.subtitlecorrector.gui.view.MainWindowView;
  */
 public final class GUIApp extends AbstractApp {
 	/** Logger */
-	private static Logger		lg	= Logger.getLogger(GUIApp.class.getName());
+	private static final Logger	LG	= Logger.getLogger(GUIApp.class.getName());
 	
 	/**
 	 * Constructor #1.<br />
@@ -35,7 +35,7 @@ public final class GUIApp extends AbstractApp {
 	
 	@Override
 	public boolean launch () {
-		lg.info("Subtitle Corrector starting...");
+		LG.info("Subtitle Corrector starting...");
 		
 		// Load MVC
 		final MainWindowController controller = new MainWindowController();
@@ -50,12 +50,12 @@ public final class GUIApp extends AbstractApp {
 					view.wait();
 				}
 			} catch (final InterruptedException e) {
-				lg.warning("Main thread interrupted while waiting for GUI building: " + ExceptionUtils.display(e));
+				LG.warning("Main thread interrupted while waiting for GUI building: " + ExceptionUtils.display(e));
 			}
 		}
 		view.setVisible(true);
 		
-		lg.info("Subtitle Corrector running");
+		LG.info("Subtitle Corrector running");
 		return true;
 	}
 	

@@ -22,7 +22,7 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  */
 public class LetterReplacement extends AbstractStrategy {
 	/** Logger */
-	private static Logger				lg	= Logger.getLogger(LetterReplacement.class.getName());
+	private static final Logger			LG	= Logger.getLogger(LetterReplacement.class.getName());
 	
 	/** The dictionary manager used in the application */
 	private final DictionaryManager		dictionaryManager;
@@ -87,8 +87,8 @@ public class LetterReplacement extends AbstractStrategy {
 	
 	@Override
 	public void stopSession () {
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("End of session, " + savedChoices.size() + " were saved during the session.");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("End of session, " + savedChoices.size() + " were saved during the session.");
 		}
 		savedChoices.clear();
 	}
@@ -97,8 +97,8 @@ public class LetterReplacement extends AbstractStrategy {
 	public void correct (final Subtitle subtitle) {
 		if (!subtitle.getContent().contains(originalLetter.getValue().toString())) {
 			// Skip subtitles which are not concerned
-			if (lg.isLoggable(Level.FINE)) {
-				lg.fine("Skipping subtitle " + subtitle);
+			if (LG.isLoggable(Level.FINE)) {
+				LG.fine("Skipping subtitle " + subtitle);
 			}
 			return;
 		}
@@ -147,8 +147,8 @@ public class LetterReplacement extends AbstractStrategy {
 			newContent.append(replacement);
 		}
 		
-		if (lg.isLoggable(Level.FINE)) {
-			lg.fine("Replacing subtitle content '" + subtitle.getContent() + "' with '" + newContent + "'");
+		if (LG.isLoggable(Level.FINE)) {
+			LG.fine("Replacing subtitle content '" + subtitle.getContent() + "' with '" + newContent + "'");
 		}
 		
 		subtitle.setContent(newContent.toString());

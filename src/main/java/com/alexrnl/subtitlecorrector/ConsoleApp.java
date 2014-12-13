@@ -33,7 +33,7 @@ import com.alexrnl.subtitlecorrector.service.SessionParameters;
  */
 public class ConsoleApp extends AbstractApp {
 	/** Logger */
-	private static Logger		lg					= Logger.getLogger(ConsoleApp.class.getName());
+	private static final Logger	LG					= Logger.getLogger(ConsoleApp.class.getName());
 	
 	/** The prefix to indicate that the file was corrected (in non-overwrite mode) */
 	private static final String	CORRECTED_EXTENSION	= "corrected";
@@ -162,7 +162,7 @@ public class ConsoleApp extends AbstractApp {
 			} catch (final IOException e) {
 				out.println(getTranslator().get(appKey.subtitleWriteError(), entry.getKey().getFile(), e.getMessage()));
 				// TODO restore a copy of the original file
-				lg.warning("Exception while writing file " + entry.getKey().getFile() + ": " + ExceptionUtils.display(e));
+				LG.warning("Exception while writing file " + entry.getKey().getFile() + ": " + ExceptionUtils.display(e));
 			}
 		}
 		

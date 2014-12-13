@@ -18,7 +18,7 @@ import com.alexrnl.subtitlecorrector.io.SubtitleWriter;
  */
 public class SubRipWriter extends SubtitleWriter {
 	/** Logger */
-	private static Logger			lg	= Logger.getLogger(SubRipWriter.class.getName());
+	private static final Logger		LG	= Logger.getLogger(SubRipWriter.class.getName());
 	
 	/** The date formatter */
 	private final SimpleDateFormat	dateFormat;
@@ -54,8 +54,8 @@ public class SubRipWriter extends SubtitleWriter {
 
 	@Override
 	protected void writeFooter (final SubtitleFile file, final BufferedWriter writer) throws IOException {
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Successfully writen " + subtitleCounter + " subtitles");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Successfully writen " + subtitleCounter + " subtitles");
 		}
 		subtitleCounter = null;
 	}

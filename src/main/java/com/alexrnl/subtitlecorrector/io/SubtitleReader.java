@@ -21,7 +21,7 @@ import com.alexrnl.subtitlecorrector.common.SubtitleFile;
  */
 public abstract class SubtitleReader {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(SubtitleReader.class.getName());
+	private static final Logger		LG	= Logger.getLogger(SubtitleReader.class.getName());
 	
 	/** The charset of the subtitle files read */
 	private final Charset			charSet;
@@ -63,11 +63,11 @@ public abstract class SubtitleReader {
 	 */
 	public synchronized SubtitleFile readFile (final Path file) throws IOException {
 		if (!Files.exists(file) || !Files.isReadable(file)) {
-			lg.warning("File " + file + " does not exists or cannot be read");
+			LG.warning("File " + file + " does not exists or cannot be read");
 			throw new IllegalArgumentException("The file does not exist or cannot be read");
 		}
-		if (lg.isLoggable(Level.INFO)) {
-			lg.fine("Loading file " + file);
+		if (LG.isLoggable(Level.INFO)) {
+			LG.fine("Loading file " + file);
 		}
 		
 		SubtitleFile subtitleFile = null;
@@ -83,13 +83,13 @@ public abstract class SubtitleReader {
 					subtitleFile.add(readSubtitle(subtitleFile, reader));
 				}
 			} catch (final EOFException e) {
-				if (lg.isLoggable(Level.INFO)) {
-					lg.info("Finished reading file " + file);
+				if (LG.isLoggable(Level.INFO)) {
+					LG.info("Finished reading file " + file);
 				}
 				readFooter(subtitleFile, reader);
 			}
 		} catch (final IOException e) {
-			lg.warning("Problem while reading subitle file: " + ExceptionUtils.display(e));
+			LG.warning("Problem while reading subitle file: " + ExceptionUtils.display(e));
 			throw e;
 		}
 		

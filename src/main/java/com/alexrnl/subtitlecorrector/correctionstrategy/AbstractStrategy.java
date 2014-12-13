@@ -14,7 +14,7 @@ import com.alexrnl.subtitlecorrector.service.SessionParameters;
  */
 public abstract class AbstractStrategy implements Strategy {
 	/** Logger */
-	private static Logger				lg	= Logger.getLogger(AbstractStrategy.class.getName());
+	private static final Logger	LG	= Logger.getLogger(AbstractStrategy.class.getName());
 	
 	@Override
 	public void startSession (final SessionParameters parameters) {
@@ -39,7 +39,7 @@ public abstract class AbstractStrategy implements Strategy {
 				return parameter;
 			}
 		}
-		lg.info("No parameter with name " + name + " found");
+		LG.info("No parameter with name " + name + " found");
 		return null;
 	}
 	

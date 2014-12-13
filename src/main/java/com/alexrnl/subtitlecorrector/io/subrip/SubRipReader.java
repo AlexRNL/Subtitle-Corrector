@@ -22,7 +22,7 @@ import com.alexrnl.subtitlecorrector.io.SubtitleReader;
  */
 public class SubRipReader extends SubtitleReader {
 	/** Logger */
-	private static Logger			lg	= Logger.getLogger(SubRipReader.class.getName());
+	private static final Logger		LG	= Logger.getLogger(SubRipReader.class.getName());
 	
 	/** The date formatter */
 	private final SimpleDateFormat	dateFormatter;
@@ -63,11 +63,11 @@ public class SubRipReader extends SubtitleReader {
 		try {
 			subtitleIndex = Integer.parseInt(currentLine);
 		} catch (final NumberFormatException e) {
-			lg.warning("Could not parse '" + currentLine + "' as a number: " + ExceptionUtils.display(e));
+			LG.warning("Could not parse '" + currentLine + "' as a number: " + ExceptionUtils.display(e));
 			throw new IOException("Could not parse a subtitle number properly", e);
 		}
-		if (lg.isLoggable(Level.FINE)) {
-			lg.fine("Reading subtitle#" + subtitleIndex);
+		if (LG.isLoggable(Level.FINE)) {
+			LG.fine("Reading subtitle#" + subtitleIndex);
 		}
 		
 		// Get the begin and end dates of the subtitle
@@ -79,12 +79,12 @@ public class SubRipReader extends SubtitleReader {
 		try {
 			begin = dateFormatter.parse(dates[0]).getTime();
 			end = dateFormatter.parse(dates[1]).getTime();
-			if (lg.isLoggable(Level.FINER)) {
-				lg.finer("Begin date=" + dateFormatter.format(new Date(begin)));
-				lg.finer("End date=" + dateFormatter.format(new Date(end)));
+			if (LG.isLoggable(Level.FINER)) {
+				LG.finer("Begin date=" + dateFormatter.format(new Date(begin)));
+				LG.finer("End date=" + dateFormatter.format(new Date(end)));
 			}
 		} catch (final ParseException e) {
-			lg.warning("Could not parse either " + dates[0] + " or " + dates[1] + " as a date");
+			LG.warning("Could not parse either " + dates[0] + " or " + dates[1] + " as a date");
 			throw new IOException("Problem while parsing a date", e);
 		}
 		

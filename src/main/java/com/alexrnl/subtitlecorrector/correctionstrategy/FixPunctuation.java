@@ -34,7 +34,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter.Parser;
  */
 public class FixPunctuation extends AbstractStrategy {
 	/** Logger */
-	private static Logger						lg				= Logger.getLogger(FixPunctuation.class.getName());
+	private static final Logger					LG				= Logger.getLogger(FixPunctuation.class.getName());
 	
 	/** Property name for the punctuation marks which have a space before. */
 	private static final String					SPACE_BEFORE	= "spacebefore";
@@ -137,8 +137,8 @@ public class FixPunctuation extends AbstractStrategy {
 			final InputStream stream = Files.newInputStream(file);
 			rules.loadFromXML(stream);
 			stream.close();
-			if (lg.isLoggable(Level.INFO)) {
-				lg.info("Loaded " + rules.size() + " punctuation rules for locale " + key);
+			if (LG.isLoggable(Level.INFO)) {
+				LG.info("Loaded " + rules.size() + " punctuation rules for locale " + key);
 			}
 			hasSpaceAfter.put(key, StringUtils.toCharList(rules.getProperty(SPACE_AFTER)));
 			hasSpaceBefore.put(key, StringUtils.toCharList(rules.getProperty(SPACE_BEFORE)));
@@ -147,7 +147,7 @@ public class FixPunctuation extends AbstractStrategy {
 
 		@Override
 		public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
-			lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
+			LG.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
 			return FileVisitResult.CONTINUE;
 		}
 	}

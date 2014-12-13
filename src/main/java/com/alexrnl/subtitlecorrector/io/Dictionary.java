@@ -29,7 +29,7 @@ import com.alexrnl.commons.io.IOUtils;
  */
 public class Dictionary {
 	/** Logger */
-	private static Logger		lg	= Logger.getLogger(Dictionary.class.getName());
+	private static final Logger	LG	= Logger.getLogger(Dictionary.class.getName());
 	
 	/** The dictionary with the words */
 	private final Set<String>	dictionary;
@@ -133,12 +133,12 @@ public class Dictionary {
 				dictionary.add(getLowerCaseWord(IOUtils.readLine(reader).trim()));
 			}
 		} catch (final EOFException e) {
-			if (lg.isLoggable(Level.INFO)) {
-				lg.info("Finished reading dictionary file " + dictionaryFile
+			if (LG.isLoggable(Level.INFO)) {
+				LG.info("Finished reading dictionary file " + dictionaryFile
 						+ " (" + dictionary.size() + " words)");
 			}
 		} catch (final IOException e) {
-			lg.warning("Exception while reading dictionary file " + dictionaryFile + ": "
+			LG.warning("Exception while reading dictionary file " + dictionaryFile + ": "
 					+ ExceptionUtils.display(e));
 			throw e;
 		}
@@ -171,7 +171,7 @@ public class Dictionary {
 				writer.write(System.lineSeparator());
 			}
 		} catch (final IOException e) {
-			lg.warning("Exception while writing dictionary file " + dictionaryFile + ": "
+			LG.warning("Exception while writing dictionary file " + dictionaryFile + ": "
 					+ ExceptionUtils.display(e));
 			throw e;
 		}

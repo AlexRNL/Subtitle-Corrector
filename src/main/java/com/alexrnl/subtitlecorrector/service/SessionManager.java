@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class SessionManager implements SessionStateListener {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(SessionManager.class.getName());
+	private static final Logger					LG	= Logger.getLogger(SessionManager.class.getName());
 	
 	/** Flag indicating that a session is started and in progress */
 	private boolean								inSession;
@@ -101,8 +101,8 @@ public class SessionManager implements SessionStateListener {
 		for (final SessionStateListener sessionListener : getSessionListeners()) {
 			sessionListener.startSession(parameters);
 		}
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Session manager has successfully started the session");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Session manager has successfully started the session");
 		}
 	}
 	
@@ -117,8 +117,8 @@ public class SessionManager implements SessionStateListener {
 		for (final SessionStateListener sessionListener : getSessionListeners()) {
 			sessionListener.stopSession();
 		}
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Session manager has successfully stopped the session");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Session manager has successfully stopped the session");
 		}
 	}
 }

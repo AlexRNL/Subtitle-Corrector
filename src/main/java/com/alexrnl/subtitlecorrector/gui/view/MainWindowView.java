@@ -40,7 +40,7 @@ import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
  */
 public class MainWindowView extends AbstractFrame {
 	/** Logger */
-	private static Logger			lg						= Logger.getLogger(MainWindowView.class.getName());
+	private static final Logger		LG						= Logger.getLogger(MainWindowView.class.getName());
 	
 	/** Serial version UID */
 	private static final long		serialVersionUID		= -6742939741527280064L;
@@ -175,8 +175,8 @@ public class MainWindowView extends AbstractFrame {
 				if (answer == JFileChooser.APPROVE_OPTION) {
 					controller.changeSubtitle(fileChooser.getSelectedFile().toPath());
 				} else {
-					if (lg.isLoggable(Level.INFO)) {
-						lg.info("User canceled file selection");
+					if (LG.isLoggable(Level.INFO)) {
+						LG.info("User canceled file selection");
 					}
 				}
 			}
@@ -197,8 +197,8 @@ public class MainWindowView extends AbstractFrame {
 	
 	@Override
 	public void dispose () {
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Subtitle corrector exiting");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Subtitle corrector exiting");
 		}
 		super.dispose();
 		controller.dispose();
@@ -207,12 +207,12 @@ public class MainWindowView extends AbstractFrame {
 	@Override
 	public void modelPropertyChange (final PropertyChangeEvent evt) {
 		if (!isReady()) {
-			lg.warning("Main window is not ready, cannot update view (" + evt + ")");
+			LG.warning("Main window is not ready, cannot update view (" + evt + ")");
 			return;
 		}
 		
 		if (evt == null || evt.getPropertyName() == null) {
-			lg.warning("Change event is null, or property name is null, cannot process event: "
+			LG.warning("Change event is null, or property name is null, cannot process event: "
 					+ evt);
 			return;
 		}
@@ -227,7 +227,7 @@ public class MainWindowView extends AbstractFrame {
 				// TODO change parameter panel
 				break;
 			default:
-				lg.info("Model property not handle by main window: " + evt);
+				LG.info("Model property not handle by main window: " + evt);
 				break;
 		}
 	}

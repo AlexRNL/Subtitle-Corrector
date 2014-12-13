@@ -21,10 +21,10 @@ import com.alexrnl.subtitlecorrector.common.SubtitleFile;
  */
 public abstract class SubtitleWriter {
 	/** Logger */
-	private static Logger	lg	= Logger.getLogger(SubtitleWriter.class.getName());
+	private static final Logger	LG	= Logger.getLogger(SubtitleWriter.class.getName());
 	
 	/** The character set used for writing the subtitles */
-	private final Charset	charSet;
+	private final Charset		charSet;
 	
 	/**
 	 * Constructor #1.<br />
@@ -75,17 +75,17 @@ public abstract class SubtitleWriter {
 	 */
 	public synchronized void writeFile (final SubtitleFile file, final Path target) throws IOException {
 		if (Files.isDirectory(target)) {
-			lg.warning("File " + target + " is a director, it will not be overwritten");
+			LG.warning("File " + target + " is a director, it will not be overwritten");
 			throw new IllegalArgumentException("File specified is a directory");
 		}
 		
 		if (Files.exists(target) && !Files.isWritable(target)) {
-			lg.warning("File " + target + " exists and is not writable");
+			LG.warning("File " + target + " exists and is not writable");
 			throw new IllegalArgumentException("File " + target + " already exists is not writable");
 		}
 		
-		if (Files.exists(target) && lg.isLoggable(Level.INFO)) {
-			lg.info("File " + target + " will be overwritten");
+		if (Files.exists(target) && LG.isLoggable(Level.INFO)) {
+			LG.info("File " + target + " will be overwritten");
 		}
 		
 		try (BufferedWriter writer = Files.newBufferedWriter(target, charSet, StandardOpenOption.CREATE)) {
@@ -98,12 +98,12 @@ public abstract class SubtitleWriter {
 			}
 			writeFooter(file, writer);
 		} catch (final IOException e) {
-			lg.warning("Problem while writing the file: " + ExceptionUtils.display(e));
+			LG.warning("Problem while writing the file: " + ExceptionUtils.display(e));
 			throw e;
 		}
 		
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("File " + target + " has been successfully written");
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("File " + target + " has been successfully written");
 		}
 	}
 

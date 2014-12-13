@@ -30,7 +30,7 @@ import com.alexrnl.subtitlecorrector.io.Dictionary;
  */
 public class DictionaryManager implements SessionStateListener {
 	/** Logger */
-	private static Logger					lg						= Logger.getLogger(DictionaryManager.class.getName());
+	private static final Logger				LG						= Logger.getLogger(DictionaryManager.class.getName());
 	
 	/** The file extension for the dictionary files */
 	public static final String				DICTIONARY_EXTENSION	= ".txt";
@@ -119,7 +119,7 @@ public class DictionaryManager implements SessionStateListener {
 		if (customDictionaries.containsKey(customDictionaryKey)) {
 			return customDictionaries.get(customDictionaryKey).addWord(word);
 		}
-		lg.warning("Could not find custom dictionary " + customDictionaryKey);
+		LG.warning("Could not find custom dictionary " + customDictionaryKey);
 		return false;
 	}
 	
@@ -142,14 +142,14 @@ public class DictionaryManager implements SessionStateListener {
 	@Override
 	public void startSession (final SessionParameters parameters) {
 		activeDictionaries.add(sessionDictionary);
-		if (lg.isLoggable(Level.INFO)) {
-			lg.info("Activating locale dictionary " + parameters.getLocale() + " and customs "
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Activating locale dictionary " + parameters.getLocale() + " and customs "
 					+ parameters.getCustomDictionaries() + " for next session");
 		}
 		if (localeDictionaries.containsKey(parameters.getLocale())) {
 			activeDictionaries.add(localeDictionaries.get(parameters.getLocale()));
 		} else {
-			lg.warning("No dictionnary found for locale " + parameters.getLocale()
+			LG.warning("No dictionnary found for locale " + parameters.getLocale()
 					+ "; available locales are " + localeDictionaries.keySet());
 		}
 		for (final String customDictionary : parameters.getCustomDictionaries()) {
@@ -161,16 +161,16 @@ public class DictionaryManager implements SessionStateListener {
 	public void stopSession () {
 		for (final Entry<String, Dictionary> dictionary : customDictionaries.entrySet()) {
 			if (activeDictionaries.contains(dictionary.getValue()) && dictionary.getValue().isUpdated()) {
-				if (lg.isLoggable(Level.INFO)) {
-					lg.info("Saving dictionary " + dictionary.getKey() + " because it has been updated in the last session");
+				if (LG.isLoggable(Level.INFO)) {
+					LG.info("Saving dictionary " + dictionary.getKey() + " because it has been updated in the last session");
 				}
 				try {
 					dictionary.getValue().save();
-					if (lg.isLoggable(Level.INFO)) {
-						lg.info("Dictionary successfully saved");
+					if (LG.isLoggable(Level.INFO)) {
+						LG.info("Dictionary successfully saved");
 					}
 				} catch (final IOException e) {
-					lg.warning("The dictionary file " + dictionary.getKey() + " could not be saved: "
+					LG.warning("The dictionary file " + dictionary.getKey() + " could not be saved: "
 							+ ExceptionUtils.display(e));
 				}
 			}
@@ -203,8 +203,8 @@ public class DictionaryManager implements SessionStateListener {
 				throws IOException {
 			if (file.getFileName().toString().endsWith(DICTIONARY_EXTENSION)) {
 				final T key = getDictionaryKey(file);
-				if (lg.isLoggable(Level.INFO)) {
-					lg.info("Adding dictionary " + key + " from file " + file);
+				if (LG.isLoggable(Level.INFO)) {
+					LG.info("Adding dictionary " + key + " from file " + file);
 				}
 				dictionaryMap.put(key, buildDictionary(file));
 			}
@@ -213,7 +213,7 @@ public class DictionaryManager implements SessionStateListener {
 
 		@Override
 		public FileVisitResult visitFileFailed (final Path file, final IOException exc) throws IOException {
-			lg.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
+			LG.warning("Could not open or read the file " + file + ": " + ExceptionUtils.display(exc));
 			return FileVisitResult.CONTINUE;
 		}
 		
