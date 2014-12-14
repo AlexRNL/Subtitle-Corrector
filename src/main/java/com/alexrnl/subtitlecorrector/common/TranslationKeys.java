@@ -51,28 +51,27 @@ public final class TranslationKeys {
 		}
 		
 		/**
-		 * Translations for the letter replacement strategy.
+		 * Class which factorise common translation keys declaration in strategies.
 		 */
-		public static final class LetterReplacement {
-			/** The root key for the letter replacement strategy */
-			private static final String	LETTER_REPLACEMENT_KEY	= "letterreplacement";
-			
-			/** The key for the letter replacement strategy translations */
-			private final String		letterReplacementKey;
+		public static abstract class AbstractStrategy {
+			/** The key for the actual strategy translations */
+			private final String	actualStrategyKey;
 			
 			/**
 			 * Constructor #1.<br />
 			 * @param parentKey
 			 *        the key from the parent category.
+			 * @param strategyKey
+			 *        the key for the actual strategy.
 			 */
-			private LetterReplacement (final String parentKey) {
+			protected AbstractStrategy (final String parentKey, final String strategyKey) {
 				super();
-				letterReplacementKey = parentKey + HIERARCHY_SEPARATOR + LETTER_REPLACEMENT_KEY;
+				actualStrategyKey = parentKey + HIERARCHY_SEPARATOR + strategyKey;
 			}
 			
 			@Override
 			public String toString () {
-				return letterReplacementKey;
+				return actualStrategyKey;
 			}
 			
 			/**
@@ -80,7 +79,24 @@ public final class TranslationKeys {
 			 * @return the description of the strategy.
 			 */
 			public String description () {
-				return letterReplacementKey + HIERARCHY_SEPARATOR + "description";
+				return actualStrategyKey + HIERARCHY_SEPARATOR + "description";
+			}
+		}
+		
+		/**
+		 * Translations for the letter replacement strategy.
+		 */
+		public static final class LetterReplacement extends AbstractStrategy {
+			/** The root key for the letter replacement strategy */
+			private static final String	LETTER_REPLACEMENT_KEY	= "letterreplacement";
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			private LetterReplacement (final String parentKey) {
+				super(parentKey, LETTER_REPLACEMENT_KEY);
 			}
 			
 			/**
@@ -88,7 +104,7 @@ public final class TranslationKeys {
 			 * @return the original letter.
 			 */
 			public String originalLetter () {
-				return letterReplacementKey + HIERARCHY_SEPARATOR + "originalletter";
+				return toString() + HIERARCHY_SEPARATOR + "originalletter";
 			}
 			
 			/**
@@ -96,7 +112,7 @@ public final class TranslationKeys {
 			 * @return the new letter.
 			 */
 			public String newLetter () {
-				return letterReplacementKey + HIERARCHY_SEPARATOR + "newletter";
+				return toString() + HIERARCHY_SEPARATOR + "newletter";
 			}
 			
 			/**
@@ -104,7 +120,7 @@ public final class TranslationKeys {
 			 * @return the only missing from dictionary parameter.
 			 */
 			public String onlyMissingFromDictionary () {
-				return letterReplacementKey + HIERARCHY_SEPARATOR + "onlymissingfromdictionary";
+				return toString() + HIERARCHY_SEPARATOR + "onlymissingfromdictionary";
 			}
 			
 			/**
@@ -112,7 +128,7 @@ public final class TranslationKeys {
 			 * @return the prompt before correcting parameter.
 			 */
 			public String promptBeforeCorrecting () {
-				return letterReplacementKey + HIERARCHY_SEPARATOR + "promptbeforecorrecting";
+				return toString() + HIERARCHY_SEPARATOR + "promptbeforecorrecting";
 			}
 		}
 		
@@ -127,12 +143,9 @@ public final class TranslationKeys {
 		/**
 		 * Translation for the fix punctuation strategy.
 		 */
-		public static final class FixPunctuation {
+		public static final class FixPunctuation extends AbstractStrategy {
 			/** The root key for the letter replacement strategy */
 			private static final String	FIX_PUNCTUATION_KEY	= "fixpunctuation";
-			
-			/** The key for the fix punctuation translations */
-			private final String		fixPunctuationKey;
 			
 			/**
 			 * Constructor #1.<br />
@@ -140,30 +153,15 @@ public final class TranslationKeys {
 			 *        the key from the parent category.
 			 */
 			private FixPunctuation (final String parentKey) {
-				super();
-				fixPunctuationKey = parentKey + HIERARCHY_SEPARATOR + FIX_PUNCTUATION_KEY;
+				super(parentKey, FIX_PUNCTUATION_KEY);
 			}
 			
-			@Override
-			public String toString () {
-				return fixPunctuationKey;
-			}
-			
-			/**
-			 * The translation for the description of the strategy.
-			 * TODO factorise?
-			 * @return the description of the strategy.
-			 */
-			public String description () {
-				return fixPunctuationKey + HIERARCHY_SEPARATOR + "description";
-			}
-
 			/**
 			 * The translation for the locale parameter.
 			 * @return the translation for the locale parameter.
 			 */
 			public String locale () {
-				return fixPunctuationKey + HIERARCHY_SEPARATOR + "locale";
+				return toString() + HIERARCHY_SEPARATOR + "locale";
 			}
 		}
 		
