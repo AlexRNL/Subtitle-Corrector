@@ -90,7 +90,7 @@ public class AbstractAppTest {
 	public void testGetStrategies () {
 		final Map<String, Strategy> strategies = app.getStrategies();
 		assertNotNull(strategies);
-		assertEquals(2, strategies.size());
+		assertEquals(3, strategies.size());
 	}
 	
 	/**
