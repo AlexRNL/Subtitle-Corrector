@@ -27,7 +27,6 @@ public final class TranslationKeys {
 	
 	/**
 	 * The translations for the strategies
-	 * @author Alex
 	 */
 	public static final class Strategy {
 		/** The root key for the strategies */
@@ -53,7 +52,6 @@ public final class TranslationKeys {
 		
 		/**
 		 * Translations for the letter replacement strategy.
-		 * @author Alex
 		 */
 		public static final class LetterReplacement {
 			/** The root key for the letter replacement strategy */
@@ -128,7 +126,6 @@ public final class TranslationKeys {
 		
 		/**
 		 * Translation for the fix punctuation strategy.
-		 * @author Alex
 		 */
 		public static final class FixPunctuation {
 			/** The root key for the letter replacement strategy */
@@ -190,7 +187,6 @@ public final class TranslationKeys {
 	
 	/**
 	 * The translations for the subtitle provider.
-	 * @author Alex
 	 */
 	public static final class SubtitleProvider {
 		/** The root key for the subtitle provider translations */
@@ -268,7 +264,6 @@ public final class TranslationKeys {
 	
 	/**
 	 * The translation for the main window.
-	 * @author Alex
 	 */
 	public static final class MainWindow {
 		/** The root key for the main window translations */
@@ -339,7 +334,6 @@ public final class TranslationKeys {
 	
 	/**
 	 * The translation for the console.
-	 * @author Alex
 	 */
 	public static final class Console {
 		/** The root key for the console */
@@ -392,7 +386,6 @@ public final class TranslationKeys {
 		
 		/**
 		 * The translation for the user prompt.
-		 * @author Alex
 		 */
 		public static final class UserPrompt {
 			/** The root key for the user prompt */
@@ -467,7 +460,6 @@ public final class TranslationKeys {
 		
 		/**
 		 * The translation for the console application.
-		 * @author Alex
 		 */
 		public static final class App {
 			/** The root key for the user prompt */
