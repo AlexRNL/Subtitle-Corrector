@@ -99,7 +99,6 @@ public class SubtitleProviderTest {
 	public void testLoadSubtitleReaderError () throws IOException {
 		final SubtitleFormat subtitleFormat = mock(SubtitleFormat.class);
 		final SubtitleReader subtitleReader = mock(SubtitleReader.class);
-		final SubtitleFile subtitleFile = mock(SubtitleFile.class);
 		final Path file = subtitleFolder.newFile("readexception.srt").toPath();
 		
 		when(subtitleFormatManager.getFormatByPath(file)).thenReturn(new HashSet<>(Arrays.asList(subtitleFormat)));
