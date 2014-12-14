@@ -1,6 +1,6 @@
 package com.alexrnl.subtitlecorrector.correctionstrategy;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -28,7 +28,7 @@ public abstract class AbstractStrategy implements Strategy {
 	
 	@Override
 	public List<Parameter<?>> getParameters () {
-		return new ArrayList<>(0);
+		return Collections.emptyList();
 	}
 	
 	@Override
