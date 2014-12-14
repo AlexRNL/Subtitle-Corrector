@@ -26,6 +26,8 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.strategy.fixpunctuation", KEYS.strategy().fixPunctuation().toString());
 		assertEquals("subtitlecorrector.strategy.fixpunctuation.description", KEYS.strategy().fixPunctuation().description());
 		assertEquals("subtitlecorrector.strategy.fixpunctuation.locale", KEYS.strategy().fixPunctuation().locale());
+		assertEquals("subtitlecorrector.strategy.checkspelling", KEYS.strategy().checkSpelling().toString());
+		assertEquals("subtitlecorrector.strategy.checkspelling.description", KEYS.strategy().checkSpelling().description());
 		
 		assertEquals("subtitlecorrector.subtitleprovider.noaccess", KEYS.subtitleProvider().noAccess());
 		assertEquals("subtitlecorrector.subtitleprovider.foldervisiterror", KEYS.subtitleProvider().folderVisitError());

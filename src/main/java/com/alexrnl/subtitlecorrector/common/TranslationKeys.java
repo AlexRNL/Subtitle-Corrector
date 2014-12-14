@@ -144,7 +144,7 @@ public final class TranslationKeys {
 		 * Translation for the fix punctuation strategy.
 		 */
 		public static final class FixPunctuation extends AbstractStrategy {
-			/** The root key for the letter replacement strategy */
+			/** The root key for the fix punctuation strategy */
 			private static final String	FIX_PUNCTUATION_KEY	= "fixpunctuation";
 			
 			/**
@@ -171,6 +171,31 @@ public final class TranslationKeys {
 		 */
 		public FixPunctuation fixPunctuation () {
 			return new FixPunctuation(strategyKey);
+		}
+		
+		/**
+		 * The translations for the check spelling strategy.
+		 */
+		public static final class CheckSpelling extends AbstractStrategy {
+			/** The root key for the check spelling strategy */
+			private static final String	CHECK_SPELLING_KEY	= "checkspelling";
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			private CheckSpelling (final String parentKey) {
+				super(parentKey, CHECK_SPELLING_KEY);
+			}
+		}
+		
+		/**
+		 * The check spelling translations.
+		 * @return the check spelling translations.
+		 */
+		public CheckSpelling checkSpelling () {
+			return new CheckSpelling(strategyKey);
 		}
 		
 	}
