@@ -56,7 +56,7 @@ public class FixPunctuation extends AbstractStrategy {
 	 *         if reading the rules fails.
 	 */
 	public FixPunctuation (final Path punctuationRuleFolder) throws IOException {
-		super();
+		super(KEYS.strategy().fixPunctuation());
 		Objects.requireNonNull(punctuationRuleFolder);
 		if (!Files.isDirectory(punctuationRuleFolder)) {
 			throw new IllegalArgumentException("The path must refer to a folder with the punctuation rules");
@@ -78,16 +78,6 @@ public class FixPunctuation extends AbstractStrategy {
 		final List<Parameter<?>> parameters = new ArrayList<>();
 		parameters.add(locale);
 		return parameters;
-	}
-	
-	@Override
-	public String getTranslationKey () {
-		return KEYS.strategy().fixPunctuation().toString();
-	}
-	
-	@Override
-	public String getDescription () {
-		return KEYS.strategy().fixPunctuation().description();
 	}
 	
 	@Override

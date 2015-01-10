@@ -47,7 +47,7 @@ public class LetterReplacement extends AbstractStrategy {
 	 *        the prompt to use.
 	 */
 	public LetterReplacement (final DictionaryManager dictionaryManager, final UserPrompt prompt) {
-		super();
+		super(KEYS.strategy().letterReplacement());
 		this.dictionaryManager = dictionaryManager;
 		this.prompt = prompt;
 		savedChoices = new HashMap<>();
@@ -65,16 +65,6 @@ public class LetterReplacement extends AbstractStrategy {
 		parameters.add(onlyMissingFromDictionary);
 		parameters.add(promptBeforeCorrecting);
 		return parameters;
-	}
-	
-	@Override
-	public String getTranslationKey () {
-		return KEYS.strategy().letterReplacement().toString();
-	}
-	
-	@Override
-	public String getDescription () {
-		return KEYS.strategy().letterReplacement().description();
 	}
 	
 	@Override

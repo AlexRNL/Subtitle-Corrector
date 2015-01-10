@@ -16,6 +16,29 @@ public abstract class AbstractStrategy implements Strategy {
 	/** Logger */
 	private static final Logger	LG	= Logger.getLogger(AbstractStrategy.class.getName());
 	
+	/** The translation key for the strategy */
+	private final com.alexrnl.subtitlecorrector.common.TranslationKeys.Strategy.AbstractStrategy translationKey;
+	
+	/**
+	 * Constructor #1.<br />
+	 * @param translationKey
+	 *        the translation key of the strategy.
+	 */
+	public AbstractStrategy (final com.alexrnl.subtitlecorrector.common.TranslationKeys.Strategy.AbstractStrategy translationKey) {
+		super();
+		this.translationKey = translationKey;
+	}
+	
+	@Override
+	public String getTranslationKey () {
+		return translationKey.toString();
+	}
+	
+	@Override
+	public String getDescription () {
+		return translationKey.description();
+	}
+	
 	@Override
 	public void startSession (final SessionParameters parameters) {
 		// Nothing to do here, override if strategy depends on session state
