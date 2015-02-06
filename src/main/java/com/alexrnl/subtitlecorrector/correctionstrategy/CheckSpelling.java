@@ -57,6 +57,10 @@ public class CheckSpelling extends AbstractStrategy {
 			}
 			remaining = remaining.substring(currentWord.getEnd());
 			
+			if (currentWord.getWord().isEmpty()) {
+				continue;
+			}
+			
 			if (savedChoices.containsKey(currentWord.getWord())) {
 				final String replacement = savedChoices.get(currentWord.getWord());
 				newContent.append(replacement == null ? currentWord : replacement);
