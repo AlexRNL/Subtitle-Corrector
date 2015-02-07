@@ -1,7 +1,6 @@
 package com.alexrnl.subtitlecorrector.correctionstrategy;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -10,7 +9,6 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 
@@ -60,9 +58,13 @@ public class CheckSpellingTest {
 	/**
 	 * Test method for {@link CheckSpelling#correct(Subtitle)}.
 	 */
-	@Test @Ignore
-	public void testCorrect () {
-		fail("Not yet implemented"); // TODO
+	@Test
+	public void testCorrectAllInDictionnary () {
+		final Subtitle subtitle = new Subtitle(0, 2000, "Hello, world!");
+		when(dictionary.contains("Hello")).thenReturn(true);
+		when(dictionary.contains("world")).thenReturn(true);
+		checkSpelling.correct(subtitle);
+		assertEquals("Hello, world!", subtitle.getContent());
 	}
 	
 	/**
