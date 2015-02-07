@@ -82,5 +82,6 @@ public class CheckSpelling extends AbstractStrategy {
 				newContent.append(answer.getAnswer());
 			}
 		}
+		subtitle.setContent(newContent.toString().trim());
 	}
 }
