@@ -316,4 +316,38 @@ public class LetterReplacementTest {
 		assertEquals("LDR Lucix,\nhow arx you doin'?", subtitleToCheck.getContent());
 	}
 	
+	/**
+	 * Test method for {@link LetterReplacement#correct(Subtitle)}.
+	 * Test for the remember choice option in the user prompt when a cancellation is registered.
+	 */
+	@Test
+	public void testRememberCancelledChoices () {
+		final Subtitle subtitleToCorrect = new Subtitle(0, 2000, "Hello everyone!");
+		final Subtitle subtitleToCheck = new Subtitle(0, 2000, "Hello Lucie,\nhow are you doin'?");
+		originalLetter.setValue("e");
+		replacementLetter.setValue("x");
+		onlyMissingFromDictionary.setValue("false");
+		promptBeforeCorrecting.setValue("true");
+		when(prompt.confirm(anyString(), any(Word.class), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				return new UserPromptAnswer((String) invocation.getArguments()[2]);
+			}
+		});
+		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).thenReturn(new UserPromptAnswer("", true, true));
+		
+		letterReplacement.startSession(null);
+		letterReplacement.correct(subtitleToCorrect);
+		when(prompt.confirm(anyString(), eq(new Word("Hello", 0, 5)), anyString())).then(new Answer<UserPromptAnswer>() {
+			@Override
+			public UserPromptAnswer answer (final InvocationOnMock invocation) throws Throwable {
+				fail("This method should not have been called, remember choice is on");
+				return null;
+			}
+		});
+		letterReplacement.correct(subtitleToCheck);
+		letterReplacement.stopSession();
+		assertEquals("Hello Lucix,\nhow arx you doin'?", subtitleToCheck.getContent());
+	}
+	
 }

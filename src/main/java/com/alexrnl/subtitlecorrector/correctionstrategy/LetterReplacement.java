@@ -109,7 +109,8 @@ public class LetterReplacement extends AbstractStrategy {
 			}
 			
 			if (savedChoices.containsKey(currentWord.getWord())) {
-				newContent.append(savedChoices.get(currentWord.getWord()));
+				final String replacement = savedChoices.get(currentWord.getWord());
+				newContent.append(replacement == null ? currentWord : replacement);
 				continue;
 			}
 			
@@ -124,13 +125,13 @@ public class LetterReplacement extends AbstractStrategy {
 			
 			if (promptBeforeCorrecting.getValue()) {
 				final UserPromptAnswer answer = prompt.confirm(subtitle.getContent(), currentWord, replacement);
+				if (answer.isRememberChoice()) {
+					savedChoices.put(currentWord.getWord(), answer.isCancelled() ? null : answer.getAnswer());
+				}
+				
 				if (answer.isCancelled()) {
 					newContent.append(currentWord);
 					continue;
-				}
-				// TODO remember cancelled choices?
-				if (answer.isRememberChoice()) {
-					savedChoices.put(currentWord.getWord(), answer.getAnswer());
 				}
 				replacement = answer.getAnswer();
 			}
