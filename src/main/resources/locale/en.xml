@@ -15,6 +15,9 @@
 	<entry key="subtitlecorrector.strategy.fixpunctuation">Fix punctuation</entry>
 	<entry key="subtitlecorrector.strategy.fixpunctuation.description">This strategy fixes the spaces around the punctuation mark in the subtitles.</entry>
 	<entry key="subtitlecorrector.strategy.fixpunctuation.locale">The rules which should be used to fix the punctuation</entry>
+	<!-- Translations for the check spelling strategy -->
+	<entry key="subtitlecorrector.strategy.checkspelling">Check spelling</entry>
+	<entry key="subtitlecorrector.strategy.checkspelling.description">This strategy verifies that each word is well spelled.</entry>
 	
 	<!-- Translations for the subtitle provider -->
 	<entry key="subtitlecorrector.subtitleprovider.noaccess">Cannot access files at %0</entry>

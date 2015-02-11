@@ -15,6 +15,9 @@
 	<entry key="subtitlecorrector.strategy.fixpunctuation">Corrige la ponctuation</entry>
 	<entry key="subtitlecorrector.strategy.fixpunctuation.description">Cette correction permet d'ajuster les espaces autour des caractères de ponctuation dans les sous-titres.</entry>
 	<entry key="subtitlecorrector.strategy.fixpunctuation.locale">Le type de correction à appliquer sur les ponctuations</entry>
+	<!-- Translations for the check spelling strategy -->
+	<entry key="subtitlecorrector.strategy.checkspelling">Verification orthographique</entry>
+	<entry key="subtitlecorrector.strategy.checkspelling.description">Cette correction permet de vérifier l'orthographe des mots dans un sous-titre.</entry>
 	
 	<!-- Translations for the subtitle provider -->
 	<entry key="subtitlecorrector.subtitleprovider.noaccess">Impossible d'accédder aux fichiers %0</entry>

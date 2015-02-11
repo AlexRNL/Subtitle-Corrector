@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alexrnl.commons.translation.Translator;
+import com.alexrnl.subtitlecorrector.correctionstrategy.CheckSpelling;
 import com.alexrnl.subtitlecorrector.correctionstrategy.FixPunctuation;
 import com.alexrnl.subtitlecorrector.correctionstrategy.LetterReplacement;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
@@ -74,6 +75,7 @@ public abstract class AbstractApp {
 		strategies = new HashMap<>();
 		addStrategy(new LetterReplacement(dictionariesManager, userPrompt));
 		addStrategy(new FixPunctuation(Paths.get(AbstractApp.class.getResource("/punctuation").toURI())));
+		addStrategy(new CheckSpelling(dictionariesManager, userPrompt));
 		
 		subtitleFormatManager = new SubtitleFormatManager();
 		subtitleFormatManager.registerFormat(new SubRip());
