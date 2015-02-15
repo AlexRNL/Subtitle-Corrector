@@ -8,7 +8,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter.Parser;
  */
 public final class StandardParameterParsers {
 	/** Parser for character parameters */
-	private static final Parser<Character> charParser = new Parser<Character>() {
+	private static final Parser<Character> CHAR_PARSER = new Parser<Character>() {
 		@Override
 		public Character parse (final String value) {
 			try {
@@ -19,7 +19,7 @@ public final class StandardParameterParsers {
 		}
 	};
 	/** Parser for boolean parameters */
-	private static final Parser<Boolean> boolParser = new Parser<Boolean>() {
+	private static final Parser<Boolean> BOOL_PARSER = new Parser<Boolean>() {
 		@Override
 		public Boolean parse (final String value) {
 			// TODO replace with translation
@@ -27,7 +27,7 @@ public final class StandardParameterParsers {
 		}
 	};
 	/** Parser for string parameters */
-	private static final Parser<String> stringParser = new Parser<String>() {
+	private static final Parser<String> STRING_PARSER = new Parser<String>() {
 		@Override
 		public String parse (final String value) {
 			return value;
@@ -47,7 +47,7 @@ public final class StandardParameterParsers {
 	 * @return the parser to use.
 	 */
 	public static Parser<Character> character () {
-		return charParser;
+		return CHAR_PARSER;
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public final class StandardParameterParsers {
 	 * @return the parser to use.
 	 */
 	public static Parser<Boolean> bool () {
-		return boolParser;
+		return BOOL_PARSER;
 	}
 	
 	/**
@@ -63,6 +63,6 @@ public final class StandardParameterParsers {
 	 * @return the parser to use.
 	 */
 	public static Parser<String> string () {
-		return stringParser;
+		return STRING_PARSER;
 	}
 }

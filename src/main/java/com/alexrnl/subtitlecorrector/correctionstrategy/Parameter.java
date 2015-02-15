@@ -63,7 +63,7 @@ public class Parameter<T> {
 		}
 		
 		@Override
-		public T parse (final String strValue) throws IllegalArgumentException {
+		public T parse (final String strValue) {
 			final T parameter = innerParser.parse(strValue);
 			if (!possibleValues.contains(parameter)) {
 				throw new IllegalArgumentException("The value " + parameter + " is not in the allowed values: " + possibleValues);

@@ -2,7 +2,7 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
 
 import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,12 +59,7 @@ public class LetterReplacement extends AbstractStrategy {
 
 	@Override
 	public List<Parameter<?>> getParameters () {
-		final List<Parameter<?>> parameters = new ArrayList<>(4);
-		parameters.add(originalLetter);
-		parameters.add(newLetter);
-		parameters.add(onlyMissingFromDictionary);
-		parameters.add(promptBeforeCorrecting);
-		return parameters;
+		return Arrays.<Parameter<?>>asList(originalLetter, newLetter, onlyMissingFromDictionary, promptBeforeCorrecting);
 	}
 	
 	@Override

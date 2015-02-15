@@ -53,7 +53,7 @@ public final class TranslationKeys {
 		/**
 		 * Class which factorise common translation keys declaration in strategies.
 		 */
-		public static abstract class AbstractStrategy {
+		public abstract static class AbstractStrategy {
 			/** The key for the actual strategy translations */
 			private final String	actualStrategyKey;
 			

@@ -35,21 +35,21 @@ public abstract class SubtitleWriter {
 	}
 	
 	/**
-	 * Return the current character set used by this writer.
-	 * @return the charset used.
-	 */
-	protected Charset getCharSet () {
-		return charSet;
-	}
-	
-	/**
-	 * Constructor #.<br />
+	 * Constructor #2.<br />
 	 * @param charSet
 	 *        the character set to use for writing the subtitles.
 	 */
 	public SubtitleWriter (final Charset charSet) {
 		super();
 		this.charSet = charSet;
+	}
+	
+	/**
+	 * Return the current character set used by this writer.
+	 * @return the charset used.
+	 */
+	protected Charset getCharSet () {
+		return charSet;
 	}
 
 	/**
@@ -75,13 +75,13 @@ public abstract class SubtitleWriter {
 	 */
 	public synchronized void writeFile (final SubtitleFile file, final Path target) throws IOException {
 		if (Files.isDirectory(target)) {
-			LG.warning("File " + target + " is a director, it will not be overwritten");
-			throw new IllegalArgumentException("File specified is a directory");
+			LG.warning(target + " is a directory, it will not be overwritten");
+			throw new IllegalArgumentException(target + " is a directory");
 		}
 		
 		if (Files.exists(target) && !Files.isWritable(target)) {
-			LG.warning("File " + target + " exists and is not writable");
-			throw new IllegalArgumentException("File " + target + " already exists is not writable");
+			LG.warning(target + " exists and is not writable");
+			throw new IllegalArgumentException(target + " already exists is not writable");
 		}
 		
 		if (Files.exists(target) && LG.isLoggable(Level.INFO)) {
@@ -103,7 +103,7 @@ public abstract class SubtitleWriter {
 		}
 		
 		if (LG.isLoggable(Level.INFO)) {
-			LG.info("File " + target + " has been successfully written");
+			LG.info(target + " has been successfully written");
 		}
 	}
 
