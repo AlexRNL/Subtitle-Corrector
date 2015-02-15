@@ -12,13 +12,17 @@ import java.io.PrintStream;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 
 import com.alexrnl.commons.io.EditableInputStream;
+import com.alexrnl.commons.translation.Translatable;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys;
@@ -31,14 +35,57 @@ import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
  */
 public class ConsoleUserPromptTest {
 	/** The translator to use */
-	private Translator			translator;
+	private Translator					translator;
 	/** The input used */
-	private EditableInputStream	input;
+	private EditableInputStream			input;
 	/** The mocked output */
 	@Mock
-	private PrintStream			output;
+	private PrintStream					output;
 	/** The console user prompt to test */
-	private ConsoleUserPrompt	consolePrompt;
+	private ConsoleUserPrompt			consolePrompt;
+	/** The default choices */
+	private List<TranslatableString>	choices;
+	
+	/**
+	 * Class for translatable strings.<br />
+	 * For tests purposes only.
+	 */
+	private static class TranslatableString implements Translatable {
+		/** The string translated */
+		private final String string;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param string
+		 *        the string translated.
+		 */
+		public TranslatableString (final String string) {
+			super();
+			this.string = Objects.requireNonNull(string);
+		}
+		
+		@Override
+		public String getTranslationKey () {
+			return string;
+		}
+		
+		@Override
+		public int hashCode () {
+			return string.hashCode();
+		}
+		
+		@Override
+		public boolean equals (final Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (!(obj instanceof TranslatableString)) {
+				return false;
+			}
+			return string.equals(((TranslatableString) obj).string);
+		}
+		
+	}
 	
 	/**
 	 * Set up test attributes.
@@ -50,6 +97,7 @@ public class ConsoleUserPromptTest {
 	public void setUp () throws URISyntaxException {
 		initMocks(this);
 		translator = new Translator(Paths.get(ConsoleUserPrompt.class.getResource("/locale/en.xml").toURI()));
+		choices = Arrays.asList(new TranslatableString("Aba"), new TranslatableString("Hjo"), new TranslatableString("Ldr"));
 		input = new EditableInputStream("");
 		consolePrompt = new ConsoleUserPrompt(input, output);
 		consolePrompt.setTranslator(translator);
@@ -124,27 +172,27 @@ public class ConsoleUserPromptTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testAskChoiceEmptyList () {
-		consolePrompt.askChoice(Collections.emptyList(), "");
+		consolePrompt.askChoice(Collections.<TranslatableString>emptyList(), "");
 	}
 	
 	/**
-	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.
+	 * Test method for {@link ConsoleUserPrompt#askChoice(Collection, String, Object...)}.
 	 * @throws IOException
 	 *         if there is an IO issue.
 	 */
 	@Test
 	public void testAskChoice () throws IOException {
 		input.updateStream("1\n");
-		assertEquals("Aba", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		assertEquals(new TranslatableString("Aba"), consolePrompt.askChoice(choices, "unknown"));
 		verify(output).print("unknown\n\t1\tAba\n\t2\tHjo\n\t3\tLdr\n\t> ");
 		
 		// Check choice 0 => cancelled input
 		input.updateStream("0\n");
-		assertNull(consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		assertNull(consolePrompt.askChoice(choices, "unknown"));
 	}
 	
 	/**
-	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.
+	 * Test method for {@link ConsoleUserPrompt#askChoice(Collection, String, Object...)}.
 	 * Out of range integer.
 	 * @throws IOException
 	 *         if there is an IO issue.
@@ -152,16 +200,16 @@ public class ConsoleUserPromptTest {
 	@Test
 	public void testAskChoiceOutOfRangeInteger () throws IOException {
 		input.updateStream("8\n2\n");
-		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		assertEquals(new TranslatableString("Hjo"), consolePrompt.askChoice(choices, "unknown"));
 		verify(output).println("Value '8' could not be parsed as a valid integer between 0 and 3.");
 		
 		input.updateStream("-1\n2\n");
-		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		assertEquals(new TranslatableString("Hjo"), consolePrompt.askChoice(choices, "unknown"));
 		verify(output).println("Value '-1' could not be parsed as a valid integer between 0 and 3.");
 	}
 	
 	/**
-	 * Test method for {@link ConsoleUserPrompt#askChoice(java.util.Collection, String, Object...)}.<br />
+	 * Test method for {@link ConsoleUserPrompt#askChoice(Collection, String, Object...)}.<br />
 	 * Invalid integer case.
 	 * @throws IOException
 	 *         if there is an IO issue.
@@ -169,7 +217,7 @@ public class ConsoleUserPromptTest {
 	@Test
 	public void testAskChoiceInvalidInteger () throws IOException {
 		input.updateStream("aba\n2\n");
-		assertEquals("Hjo", consolePrompt.askChoice(Arrays.asList("Aba", "Hjo", "Ldr"), "unknown"));
+		assertEquals(new TranslatableString("Hjo"), consolePrompt.askChoice(choices, "unknown"));
 		verify(output).println("Value 'aba' could not be parsed as a valid integer between 0 and 3.");
 	}
 	

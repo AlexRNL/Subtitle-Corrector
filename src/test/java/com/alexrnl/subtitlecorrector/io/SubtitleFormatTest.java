@@ -98,11 +98,11 @@ public class SubtitleFormatTest {
 	}
 	
 	/**
-	 * Test method for {@link SubtitleFormat#toString()}.
+	 * Test method for {@link SubtitleFormat#getTranslationKey()}.
 	 */
 	@Test
 	public void testToString () {
-		assertEquals("SubRip", subrip.toString());
-		assertEquals("SubStation Alpha", ass.toString());
+		assertEquals("SubRip", subrip.getTranslationKey());
+		assertEquals("SubStation Alpha", ass.getTranslationKey());
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.alexrnl.commons.translation.Translatable;
 import com.alexrnl.commons.utils.object.AutoEquals;
 import com.alexrnl.commons.utils.object.AutoHashCode;
 import com.alexrnl.commons.utils.object.Field;
@@ -14,7 +15,7 @@ import com.alexrnl.commons.utils.object.Field;
  * Class defining a subtitle format.<br />
  * @author Alex
  */
-public class SubtitleFormat {
+public class SubtitleFormat implements Translatable {
 	/** The name of the format */
 	private final String			name;
 	/** The extensions of subtitle encoded in that format */
@@ -107,7 +108,7 @@ public class SubtitleFormat {
 	}
 	
 	@Override
-	public String toString () {
+	public String getTranslationKey () {
 		return getName();
 	}
 	

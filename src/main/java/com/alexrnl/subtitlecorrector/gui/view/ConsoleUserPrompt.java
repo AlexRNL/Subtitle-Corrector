@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
+import com.alexrnl.commons.translation.Translatable;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys;
@@ -96,7 +97,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 	}
 	
 	@Override
-	public <T> T askChoice (final Collection<T> choices, final String translationKey, final Object... parameters) {
+	public <T extends Translatable> T askChoice (final Collection<T> choices, final String translationKey, final Object... parameters) {
 		if (choices == null || choices.isEmpty()) {
 			throw new IllegalArgumentException("Cannot propose choices with an empty list");
 		}
@@ -108,7 +109,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 		final StringBuilder questionBuilder = new StringBuilder(translator.get(translationKey, parameters));
 		for (final T choice : choices) {
 			questionBuilder.append('\n').append('\t').append(++choiceIndex).append('\t')
-				.append(translator.get(choice.toString()));
+				.append(translator.get(choice.getTranslationKey()));
 			arrayChoices.add(choice);
 		}
 		questionBuilder.append('\n').append('\t').append(translator.get(TranslationKeys.KEYS.console().promptMark()));
