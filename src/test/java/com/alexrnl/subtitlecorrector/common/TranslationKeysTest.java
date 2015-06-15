@@ -41,6 +41,9 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.gui.mainwindow.subtitleButton", KEYS.gui().mainWindow().subtitleButton());
 		assertEquals("subtitlecorrector.gui.mainwindow.strategyLabel", KEYS.gui().mainWindow().strategyLabel());
 		assertEquals("subtitlecorrector.gui.mainwindow.startCorrectingButton", KEYS.gui().mainWindow().startCorrectingButton());
+		assertEquals("subtitlecorrector.gui.userprompt.replacewithcontext", KEYS.gui().userPrompt().replaceWithContext());
+		assertEquals("subtitlecorrector.gui.userprompt.replace", KEYS.gui().userPrompt().replace());
+		assertEquals("subtitlecorrector.gui.userprompt.rememberchoice", KEYS.gui().userPrompt().rememberChoice());
 		
 		assertEquals("subtitlecorrector.console.yes", KEYS.console().yes());
 		assertEquals("subtitlecorrector.console.no", KEYS.console().no());

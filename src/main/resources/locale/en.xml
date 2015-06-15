@@ -27,12 +27,17 @@
 	<entry key="subtitlecorrector.subtitleprovider.subtitlefilereaderror">Subtitle %0 could not be properly read, it will not be corrected</entry>
 	<entry key="subtitlecorrector.subtitleprovider.nosubtitletocorrect">No subtitle file to correct found, check available format and extensions</entry>
 	
+	<!-- Translations for GUI mode -->
 	<!-- Translations for the main window -->
-	<entry key="subtitlecorrector.mainwindow.title">Subtitle Corrector</entry>
-	<entry key="subtitlecorrector.mainwindow.subtitleLabel">Subtitle to correct</entry>
-	<entry key="subtitlecorrector.mainwindow.strategyLabel">Correction strategy</entry>
-	<entry key="subtitlecorrector.mainwindow.subtitleButton">Select subtitle...</entry>
-	<entry key="subtitlecorrector.mainwindow.startCorrectingButton">Start correction</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.title">Subtitle Corrector</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.subtitleLabel">Subtitle to correct</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.strategyLabel">Correction strategy</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.subtitleButton">Select subtitle...</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.startCorrectingButton">Start correction</entry>
+	<!-- Translations for graphic user prompt -->
+	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replacewithcontext&#10;Context: %2</entry>
+	<entry key="subtitlecorrector.gui.userprompt.replace">Replace '%0' by '%1'?</entry>
+	<entry key="subtitlecorrector.gui.userprompt.rememberchoice">Remember choice for the rest of the session?</entry>
 	
 	<!-- Translations for console mode -->
 	<!-- Generic translations -->

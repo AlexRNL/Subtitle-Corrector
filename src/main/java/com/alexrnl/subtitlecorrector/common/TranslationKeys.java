@@ -398,6 +398,29 @@ public final class TranslationKeys {
 				return userPromptKey;
 			}
 			
+			/**
+			 * Return the translation for a replacement with the context.
+			 * @return the translation for a replacement with the context.
+			 */
+			public String replaceWithContext () {
+				return userPromptKey + HIERARCHY_SEPARATOR + "replacewithcontext";
+			}
+			
+			/**
+			 * Return the translation for a replacement with no context.
+			 * @return the translation for a replacement with no context.
+			 */
+			public String replace () {
+				return userPromptKey + HIERARCHY_SEPARATOR + "replace";
+			}
+			
+			/**
+			 * Return the translation for the remember choice message.
+			 * @return the remember choice message.
+			 */
+			public String rememberChoice () {
+				return userPromptKey + HIERARCHY_SEPARATOR + "rememberchoice";
+			}
 		}
 		
 		/**
