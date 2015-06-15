@@ -12,17 +12,16 @@ import java.util.Scanner;
 import com.alexrnl.commons.translation.Translatable;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.Word;
-import com.alexrnl.subtitlecorrector.common.TranslationKeys;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys.Console;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys.Console.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
-import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
 /**
- * A console implementation for the {@link UserPrompt} interface.
+ * A console implementation for the {@link com.alexrnl.subtitlecorrector.service.UserPrompt} interface.
  * @author Alex
  */
-public class ConsoleUserPrompt implements UserPrompt {
+public class ConsoleUserPrompt implements com.alexrnl.subtitlecorrector.service.UserPrompt {
 	/** The translator to use */
 	private Translator			translator;
 	/** The console input stream */
@@ -31,6 +30,12 @@ public class ConsoleUserPrompt implements UserPrompt {
 	private Scanner				inputScanner;
 	/** The console output */
 	private final PrintStream	output;
+	
+	// Shortcuts to translations keys
+	/** The key to the console translations */
+	private final Console		consoleKey;
+	/** The key to the user prompt translations */
+	private final UserPrompt	userPromptKey;
 	
 	/**
 	 * Constructor #1.<br />
@@ -43,6 +48,8 @@ public class ConsoleUserPrompt implements UserPrompt {
 		super();
 		this.input = input;
 		this.output = output;
+		consoleKey = KEYS.console();
+		userPromptKey = consoleKey.userPrompt();
 	}
 	
 	/**
@@ -112,7 +119,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 				.append(translator.get(choice.getTranslationKey()));
 			arrayChoices.add(choice);
 		}
-		questionBuilder.append('\n').append('\t').append(translator.get(TranslationKeys.KEYS.console().promptMark()));
+		questionBuilder.append('\n').append('\t').append(translator.get(consoleKey.promptMark()));
 		final String question = questionBuilder.toString();
 		
 		final Scanner scanner = new Scanner(input);
@@ -128,7 +135,7 @@ public class ConsoleUserPrompt implements UserPrompt {
 			}
 			valid = choice >= 0 && choice < arrayChoices.size();
 			if (!valid) {
-				output.println(translator.get(TranslationKeys.KEYS.console().userPrompt().invalidChoice(),
+				output.println(translator.get(userPromptKey.invalidChoice(),
 						userInput, arrayChoices.size() - 1));
 			}
 		}
@@ -147,8 +154,6 @@ public class ConsoleUserPrompt implements UserPrompt {
 		boolean cancelled = false;
 		boolean rememberChoice;
 		
-		final Console consoleKey = KEYS.console();
-		final com.alexrnl.subtitlecorrector.common.TranslationKeys.Console.UserPrompt userPromptKey = consoleKey.userPrompt();
 		final String yes = translator.get(consoleKey.yes());
 		final String yesNoChoice = translator.get(consoleKey.yesNoPrompt());
 		
