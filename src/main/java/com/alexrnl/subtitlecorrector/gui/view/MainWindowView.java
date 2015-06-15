@@ -82,7 +82,7 @@ public class MainWindowView extends AbstractFrame {
 	 */
 	public MainWindowView (final Path iconFile, final MainWindowController controller,
 			final Translator translator, final Map<String, Strategy> strategies) {
-		super(translator.get(KEYS.mainWindow().title()), iconFile, controller, translator, strategies);
+		super(translator.get(KEYS.gui().mainWindow().title()), iconFile, controller, translator, strategies);
 	}
 
 	@Override
@@ -112,9 +112,9 @@ public class MainWindowView extends AbstractFrame {
 		final GridBagConstraints c = new GridBagConstraints(xIndex, yIndex, 1, 1, 0, 0,
 				GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.HORIZONTAL,
 				DEFAULT_INSETS, 0, 0);
-		add(new JLabel(translator.get(KEYS.mainWindow().subtitleLabel())), c);
+		add(new JLabel(translator.get(KEYS.gui().mainWindow().subtitleLabel())), c);
 		c.gridy = ++yIndex;
-		add(new JLabel(translator.get(KEYS.mainWindow().strategyLabel())), c);
+		add(new JLabel(translator.get(KEYS.gui().mainWindow().strategyLabel())), c);
 		
 		yIndex = 0;
 		c.gridy = yIndex;
@@ -123,7 +123,7 @@ public class MainWindowView extends AbstractFrame {
 		add(subtitleField, c);
 		
 		c.gridx = ++xIndex;
-		subtitleButton = new JButton(translator.get(KEYS.mainWindow().subtitleButton()));
+		subtitleButton = new JButton(translator.get(KEYS.gui().mainWindow().subtitleButton()));
 		add(subtitleButton, c);
 		
 		c.gridx = --xIndex;
@@ -141,7 +141,7 @@ public class MainWindowView extends AbstractFrame {
 		c.gridx = 0;
 		c.gridy = ++yIndex;
 		c.gridwidth = 3;
-		startCorrectingButton = new JButton(translator.get(KEYS.mainWindow().startCorrectingButton()));
+		startCorrectingButton = new JButton(translator.get(KEYS.gui().mainWindow().startCorrectingButton()));
 		add(startCorrectingButton, c);
 	}
 	

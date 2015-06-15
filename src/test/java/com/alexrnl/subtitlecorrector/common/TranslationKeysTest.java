@@ -36,11 +36,11 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.subtitleprovider.subtitlefilereaderror", KEYS.subtitleProvider().subtitleFileReadError());
 		assertEquals("subtitlecorrector.subtitleprovider.nosubtitletocorrect", KEYS.subtitleProvider().noSubtitleToCorrect());
 		
-		assertEquals("subtitlecorrector.mainwindow.title", KEYS.mainWindow().title());
-		assertEquals("subtitlecorrector.mainwindow.subtitleLabel", KEYS.mainWindow().subtitleLabel());
-		assertEquals("subtitlecorrector.mainwindow.subtitleButton", KEYS.mainWindow().subtitleButton());
-		assertEquals("subtitlecorrector.mainwindow.strategyLabel", KEYS.mainWindow().strategyLabel());
-		assertEquals("subtitlecorrector.mainwindow.startCorrectingButton", KEYS.mainWindow().startCorrectingButton());
+		assertEquals("subtitlecorrector.gui.mainwindow.title", KEYS.gui().mainWindow().title());
+		assertEquals("subtitlecorrector.gui.mainwindow.subtitleLabel", KEYS.gui().mainWindow().subtitleLabel());
+		assertEquals("subtitlecorrector.gui.mainwindow.subtitleButton", KEYS.gui().mainWindow().subtitleButton());
+		assertEquals("subtitlecorrector.gui.mainwindow.strategyLabel", KEYS.gui().mainWindow().strategyLabel());
+		assertEquals("subtitlecorrector.gui.mainwindow.startCorrectingButton", KEYS.gui().mainWindow().startCorrectingButton());
 		
 		assertEquals("subtitlecorrector.console.yes", KEYS.console().yes());
 		assertEquals("subtitlecorrector.console.no", KEYS.console().no());

@@ -286,73 +286,135 @@ public final class TranslationKeys {
 	}
 	
 	/**
-	 * The translation for the main window.
+	 * The translation for the graphic user interface
 	 */
-	public static final class MainWindow {
-		/** The root key for the main window translations */
-		private static final String	MAIN_WINDOW_KEY	= "mainwindow";
+	public static final class Gui {
+		/** The root key for the GUI */
+		private static final String	GUI_KEY	= "gui";
 		
-		/** The key for the main window translation */
-		private final String		mainWindowKey;
-
+		/** The key for the GUI translations */
+		private final String		guiKey;
+		
 		/**
 		 * Constructor #1.<br />
 		 * @param parentKey
 		 *        the key from the parent category.
 		 */
-		private MainWindow (final String parentKey) {
+		private Gui (final String parentKey) {
 			super();
-			mainWindowKey = parentKey + HIERARCHY_SEPARATOR + MAIN_WINDOW_KEY;
-		}
-
-		/**
-		 * The translation for the title of the main window.
-		 * @return the main window's title translation.
-		 */
-		public String title () {
-			return mainWindowKey + HIERARCHY_SEPARATOR + "title";
-		}
-
-		/**
-		 * The translation for the subtitle label.
-		 * @return the subtitle label translation.
-		 */
-		public String subtitleLabel () {
-			return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleLabel";
-		}
-
-		/**
-		 * The translation for the subtitle button.
-		 * @return the subtitle button translation.
-		 */
-		public String subtitleButton () {
-			return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleButton";
-		}
-
-		/**
-		 * The translation for the subtitle label.
-		 * @return the subtitle label translation.
-		 */
-		public String strategyLabel () {
-			return mainWindowKey + HIERARCHY_SEPARATOR + "strategyLabel";
-		}
-
-		/**
-		 * The translation for the start correcting button.
-		 * @return the start correcting button.
-		 */
-		public String startCorrectingButton () {
-			return mainWindowKey + HIERARCHY_SEPARATOR + "startCorrectingButton";
+			this.guiKey = parentKey + HIERARCHY_SEPARATOR + GUI_KEY;
 		}
 		
+		/**
+		 * The translation for the main window.
+		 */
+		public static final class MainWindow {
+			/** The root key for the main window translations */
+			private static final String	MAIN_WINDOW_KEY	= "mainwindow";
+			
+			/** The key for the main window translation */
+			private final String		mainWindowKey;
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			private MainWindow (final String parentKey) {
+				super();
+				mainWindowKey = parentKey + HIERARCHY_SEPARATOR + MAIN_WINDOW_KEY;
+			}
+			
+			/**
+			 * The translation for the title of the main window.
+			 * @return the main window's title translation.
+			 */
+			public String title () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "title";
+			}
+			
+			/**
+			 * The translation for the subtitle label.
+			 * @return the subtitle label translation.
+			 */
+			public String subtitleLabel () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleLabel";
+			}
+			
+			/**
+			 * The translation for the subtitle button.
+			 * @return the subtitle button translation.
+			 */
+			public String subtitleButton () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "subtitleButton";
+			}
+			
+			/**
+			 * The translation for the subtitle label.
+			 * @return the subtitle label translation.
+			 */
+			public String strategyLabel () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "strategyLabel";
+			}
+			
+			/**
+			 * The translation for the start correcting button.
+			 * @return the start correcting button.
+			 */
+			public String startCorrectingButton () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "startCorrectingButton";
+			}
+		}
+		/**
+		 * The main window translations.
+		 * @return the main window translation.
+		 */
+		public MainWindow mainWindow () {
+			return new MainWindow(guiKey);
+		}
+		
+		/**
+		 * The translation for the user prompt.
+		 */
+		public static final class UserPrompt {
+			/** The root key for the user prompt */
+			private static final String	USER_PROMPT_KEY	= "userprompt";
+			
+			/** The key for the user prompt translations */
+			private final String		userPromptKey;
+			
+			/**
+			 * Constructor #1.<br />
+			 * @param parentKey
+			 *        the key from the parent category.
+			 */
+			private UserPrompt (final String parentKey) {
+				super();
+				this.userPromptKey = parentKey + HIERARCHY_SEPARATOR + USER_PROMPT_KEY;
+			}
+			
+			@Override
+			public String toString () {
+				return userPromptKey;
+			}
+			
+		}
+		
+		/**
+		 * The user prompt translation.
+		 * @return the GUI user prompt translation.
+		 */
+		public UserPrompt userPrompt () {
+			return new UserPrompt(guiKey);
+		}
 	}
 	
 	/**
-	 * The main window translations.
-	 * @return the main window translation.
+	 * The GUI translations
+	 * @return the GUI translations.
 	 */
-	public MainWindow mainWindow () {
-		return new MainWindow(subtitleCorrectorKey);
+	public Gui gui () {
+		return new Gui(subtitleCorrectorKey);
 	}
 	
 	/**
