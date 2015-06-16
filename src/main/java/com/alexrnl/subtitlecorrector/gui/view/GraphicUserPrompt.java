@@ -27,6 +27,9 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 	/** Logger */
 	private static final Logger	LG	= Logger.getLogger(GraphicUserPrompt.class.getName());
 	
+	/** The maximum length for lines in dialogs */
+	private static final int	MAXIMUM_LINE_LENGTH = 50;
+	
 	/** The translator to use */
 	private Translator			translator;
 	
@@ -57,7 +60,7 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 	 *        the type of the dialog.
 	 */
 	private void showDialog (final Dialog dialog, final int type) {
-		SwingUtils.showMessageDialog(null, translator, dialog, type, 50);
+		SwingUtils.showMessageDialog(null, translator, dialog, type, MAXIMUM_LINE_LENGTH);
 	}
 	
 	@Override
@@ -79,7 +82,7 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 	@Override
 	public <T extends Translatable> T askChoice (final Collection<T> choices, final String translationKey,
 			final Object... parameters) {
-		return SwingUtils.askChoice(null, translator, new StandardDialog(translationKey, parameters), choices, 50);
+		return SwingUtils.askChoice(null, translator, new StandardDialog(translationKey, parameters), choices, MAXIMUM_LINE_LENGTH);
 	}
 	
 	@Override
@@ -88,10 +91,10 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 		final StandardDialog dialog = context != null && !context.isEmpty() ?
 				new StandardDialog(userPromptKey.replaceWithContext(), original, replacement) :
 				new StandardDialog(userPromptKey.replace(), original, replacement, context);
-		final String answer = SwingUtils.askFreeInput(null, translator, dialog, replacement, 50);
+		final String answer = SwingUtils.askFreeInput(null, translator, dialog, replacement, MAXIMUM_LINE_LENGTH);
 		
 		return new UserPromptAnswer(answer, answer == null,
-				SwingUtils.askConfirmation(null, translator, new StandardDialog(userPromptKey.rememberChoice()), 50));
+				SwingUtils.askConfirmation(null, translator, new StandardDialog(userPromptKey.rememberChoice()), MAXIMUM_LINE_LENGTH));
 	}
 	
 	@Override

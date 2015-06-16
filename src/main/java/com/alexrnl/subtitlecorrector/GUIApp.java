@@ -37,7 +37,7 @@ public final class GUIApp extends AbstractApp {
 		LG.info("Subtitle Corrector starting...");
 		
 		// Load MVC
-		final MainWindowController controller = new MainWindowController();
+		final MainWindowController controller = new MainWindowController(this);
 		final MainWindowModel model = new MainWindowModel();
 		final MainWindowView view = new MainWindowView(null, controller, getTranslator(), getStrategies());
 		controller.addModel(model);

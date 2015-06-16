@@ -15,6 +15,7 @@ import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormatManager;
 import com.alexrnl.subtitlecorrector.io.subrip.SubRip;
 import com.alexrnl.subtitlecorrector.service.DictionaryManager;
+import com.alexrnl.subtitlecorrector.service.ServiceProvider;
 import com.alexrnl.subtitlecorrector.service.SessionManager;
 import com.alexrnl.subtitlecorrector.service.SubtitleProvider;
 import com.alexrnl.subtitlecorrector.service.UserPrompt;
@@ -24,7 +25,7 @@ import com.alexrnl.subtitlecorrector.service.UserPrompt;
  * Allows to factorise initialization code between console and GUI application.
  * @author Alex
  */
-public abstract class AbstractApp {
+public abstract class AbstractApp implements ServiceProvider {
 	/** The name of the program */
 	public static final String			PROGRAM_NAME	= "subtitleCorrector";
 	
@@ -83,35 +84,23 @@ public abstract class AbstractApp {
 		subtitleProvider = new SubtitleProvider(subtitleFormatManager, userPrompt);
 	}
 	
-	/**
-	 * Return the attribute translator.
-	 * @return the attribute translator.
-	 */
-	protected Translator getTranslator () {
+	@Override
+	public Translator getTranslator () {
 		return translator;
 	}
 	
-	/**
-	 * Return the attribute sessionManager.
-	 * @return the attribute sessionManager.
-	 */
-	protected SessionManager getSessionManager () {
+	@Override
+	public SessionManager getSessionManager () {
 		return sessionManager;
 	}
-
-	/**
-	 * Return the attribute dictionariesManager.
-	 * @return the attribute dictionariesManager.
-	 */
-	protected DictionaryManager getDictionariesManager () {
+	
+	@Override
+	public DictionaryManager getDictionariesManager () {
 		return dictionariesManager;
 	}
 	
-	/**
-	 * Return the attribute strategies.
-	 * @return the attribute strategies.
-	 */
-	protected Map<String, Strategy> getStrategies () {
+	@Override
+	public Map<String, Strategy> getStrategies () {
 		return Collections.unmodifiableMap(strategies);
 	}
 	
@@ -130,19 +119,13 @@ public abstract class AbstractApp {
 		return previousStrategy != null;
 	}
 	
-	/**
-	 * Return the attribute subtitleFormatManager.
-	 * @return the attribute subtitleFormatManager.
-	 */
-	protected SubtitleFormatManager getSubtitleFormatManager () {
+	@Override
+	public SubtitleFormatManager getSubtitleFormatManager () {
 		return subtitleFormatManager;
 	}
 	
-	/**
-	 * Return the attribute subtitleProvider.
-	 * @return the attribute subtitleProvider.
-	 */
-	protected SubtitleProvider getSubtitleProvider () {
+	@Override
+	public SubtitleProvider getSubtitleProvider () {
 		return subtitleProvider;
 	}
 
