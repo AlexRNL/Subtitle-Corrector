@@ -16,6 +16,8 @@ public class MainWindowModel extends AbstractModel {
 	private Path			subtitle;
 	/** The name of the strategy to use */
 	private Strategy		strategy;
+	/** Flag to overwrite the file */
+	private Boolean			overwrite;
 	
 	/**
 	 * Constructor #1.<br />
@@ -61,6 +63,25 @@ public class MainWindowModel extends AbstractModel {
 		final Strategy oldStrategyName = this.strategy;
 		this.strategy = strategy;
 		fireModelChange(MainWindowController.STRATEGY_PROPERTY, oldStrategyName, strategy);
+	}
+	
+	/**
+	 * Return the attribute overwrite.
+	 * @return the attribute overwrite.
+	 */
+	public Boolean isOverwrite () {
+		return overwrite;
+	}
+	
+	/**
+	 * Set the attribute overwrite.
+	 * @param overwrite
+	 *        the attribute overwrite.
+	 */
+	public void setOverwrite (final Boolean overwrite) {
+		final Boolean oldOverwrite = this.overwrite;
+		this.overwrite = overwrite;
+		fireModelChange(MainWindowController.OVERWRITE_PROPERTY, oldOverwrite, overwrite);
 	}
 	
 }

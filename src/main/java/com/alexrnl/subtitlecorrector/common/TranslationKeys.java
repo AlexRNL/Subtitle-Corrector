@@ -358,6 +358,14 @@ public final class TranslationKeys {
 			}
 			
 			/**
+			 * The translation for the overwrite label.
+			 * @return the overwrite label.
+			 */
+			public String overwriteLabel () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "overwriteLabel";
+			}
+			
+			/**
 			 * The translation for the start correcting button.
 			 * @return the start correcting button.
 			 */

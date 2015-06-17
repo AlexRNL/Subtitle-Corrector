@@ -32,6 +32,7 @@
 	<entry key="subtitlecorrector.gui.mainwindow.title">Subtitle Corrector</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.subtitleLabel">Subtitle to correct</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.strategyLabel">Correction strategy</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.overwriteLabel">Overwrite existing file</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.subtitleButton">Select subtitle...</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.startCorrectingButton">Start correction</entry>
 	<!-- Translations for graphic user prompt -->

@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -59,6 +60,8 @@ public class MainWindowView extends AbstractFrame {
 	private JComboBox<String>		strategyComboBox;
 	/** The button to start the correction */
 	private JButton					startCorrectingButton;
+	/** The check box for the overwrite option */
+	private JCheckBox				overwriteCheckbox;
 	/** The panel with the parameters of the strategy */
 	private JPanel					strategyParameterPanel;
 	
@@ -135,6 +138,12 @@ public class MainWindowView extends AbstractFrame {
 		c.gridx = 0;
 		c.gridy = ++yIndex;
 		c.gridwidth = 3;
+		overwriteCheckbox = new JCheckBox(translator.get(KEYS.gui().mainWindow().overwriteLabel()));
+		add(overwriteCheckbox, c);
+		
+		c.gridx = 0;
+		c.gridy = ++yIndex;
+		c.gridwidth = 3;
 		strategyParameterPanel = new JPanel();
 		add(strategyParameterPanel, c);
 		
@@ -149,11 +158,6 @@ public class MainWindowView extends AbstractFrame {
 	 * Install the listeners on the components.
 	 */
 	private void installListeners () {
-		if (subtitleField == null || subtitleButton == null || strategyComboBox == null) {
-			throw new IllegalStateException("Cannot install listener on null components, call " +
-					"buildMainContainer before this method");
-		}
-		
 		subtitleField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped (final KeyEvent e) {
@@ -185,6 +189,12 @@ public class MainWindowView extends AbstractFrame {
 			@Override
 			public void itemStateChanged (final ItemEvent e) {
 				controller.changeStrategy(strategies.get(e.getItem()));
+			}
+		});
+		overwriteCheckbox.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed (final ActionEvent e) {
+				controller.changeOverwrite(overwriteCheckbox.isSelected());
 			}
 		});
 		startCorrectingButton.addActionListener(new ActionListener() {
@@ -225,6 +235,9 @@ public class MainWindowView extends AbstractFrame {
 				final Strategy strategy = (Strategy) evt.getNewValue();
 				strategyComboBox.setSelectedItem(translator.get(strategy.getTranslationKey()));
 				// TODO change parameter panel
+				break;
+			case MainWindowController.OVERWRITE_PROPERTY:
+				overwriteCheckbox.setSelected((boolean) evt.getNewValue());
 				break;
 			default:
 				LG.info("Model property not handle by main window: " + evt);
