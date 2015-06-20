@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector.gui.controller;
 
+import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Locale;
@@ -123,7 +125,7 @@ public class MainWindowController extends AbstractController {
 						Path target = entry.getKey().getFile();
 						if (!model.isOverwrite()) {
 							target = target.getParent().resolve(IOUtils.getFilename(target)
-											+ IOUtils.FILE_EXTENSION_SEPARATOR + "corrected"
+											+ IOUtils.FILE_EXTENSION_SEPARATOR + serviceProvider.getTranslator().get(KEYS.misc().fileExtension())
 											+ IOUtils.FILE_EXTENSION_SEPARATOR + IOUtils.getFileExtension(target));
 						}
 						entry.getValue().getWriter().writeFile(entry.getKey(), target);

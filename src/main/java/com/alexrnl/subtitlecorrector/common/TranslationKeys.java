@@ -640,4 +640,42 @@ public final class TranslationKeys {
 	public Console console () {
 		return new Console(subtitleCorrectorKey);
 	}
+	
+	/**
+	 * Miscellaneous translations.
+	 */
+	public static final class Misc {
+		/** The root key for the misc */
+		private static final String	MISC_KEY	= "misc";
+		
+		/** The key for the console translations */
+		private final String		miscKey;
+		
+		/**
+		 * Constructor #1.<br />
+		 * @param parentKey
+		 *        the key from the parent category.
+		 */
+		private Misc (final String parentKey) {
+			super();
+			this.miscKey = parentKey + HIERARCHY_SEPARATOR + MISC_KEY;
+		}
+		
+		/**
+		 * The extension for corrected subtitles files.
+		 * @return the extension for corrected subtitles files.
+		 */
+		public String fileExtension () {
+			return miscKey + HIERARCHY_SEPARATOR + "fileExtension";
+		}
+		
+	}
+	
+	/**
+	 * The miscellaneous translations.
+	 * @return the miscellaneous translations.
+	 */
+	public Misc misc () {
+		return new Misc(subtitleCorrectorKey);
+	}
 }

@@ -55,4 +55,7 @@
 	<entry key="subtitlecorrector.console.app.strategyparametersinput">Entrez la configuration pour la stratégie %0 :</entry>
 	<entry key="subtitlecorrector.console.app.strategyparametersinvalidvalue">Valeur non valide pour le paramètre : %0</entry>
 	<entry key="subtitlecorrector.console.app.subtitlewriteerror">Le sous-titre corrigé %0 n'a pas pu être correctement sauvegardé : %1</entry>
+	
+	<!-- Miscellaneous translations -->
+	<entry key="subtitlecorrector.misc.fileExtension">corrected</entry>
 </properties>

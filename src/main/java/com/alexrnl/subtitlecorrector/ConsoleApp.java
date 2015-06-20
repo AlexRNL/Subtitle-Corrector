@@ -1,5 +1,7 @@
 package com.alexrnl.subtitlecorrector;
 
+import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
+
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.URISyntaxException;
@@ -34,9 +36,6 @@ import com.alexrnl.subtitlecorrector.service.SessionParameters;
 public class ConsoleApp extends AbstractApp {
 	/** Logger */
 	private static final Logger	LG					= Logger.getLogger(ConsoleApp.class.getName());
-	
-	/** The prefix to indicate that the file was corrected (in non-overwrite mode) */
-	private static final String	CORRECTED_EXTENSION	= "corrected";
 	
 	/** The print stream to use for interacting with the user */
 	private final PrintStream	out;
@@ -155,7 +154,7 @@ public class ConsoleApp extends AbstractApp {
 				Path target = entry.getKey().getFile();
 				if (!overwrite) {
 					target = target.getParent().resolve(IOUtils.getFilename(target)
-									+ IOUtils.FILE_EXTENSION_SEPARATOR + CORRECTED_EXTENSION
+									+ IOUtils.FILE_EXTENSION_SEPARATOR + getTranslator().get(KEYS.misc().fileExtension())
 									+ IOUtils.FILE_EXTENSION_SEPARATOR + IOUtils.getFileExtension(target));
 				}
 				entry.getValue().getWriter().writeFile(entry.getKey(), target);

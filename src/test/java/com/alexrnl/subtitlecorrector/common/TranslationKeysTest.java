@@ -60,5 +60,7 @@ public class TranslationKeysTest {
 		assertEquals("subtitlecorrector.console.app.strategyparametersinput", KEYS.console().app().strategyParametersInput());
 		assertEquals("subtitlecorrector.console.app.strategyparametersinvalidvalue", KEYS.console().app().strategyParametersInvalidValue());
 		assertEquals("subtitlecorrector.console.app.subtitlewriteerror", KEYS.console().app().subtitleWriteError());
+		
+		assertEquals("subtitlecorrector.misc.fileExtension", KEYS.misc().fileExtension());
 	}
 }
