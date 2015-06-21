@@ -374,6 +374,14 @@ public final class TranslationKeys {
 			}
 			
 			/**
+			 * The translation for the locale parameter label.
+			 * @return the locale label.
+			 */
+			public String localeLabel () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "localeLabel";
+			}
+			
+			/**
 			 * The translation for the start correcting button.
 			 * @return the start correcting button.
 			 */

@@ -34,6 +34,7 @@
 	<entry key="subtitlecorrector.gui.mainwindow.overwriteLabel">Ecraser le fichier existant</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.subtitleButton">Sélection du sous titre...</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.strategyParameters">Paramètres de la stratégie</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.localeLabel">Langue du dictionnaire</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.startCorrectingButton">Commencer la correction</entry>
 	<!-- Translations for graphic user prompt -->
 	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replacewithcontext&#10;Contexte : %2</entry>
