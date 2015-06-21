@@ -5,7 +5,10 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
+
 import com.alexrnl.commons.error.ExceptionUtils;
+import com.alexrnl.commons.gui.swing.SwingUtils;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.gui.view.GraphicUserPrompt;
@@ -30,6 +33,7 @@ public final class GUIApp extends AbstractApp {
 	 */
 	public GUIApp (final List<String> args) throws IOException, URISyntaxException {
 		super(new GraphicUserPrompt());
+		SwingUtils.setLookAndFeel(new NimbusLookAndFeel().getName());
 	}
 	
 	@Override
@@ -43,14 +47,14 @@ public final class GUIApp extends AbstractApp {
 		controller.addModel(model);
 		controller.addView(view);
 		
-		synchronized (view) {
-			try {
-				while (!view.isReady()) {
+		try {
+			while (!view.isReady()) {
+				synchronized (view) {
 					view.wait();
 				}
-			} catch (final InterruptedException e) {
-				LG.warning("Main thread interrupted while waiting for GUI building: " + ExceptionUtils.display(e));
 			}
+		} catch (final InterruptedException e) {
+			LG.warning("Main thread interrupted while waiting for GUI building: " + ExceptionUtils.display(e));
 		}
 		view.setVisible(true);
 		
