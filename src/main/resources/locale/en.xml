@@ -34,6 +34,7 @@
 	<entry key="subtitlecorrector.gui.mainwindow.strategyLabel">Correction strategy</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.overwriteLabel">Overwrite existing file</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.subtitleButton">Select subtitle...</entry>
+	<entry key="subtitlecorrector.gui.mainwindow.strategyParameters">Strategy parameters</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.startCorrectingButton">Start correction</entry>
 	<!-- Translations for graphic user prompt -->
 	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replacewithcontext&#10;Context: %2</entry>

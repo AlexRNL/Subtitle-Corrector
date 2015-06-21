@@ -15,10 +15,11 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Map;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -32,6 +33,7 @@ import javax.swing.WindowConstants;
 import com.alexrnl.commons.gui.swing.AbstractFrame;
 import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.translation.Translator;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 
@@ -64,13 +66,13 @@ public class MainWindowView extends AbstractFrame {
 	private JCheckBox				overwriteCheckbox;
 	/** The panel with the parameters of the strategy */
 	private JPanel					strategyParameterPanel;
+	/** The combo box for the locale parameter */
+	private JComboBox<Locale>		localeComboBox;
 	
 	/** The controller in charge of the view */
 	private MainWindowController	controller;
 	/** The translator to use for the view */
 	private Translator				translator;
-	/** The map for the strategies */
-	private Map<String, Strategy>	strategies;
 	
 	/**
 	 * Constructor #1.<br />
@@ -80,19 +82,16 @@ public class MainWindowView extends AbstractFrame {
 	 *        the controller which handle this view.
 	 * @param translator
 	 *        the translator to use for the GUI.
-	 * @param strategies
-	 *        the strategies available.
 	 */
 	public MainWindowView (final Path iconFile, final MainWindowController controller,
-			final Translator translator, final Map<String, Strategy> strategies) {
-		super(translator.get(KEYS.gui().mainWindow().title()), iconFile, controller, translator, strategies);
+			final Translator translator) {
+		super(translator.get(KEYS.gui().mainWindow().title()), iconFile, controller, translator);
 	}
 
 	@Override
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
 		translator = (Translator) parameters[1];
-		strategies = (Map<String, Strategy>) parameters[2];
 	}
 	
 	@Override
@@ -132,7 +131,7 @@ public class MainWindowView extends AbstractFrame {
 		c.gridx = --xIndex;
 		c.gridy = ++yIndex;
 		c.gridwidth = 2;
-		strategyComboBox = new JComboBox<>(strategies.keySet().toArray(new String[0]));
+		strategyComboBox = new JComboBox<>(controller.getStrategiesNames().toArray(new String[0]));
 		add(strategyComboBox, c);
 		
 		c.gridx = 0;
@@ -145,6 +144,10 @@ public class MainWindowView extends AbstractFrame {
 		c.gridy = ++yIndex;
 		c.gridwidth = 3;
 		strategyParameterPanel = new JPanel();
+		strategyParameterPanel.setLayout(new GridBagLayout());
+		strategyParameterPanel.setBorder(BorderFactory.createTitledBorder(translator.get(KEYS.gui().mainWindow().strategyParameters())));
+		localeComboBox = new JComboBox<>(controller.getAvailableLocales().toArray(new Locale[0]));
+		updateStrategyParameterPanel(null);
 		add(strategyParameterPanel, c);
 		
 		c.gridx = 0;
@@ -152,6 +155,43 @@ public class MainWindowView extends AbstractFrame {
 		c.gridwidth = 3;
 		startCorrectingButton = new JButton(translator.get(KEYS.gui().mainWindow().startCorrectingButton()));
 		add(startCorrectingButton, c);
+	}
+	
+	/**
+	 * Update the strategy parameter panel with the specified {@link Strategy} parameters.
+	 * @param strategy
+	 *        the strategy currently used, can be <code>null</code> if none is selected.
+	 */
+	private void updateStrategyParameterPanel (final Strategy strategy) {
+		strategyParameterPanel.removeAll();
+		
+		final int xIndex = 0;
+		int yIndex = 0;
+		final GridBagConstraints c = new GridBagConstraints(xIndex, yIndex, 1, 1, 0, 0,
+				GridBagConstraints.BASELINE_TRAILING, GridBagConstraints.HORIZONTAL,
+				DEFAULT_INSETS, 0, 0);
+		
+		strategyParameterPanel.add(localeComboBox, c);
+		
+		if (strategy != null) {
+			for (final Parameter<?> parameter : strategy.getParameters()) {
+				c.gridy = ++yIndex;
+				c.gridx = xIndex;
+				strategyParameterPanel.add(new JLabel(translator.get(parameter.getDescription())), c);
+				switch (parameter.getType()) {
+					case BOOLEAN:
+						break;
+					case FREE:
+						break;
+					case LIST:
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		strategyParameterPanel.revalidate();
 	}
 	
 	/**
@@ -188,13 +228,19 @@ public class MainWindowView extends AbstractFrame {
 		strategyComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged (final ItemEvent e) {
-				controller.changeStrategy(strategies.get(e.getItem()));
+				controller.changeStrategy((String) e.getItem());
 			}
 		});
 		overwriteCheckbox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed (final ActionEvent e) {
 				controller.changeOverwrite(overwriteCheckbox.isSelected());
+			}
+		});
+		localeComboBox.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged (final ItemEvent e) {
+				controller.changeLocale((Locale) e.getItem());
 			}
 		});
 		startCorrectingButton.addActionListener(new ActionListener() {
@@ -234,10 +280,14 @@ public class MainWindowView extends AbstractFrame {
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();
 				strategyComboBox.setSelectedItem(translator.get(strategy.getTranslationKey()));
-				// TODO change parameter panel
+				updateStrategyParameterPanel(strategy);
+				pack();
 				break;
 			case MainWindowController.OVERWRITE_PROPERTY:
 				overwriteCheckbox.setSelected((boolean) evt.getNewValue());
+				break;
+			case MainWindowController.LOCALE_PROPERTY:
+				localeComboBox.setSelectedItem(evt.getNewValue());
 				break;
 			default:
 				LG.info("Model property not handle by main window: " + evt);

@@ -39,7 +39,7 @@ public final class GUIApp extends AbstractApp {
 		// Load MVC
 		final MainWindowController controller = new MainWindowController(this);
 		final MainWindowModel model = new MainWindowModel();
-		final MainWindowView view = new MainWindowView(null, controller, getTranslator(), getStrategies());
+		final MainWindowView view = new MainWindowView(null, controller, getTranslator());
 		controller.addModel(model);
 		controller.addView(view);
 		

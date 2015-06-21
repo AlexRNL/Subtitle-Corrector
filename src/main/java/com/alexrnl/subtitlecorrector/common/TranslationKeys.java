@@ -366,6 +366,14 @@ public final class TranslationKeys {
 			}
 			
 			/**
+			 * The translation for the strategy parameter group.
+			 * @return the title of the group for the strategy parameters buttons.
+			 */
+			public String strategyParameters () {
+				return mainWindowKey + HIERARCHY_SEPARATOR + "strategyParameters";
+			}
+			
+			/**
 			 * The translation for the start correcting button.
 			 * @return the start correcting button.
 			 */

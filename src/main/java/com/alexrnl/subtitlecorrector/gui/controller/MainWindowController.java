@@ -4,9 +4,11 @@ import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
@@ -20,7 +22,6 @@ import com.alexrnl.commons.translation.StandardDialog;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys;
-import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormat;
 import com.alexrnl.subtitlecorrector.service.ServiceProvider;
@@ -38,6 +39,8 @@ public class MainWindowController extends AbstractController {
 	public static final String	SUBTITLE_PROPERTY	= "Subtitle";
 	/** The name for the strategy property */
 	public static final String	STRATEGY_PROPERTY	= "Strategy";
+	/** The name for the locale property */
+	public static final String	LOCALE_PROPERTY		= "Locale";
 	/** The name for the overwrite property */
 	public static final String	OVERWRITE_PROPERTY	= "Overwrite";
 	
@@ -53,7 +56,23 @@ public class MainWindowController extends AbstractController {
 		super();
 		this.serviceProvider = serviceProvider;
 	}
-
+	
+	/**
+	 * The names of the available strategies.
+	 * @return the set with the strategies names.
+	 */
+	public Set<String> getStrategiesNames () {
+		return Collections.unmodifiableSet(serviceProvider.getStrategies().keySet());
+	}
+	
+	/**
+	 * The available locales for dictionary based verifications.
+	 * @return the set with the locales.
+	 */
+	public Set<Locale> getAvailableLocales () {;
+		return Collections.unmodifiableSet(serviceProvider.getDictionariesManager().getLocaleDictionaries().keySet());
+	}
+	
 	/**
 	 * Change the value of the subtitle.
 	 * @param newSubtitle
@@ -68,8 +87,9 @@ public class MainWindowController extends AbstractController {
 	 * @param strategy
 	 *        the new strategy.
 	 */
-	public void changeStrategy (final Strategy strategy) {
-		setModelProperty(STRATEGY_PROPERTY, strategy);
+	public void changeStrategy (final String strategy) {
+		// TODO null check
+		setModelProperty(STRATEGY_PROPERTY, serviceProvider.getStrategies().get(strategy));
 	}
 	
 	/**
@@ -80,7 +100,16 @@ public class MainWindowController extends AbstractController {
 	public void changeOverwrite (final boolean overwrite) {
 		setModelProperty(OVERWRITE_PROPERTY, overwrite);
 	}
-
+	
+	/**
+	 * Change the value of the locale property.
+	 * @param locale
+	 *        the new locale property.
+	 */
+	public void changeLocale (final Locale locale) {
+		setModelProperty(LOCALE_PROPERTY, locale);
+	}
+	
 	private enum Result {
 		NO_SUBTITLES,
 		FINISHED,
@@ -106,7 +135,7 @@ public class MainWindowController extends AbstractController {
 				
 				// TODO set custom dictionaries and locale
 				final SessionParameters parameters = new SessionParameters();
-				parameters.setLocale(Locale.ENGLISH);
+				parameters.setLocale(model.getLocale());
 				
 				// Actually correct subtitles
 				serviceProvider.getSessionManager().addSessionListener(model.getStrategy());
@@ -143,4 +172,5 @@ public class MainWindowController extends AbstractController {
 		
 		worker.execute();
 	}
+	
 }

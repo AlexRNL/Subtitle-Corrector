@@ -1,6 +1,7 @@
 package com.alexrnl.subtitlecorrector.gui.model;
 
 import java.nio.file.Path;
+import java.util.Locale;
 
 import com.alexrnl.commons.mvc.AbstractModel;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
@@ -18,6 +19,8 @@ public class MainWindowModel extends AbstractModel {
 	private Strategy		strategy;
 	/** Flag to overwrite the file */
 	private Boolean			overwrite;
+	/** The language to use for the subtitle file */
+	private Locale			locale;
 	
 	/**
 	 * Constructor #1.<br />
@@ -82,6 +85,24 @@ public class MainWindowModel extends AbstractModel {
 		final Boolean oldOverwrite = this.overwrite;
 		this.overwrite = overwrite;
 		fireModelChange(MainWindowController.OVERWRITE_PROPERTY, oldOverwrite, overwrite);
+	}
+	
+	/**
+	 * Return the attribute locale.
+	 * @return the attribute locale.
+	 */
+	public Locale getLocale () {
+		return locale;
+	}
+	
+	/**
+	 * Set the attribute locale.
+	 * @param locale the attribute locale.
+	 */
+	public void setLocale (final Locale locale) {
+		final Locale oldLocale = this.locale;
+		this.locale = locale;
+		fireModelChange(MainWindowController.LOCALE_PROPERTY, oldLocale, locale);
 	}
 	
 }
