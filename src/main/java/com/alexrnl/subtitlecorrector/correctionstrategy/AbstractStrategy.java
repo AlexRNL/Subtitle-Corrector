@@ -58,7 +58,7 @@ public abstract class AbstractStrategy implements Strategy {
 	public Parameter<?> getParameterByName (final String name) {
 		Objects.requireNonNull(name);
 		for (final Parameter<?> parameter : getParameters()) {
-			if (parameter.getDescription().equals(name)) {
+			if (parameter.getTranslationKey().equals(name)) {
 				return parameter;
 			}
 		}

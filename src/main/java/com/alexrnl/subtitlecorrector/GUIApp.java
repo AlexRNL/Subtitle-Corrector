@@ -48,8 +48,8 @@ public final class GUIApp extends AbstractApp {
 		controller.addView(view);
 		
 		try {
-			while (!view.isReady()) {
-				synchronized (view) {
+			synchronized (view) {
+				while (!view.isReady()) {
 					view.wait();
 				}
 			}

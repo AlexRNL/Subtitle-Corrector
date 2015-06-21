@@ -53,13 +53,13 @@ public class ParameterTest {
 	}
 	
 	/**
-	 * Test method for {@link Parameter#getDescription()}.
+	 * Test method for {@link Parameter#getTranslationKey()}.
 	 */
 	@Test
-	public void testGetDescription () {
-		assertEquals("ldr/rnr", requiredParameter.getDescription());
-		assertEquals("aba/gta", otherParameter.getDescription());
-		assertEquals("hjo//", listParameter.getDescription());
+	public void testGetTransaltionKey () {
+		assertEquals("ldr/rnr", requiredParameter.getTranslationKey());
+		assertEquals("aba/gta", otherParameter.getTranslationKey());
+		assertEquals("hjo//", listParameter.getTranslationKey());
 	}
 	
 	/**

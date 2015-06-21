@@ -87,7 +87,7 @@ public class MainWindowView extends AbstractFrame {
 			final Translator translator) {
 		super(translator.get(KEYS.gui().mainWindow().title()), iconFile, controller, translator);
 	}
-
+	
 	@Override
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
@@ -97,11 +97,11 @@ public class MainWindowView extends AbstractFrame {
 	@Override
 	protected void build () {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
+		
 		buildMainContainer();
 		installListeners();
 	}
-
+	
 	/**
 	 * Build the main container of the main window.
 	 */
@@ -177,7 +177,7 @@ public class MainWindowView extends AbstractFrame {
 			for (final Parameter<?> parameter : strategy.getParameters()) {
 				c.gridy = ++yIndex;
 				c.gridx = xIndex;
-				strategyParameterPanel.add(new JLabel(translator.get(parameter.getDescription())), c);
+				strategyParameterPanel.add(new JLabel(translator.get(parameter)), c);
 				switch (parameter.getType()) {
 					case BOOLEAN:
 						break;
@@ -279,7 +279,7 @@ public class MainWindowView extends AbstractFrame {
 				break;
 			case MainWindowController.STRATEGY_PROPERTY:
 				final Strategy strategy = (Strategy) evt.getNewValue();
-				strategyComboBox.setSelectedItem(translator.get(strategy.getTranslationKey()));
+				strategyComboBox.setSelectedItem(translator.get(strategy));
 				updateStrategyParameterPanel(strategy);
 				pack();
 				break;

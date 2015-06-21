@@ -116,7 +116,7 @@ public class ConsoleUserPrompt implements com.alexrnl.subtitlecorrector.service.
 		final StringBuilder questionBuilder = new StringBuilder(translator.get(translationKey, parameters));
 		for (final T choice : choices) {
 			questionBuilder.append('\n').append('\t').append(++choiceIndex).append('\t')
-				.append(translator.get(choice.getTranslationKey()));
+				.append(translator.get(choice));
 			arrayChoices.add(choice);
 		}
 		questionBuilder.append('\n').append('\t').append(translator.get(consoleKey.promptMark()));

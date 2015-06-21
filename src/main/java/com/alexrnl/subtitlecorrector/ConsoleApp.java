@@ -104,7 +104,7 @@ public class ConsoleApp extends AbstractApp {
 		final Scanner input = new Scanner(System.in);
 		final List<Parameter<?>> strategyParameters = strategy.getParameters();
 		if (!strategyParameters.isEmpty()) {
-			out.println(getTranslator().get(appKey.strategyParametersInput(), getTranslator().get(strategy.getTranslationKey())));
+			out.println(getTranslator().get(appKey.strategyParametersInput(), getTranslator().get(strategy)));
 		}
 		for (final Parameter<?> parameter : strategyParameters) {
 			String prompt = "";
@@ -121,7 +121,7 @@ public class ConsoleApp extends AbstractApp {
 			}
 			boolean success = false;
 			while (!success) {
-				out.print("\t" + getTranslator().get(parameter.getDescription()) + prompt + " > ");
+				out.print("\t" + getTranslator().get(parameter) + prompt + " > ");
 				try {
 					parameter.setValue(input.nextLine());
 					success = true;

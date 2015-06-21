@@ -3,6 +3,8 @@ package com.alexrnl.subtitlecorrector.correctionstrategy;
 import java.util.Collection;
 import java.util.Collections;
 
+import com.alexrnl.commons.translation.Translatable;
+
 
 /**
  * A parameter of a strategy.<br />
@@ -10,12 +12,12 @@ import java.util.Collections;
  * @param <T>
  *        the type of the parameter.
  */
-public class Parameter<T> {
+public class Parameter<T> implements Translatable {
 	
 	/** The type of parameter represented */
 	private final ParameterType	type;
-	/** The description of the parameter (usually a translation key) */
-	private final String		description;
+	/** The translation key of the parameter */
+	private final String		translationKey;
 	/** <code>true</code> if the parameter is required */
 	private final boolean		required;
 	/** The value of the parameter */
@@ -76,8 +78,8 @@ public class Parameter<T> {
 	 * Constructor #1.<br />
 	 * @param type
 	 *        the type of the parameter.
-	 * @param description
-	 *        the description of the parameter.
+	 * @param translationKey
+	 *        the translation key of the parameter.
 	 * @param required
 	 *        <code>true</code> if the parameter is required.
 	 * @param parser
@@ -87,11 +89,11 @@ public class Parameter<T> {
 	 * @param possibleValues
 	 *        the possible values for the parameter, or <code>null</code> if it is a free parameter.
 	 */
-	public Parameter (final ParameterType type, final String description, final boolean required,
+	public Parameter (final ParameterType type, final String translationKey, final boolean required,
 			final Parser<T> parser, final T defaultValue, final Collection<T> possibleValues) {
 		super();
 		this.type = type;
-		this.description = description;
+		this.translationKey = translationKey;
 		this.required = required;
 		this.value = defaultValue;
 		this.possibleValues = possibleValues == null ? null : Collections.unmodifiableCollection(possibleValues);
@@ -106,8 +108,8 @@ public class Parameter<T> {
 	 * Constructor #2.<br />
 	 * @param type
 	 *        the type of the parameter.
-	 * @param description
-	 *        the description of the parameter.
+	 * @param translationKey
+	 *        the translation key of the parameter.
 	 * @param required
 	 *        <code>true</code> if the parameter is required.
 	 * @param parser
@@ -115,42 +117,42 @@ public class Parameter<T> {
 	 * @param defaultValue
 	 *        the default value of the parameter.
 	 */
-	public Parameter (final ParameterType type, final String description, final boolean required,
+	public Parameter (final ParameterType type, final String translationKey, final boolean required,
 			final Parser<T> parser, final T defaultValue) {
-		this(type, description, required, parser, defaultValue, null);
+		this(type, translationKey, required, parser, defaultValue, null);
 	}
-
+	
 	/**
 	 * Constructor #3.<br />
 	 * Build a parameter with no default value (which is therefore, required).
 	 * @param type
 	 *        the type of the parameter.
-	 * @param description
-	 *        the description of the parameter.
+	 * @param translationKey
+	 *        the translation key of the parameter.
 	 * @param parser
 	 *        the parser to convert a string into the parameter type.
 	 */
-	public Parameter (final ParameterType type, final String description, final Parser<T> parser) {
-		this(type, description, parser, null);
+	public Parameter (final ParameterType type, final String translationKey, final Parser<T> parser) {
+		this(type, translationKey, parser, null);
 	}
-
+	
 	/**
 	 * Constructor #4.<br />
 	 * Build a parameter with no default value (which is therefore, required).
 	 * @param type
 	 *        the type of the parameter.
-	 * @param description
-	 *        the description of the parameter.
+	 * @param translationKey
+	 *        the translation key of the parameter.
 	 * @param parser
 	 *        the parser to convert a string into the parameter type.
 	 * @param possibleValues
 	 *        the possible values for the parameter, or <code>null</code> if it is a free parameter.
 	 */
-	public Parameter (final ParameterType type, final String description, final Parser<T> parser,
+	public Parameter (final ParameterType type, final String translationKey, final Parser<T> parser,
 			final Collection<T> possibleValues) {
-		this(type, description, true, parser, null, possibleValues);
+		this(type, translationKey, true, parser, null, possibleValues);
 	}
-
+	
 	/**
 	 * Return the attribute type.
 	 * @return the attribute type.
@@ -158,15 +160,12 @@ public class Parameter<T> {
 	public ParameterType getType () {
 		return type;
 	}
-
-	/**
-	 * The description of the parameter.
-	 * @return the description which can be shown in an HMI.
-	 */
-	public String getDescription () {
-		return description;
+	
+	@Override
+	public String getTranslationKey () {
+		return translationKey;
 	}
-
+	
 	/**
 	 * Return the attribute required.
 	 * @return the attribute required.
@@ -174,7 +173,7 @@ public class Parameter<T> {
 	public boolean isRequired () {
 		return required;
 	}
-
+	
 	/**
 	 * Return the attribute value.
 	 * @return the attribute value.
@@ -182,7 +181,7 @@ public class Parameter<T> {
 	public T getValue () {
 		return value;
 	}
-
+	
 	/**
 	 * Set the attribute value.
 	 * @param value the attribute value.
@@ -190,7 +189,7 @@ public class Parameter<T> {
 	public void setValue (final String value) {
 		this.value = parser.parse(value);
 	}
-
+	
 	/**
 	 * Return the attribute possibleValues.
 	 * @return the attribute possibleValues.
