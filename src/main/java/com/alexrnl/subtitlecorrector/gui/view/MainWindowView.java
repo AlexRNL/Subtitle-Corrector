@@ -15,9 +15,7 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -27,7 +25,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -74,12 +71,14 @@ public class MainWindowView extends AbstractFrame {
 	/** The combo box for the locale parameter */
 	private JComboBox<Locale>		localeComboBox;
 	/** Map with the strategy parameters components */
-	private Map<String, JComponent>	strategyParameters;
+	private Map<String, StrategyParameterComponent>	strategyParameters;
 	
 	/** The controller in charge of the view */
 	private MainWindowController	controller;
 	/** The translator to use for the view */
 	private Translator				translator;
+	/** The factory for the component representing strategy parameters */
+	private StrategyParameterComponentFactory	parameterComponentFactory;
 	
 	/**
 	 * Constructor #1.<br />
@@ -99,6 +98,7 @@ public class MainWindowView extends AbstractFrame {
 	protected void preInit (final Object... parameters) {
 		controller = (MainWindowController) parameters[0];
 		translator = (Translator) parameters[1];
+		parameterComponentFactory = new StrategyParameterComponentFactory();
 	}
 	
 	@Override
@@ -185,41 +185,13 @@ public class MainWindowView extends AbstractFrame {
 		
 		if (strategy != null) {
 			for (final Parameter<?> parameter : strategy.getParameters()) {
-				xIndex = 0;
+				c.gridx = 0;
 				c.gridy = ++yIndex;
-				c.gridx = xIndex;
-				c.gridwidth = 1;
-				final String parameterLabel = translator.get(parameter);
-				JComponent parameterComponent = null;
-				switch (parameter.getType()) {
-					case BOOLEAN:
-						c.gridwidth = 2;
-						parameterComponent = new JCheckBox(parameterLabel);
-						strategyParameterPanel.add(parameterComponent, c);
-						break;
-					case FREE:
-						strategyParameterPanel.add(new JLabel(parameterLabel), c);
-						c.gridx = ++xIndex;
-						parameterComponent = new JTextField();
-						strategyParameterPanel.add(parameterComponent, c);
-						break;
-					case LIST:
-						strategyParameterPanel.add(new JLabel(parameterLabel), c);
-						c.gridx = ++xIndex;
-						final List<String> values = new ArrayList<>();
-						for (final Object value : parameter.getPossibleValues()) {
-							values.add(String.valueOf(value));
-						}
-						parameterComponent = new JComboBox<>(values.toArray(new String[values.size()]));
-						strategyParameterPanel.add(parameterComponent, c);
-						break;
-					default:
-						LG.warning("Parameter type " + parameter.getType() + " is not supported");
-						break;
-				}
-				if (parameterComponent != null) {
-					strategyParameters.put(parameterLabel, parameterComponent);
-				}
+				c.gridwidth = 2;
+				final String label = translator.get(parameter);
+				final StrategyParameterComponent component = parameterComponentFactory.getParameterComponent(parameter, label);
+				strategyParameterPanel.add(component.getComponent(), c);
+				strategyParameters.put(label, component);
 			}
 		}
 		
