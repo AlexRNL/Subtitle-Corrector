@@ -1,5 +1,8 @@
 package com.alexrnl.subtitlecorrector.gui.view;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 
 /**
@@ -33,11 +36,15 @@ public class StrategyParameterComponentFactory {
 		
 		switch (parameter.getType()) {
 			case BOOLEAN:
-				return new BooleanStrategyParameter(parameter, label);
+				return new BooleanStrategyParameter(label);
 			case FREE:
-				return new FreeStrategyParameter(parameter, label);
+				return new FreeStrategyParameter(label);
 			case LIST:
-				return new ListStrategyParameter(parameter, label);
+				final List<String> values = new ArrayList<>();
+				for (final Object value : parameter.getPossibleValues()) {
+					values.add(String.valueOf(value));
+				}
+				return new ListStrategyParameter(label, values);
 			default:
 				throw new IllegalArgumentException("Unsupported parameter type " + parameter.getType());
 		}

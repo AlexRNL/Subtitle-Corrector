@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -182,6 +183,8 @@ public class MainWindowView extends AbstractFrame {
 		strategyParameterPanel.add(new JLabel(translator.get(KEYS.gui().mainWindow().localeLabel())), c);
 		c.gridx = ++xIndex;
 		strategyParameterPanel.add(localeComboBox, c);
+		// TODO remove listeners from strategy parameters component
+		strategyParameters.clear();
 		
 		if (strategy != null) {
 			for (final Parameter<?> parameter : strategy.getParameters()) {
@@ -213,6 +216,7 @@ public class MainWindowView extends AbstractFrame {
 				});
 			}
 		});
+		
 		subtitleButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed (final ActionEvent e) {
@@ -229,24 +233,37 @@ public class MainWindowView extends AbstractFrame {
 				}
 			}
 		});
+		
 		strategyComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged (final ItemEvent e) {
 				controller.changeStrategy((String) e.getItem());
 			}
 		});
+		
 		overwriteCheckbox.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed (final ActionEvent e) {
 				controller.changeOverwrite(overwriteCheckbox.isSelected());
 			}
 		});
+		
 		localeComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged (final ItemEvent e) {
 				controller.changeLocale((Locale) e.getItem());
 			}
 		});
+		
+		for (final Entry<String, StrategyParameterComponent> parameter : strategyParameters.entrySet()) {
+			parameter.getValue().addValueListener(new StrategyParameterValueListener() {
+				@Override
+				public void valueChanged (final String newValue) {
+					controller.changeStrategyParameterValue(parameter.getKey(), newValue);
+				}
+			});
+		}
+		
 		startCorrectingButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed (final ActionEvent e) {

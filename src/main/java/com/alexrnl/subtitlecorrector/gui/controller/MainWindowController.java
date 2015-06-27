@@ -109,6 +109,16 @@ public class MainWindowController extends AbstractController {
 	public void changeLocale (final Locale locale) {
 		setModelProperty(LOCALE_PROPERTY, locale);
 	}
+
+	/**
+	 * Change the value of the
+	 * @param key
+	 * @param newValue
+	 */
+	public void changeStrategyParameterValue (final String label, final String value) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	private enum Result {
 		NO_SUBTITLES,

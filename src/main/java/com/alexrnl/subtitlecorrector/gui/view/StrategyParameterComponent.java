@@ -17,4 +17,10 @@ public interface StrategyParameterComponent {
 	 */
 	JComponent getComponent ();
 	
+	/**
+	 * Add a listener on the value of the strategy parameter.
+	 * @param listener
+	 *        the listener to notify.
+	 */
+	void addValueListener (StrategyParameterValueListener listener);
 }
