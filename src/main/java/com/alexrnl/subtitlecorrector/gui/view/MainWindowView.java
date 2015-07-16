@@ -293,8 +293,13 @@ public class MainWindowView extends AbstractFrame {
 					+ evt);
 			return;
 		}
-		
-		switch (evt.getPropertyName()) {
+		String propertyName = evt.getPropertyName();
+		String parameterKey = null;
+		if (evt.getPropertyName().startsWith(MainWindowController.STRATEGY_PARAMETER_PROPERTY)) {
+			parameterKey = evt.getPropertyName().substring(MainWindowController.STRATEGY_PARAMETER_PROPERTY.length());
+			propertyName = MainWindowController.STRATEGY_PARAMETER_PROPERTY;
+		}
+		switch (propertyName) {
 			case MainWindowController.SUBTITLE_PROPERTY:
 				subtitleField.setText(IOUtils.getFilename((Path) evt.getNewValue()));
 				break;
@@ -310,6 +315,10 @@ public class MainWindowView extends AbstractFrame {
 				break;
 			case MainWindowController.LOCALE_PROPERTY:
 				localeComboBox.setSelectedItem(evt.getNewValue());
+				break;
+			case MainWindowController.STRATEGY_PARAMETER_PROPERTY:
+				final StrategyParameterComponent parameterComponent = strategyParameters.get(parameterKey);
+				parameterComponent.setValue(evt.getNewValue());
 				break;
 			default:
 				LG.info("Model property not handle by main window: " + evt);

@@ -33,28 +33,36 @@ import com.alexrnl.subtitlecorrector.service.SessionParameters;
  */
 public class MainWindowController extends AbstractController {
 	/** Logger */
-	private static final Logger	LG					= Logger.getLogger(MainWindowController.class.getName());
+	private static final Logger		LG = Logger.getLogger(MainWindowController.class.getName());
 	
+	// TODO move these constants to model?
 	/** The name for the subtitle property */
-	public static final String	SUBTITLE_PROPERTY	= "Subtitle";
+	public static final String		SUBTITLE_PROPERTY			= "Subtitle";
 	/** The name for the strategy property */
-	public static final String	STRATEGY_PROPERTY	= "Strategy";
+	public static final String		STRATEGY_PROPERTY			= "Strategy";
 	/** The name for the locale property */
-	public static final String	LOCALE_PROPERTY		= "Locale";
+	public static final String		LOCALE_PROPERTY				= "Locale";
 	/** The name for the overwrite property */
-	public static final String	OVERWRITE_PROPERTY	= "Overwrite";
+	public static final String		OVERWRITE_PROPERTY			= "Overwrite";
+	/** The name for the strategy parameters property */
+	public static final String		STRATEGY_PARAMETER_PROPERTY	= "StrategyParameter";
 	
 	/** The service provider */
-	private final ServiceProvider serviceProvider;
+	private final ServiceProvider	serviceProvider;
+	/** The model for the main window */
+	private final MainWindowModel	model;
 	
 	/**
 	 * Constructor #1.<br />
 	 * @param serviceProvider
 	 *        the provider for subtitle corrector services.
+	 * @param model
+	 *        the model for the window.
 	 */
-	public MainWindowController (final ServiceProvider serviceProvider) {
+	public MainWindowController (final ServiceProvider serviceProvider, final MainWindowModel model) {
 		super();
 		this.serviceProvider = serviceProvider;
+		this.model = model;
 	}
 	
 	/**
@@ -111,13 +119,14 @@ public class MainWindowController extends AbstractController {
 	}
 
 	/**
-	 * Change the value of the
+	 * Change the value of the parameter specified.
 	 * @param key
-	 * @param newValue
+	 *        the label of the parameter.
+	 * @param value
+	 *        the value of the parameter.
 	 */
-	public void changeStrategyParameterValue (final String label, final String value) {
-		// TODO Auto-generated method stub
-		
+	public void changeStrategyParameterValue (final String key, final String value) {
+		model.setStrategyParameter(key, value);
 	}
 	
 	private enum Result {
@@ -130,8 +139,6 @@ public class MainWindowController extends AbstractController {
 	 * Start the correcting session.
 	 */
 	public void startCorrection () {
-		// TODO retrieve model differently?
-		final MainWindowModel model = (MainWindowModel) getRegisteredModels()[0];
 		final SwingWorker<Result, Void> worker = new SwingWorker<Result, Void>() {
 			@Override
 			protected Result doInBackground () throws Exception {

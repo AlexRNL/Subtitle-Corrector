@@ -1,7 +1,9 @@
 package com.alexrnl.subtitlecorrector.gui.model;
 
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import com.alexrnl.commons.mvc.AbstractModel;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Strategy;
@@ -14,19 +16,22 @@ import com.alexrnl.subtitlecorrector.gui.controller.MainWindowController;
 public class MainWindowModel extends AbstractModel {
 	
 	/** The path of the subtitle */
-	private Path			subtitle;
+	private Path						subtitle;
 	/** The name of the strategy to use */
-	private Strategy		strategy;
+	private Strategy					strategy;
 	/** Flag to overwrite the file */
-	private Boolean			overwrite;
+	private Boolean						overwrite;
 	/** The language to use for the subtitle file */
-	private Locale			locale;
+	private Locale						locale;
+	/** The map with the strategy parameters */
+	private final Map<String, String>	parameters;
 	
 	/**
 	 * Constructor #1.<br />
 	 */
 	public MainWindowModel () {
 		super();
+		parameters = new HashMap<>();
 	}
 
 	/**
@@ -97,12 +102,35 @@ public class MainWindowModel extends AbstractModel {
 	
 	/**
 	 * Set the attribute locale.
-	 * @param locale the attribute locale.
+	 * @param locale
+	 *        the attribute locale.
 	 */
 	public void setLocale (final Locale locale) {
 		final Locale oldLocale = this.locale;
 		this.locale = locale;
 		fireModelChange(MainWindowController.LOCALE_PROPERTY, oldLocale, locale);
+	}
+	
+	/**
+	 * Return the strategy parameter value for the given parameter.
+	 * @param key
+	 *        the key of the parameter.
+	 * @return the value of the parameter, <code>null</code> if it is not found.
+	 */
+	public String getStrategyParameter (final String key) {
+		return parameters.get(key);
+	}
+	
+	/**
+	 * Set the value of the specified parameter.
+	 * @param key
+	 *        the key of the parameter.
+	 * @param value
+	 *        the new value of the parameter.
+	 */
+	public void setStrategyParameter (final String key, final String value) {
+		final String oldValue = parameters.put(key, value);
+		fireModelChange(MainWindowController.STRATEGY_PARAMETER_PROPERTY + key, oldValue, value);
 	}
 	
 }
