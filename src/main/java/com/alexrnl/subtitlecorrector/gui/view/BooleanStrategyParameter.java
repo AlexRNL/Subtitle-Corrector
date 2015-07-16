@@ -52,5 +52,9 @@ public class BooleanStrategyParameter implements StrategyParameterComponent {
 		valueListeners.add(listener);
 	}
 	
+	@Override
+	public void setValue (final String value) {
+		component.setSelected(Boolean.valueOf(value));
+	}
 	
 }

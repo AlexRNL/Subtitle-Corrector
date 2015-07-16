@@ -23,4 +23,11 @@ public interface StrategyParameterComponent {
 	 *        the listener to notify.
 	 */
 	void addValueListener (StrategyParameterValueListener listener);
+
+	/***
+	 * Set the value of the strategy parameter.
+	 * @param value
+	 *        the value to set.
+	 */
+	void setValue (String value);
 }

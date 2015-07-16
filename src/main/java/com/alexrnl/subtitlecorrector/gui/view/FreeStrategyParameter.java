@@ -13,6 +13,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  * Class representing a free strategy parameter.<br />
@@ -49,9 +50,15 @@ public class FreeStrategyParameter implements StrategyParameterComponent {
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped (final KeyEvent e) {
-				for (final StrategyParameterValueListener strategyParameterValueListener : valueListeners) {
-					strategyParameterValueListener.valueChanged(textField.getText());
-				}
+				SwingUtilities.invokeLater(new Runnable() {
+					@Override
+					public void run () {
+						for (final StrategyParameterValueListener strategyParameterValueListener : valueListeners) {
+							strategyParameterValueListener.valueChanged(textField.getText());
+						}
+					}
+				});
+				
 			}
 		});
 	}
@@ -67,6 +74,11 @@ public class FreeStrategyParameter implements StrategyParameterComponent {
 			throw new IllegalArgumentException("Cannot add null listener to be notified");
 		}
 		valueListeners.add(listener);
+	}
+	
+	@Override
+	public void setValue (final String value) {
+		textField.setText(value);
 	}
 	
 }

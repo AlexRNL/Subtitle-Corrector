@@ -18,7 +18,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -191,10 +190,15 @@ public class MainWindowView extends AbstractFrame {
 				c.gridx = 0;
 				c.gridy = ++yIndex;
 				c.gridwidth = 2;
-				final String label = translator.get(parameter);
-				final StrategyParameterComponent component = parameterComponentFactory.getParameterComponent(parameter, label);
+				final StrategyParameterComponent component = parameterComponentFactory.getParameterComponent(parameter, translator.get(parameter));
 				strategyParameterPanel.add(component.getComponent(), c);
-				strategyParameters.put(label, component);
+				component.addValueListener(new StrategyParameterValueListener() {
+					@Override
+					public void valueChanged (final String newValue) {
+						controller.changeStrategyParameterValue(parameter.getTranslationKey(), newValue);
+					}
+				});
+				strategyParameters.put(parameter.getTranslationKey(), component);
 			}
 		}
 		
@@ -255,15 +259,6 @@ public class MainWindowView extends AbstractFrame {
 			}
 		});
 		
-		for (final Entry<String, StrategyParameterComponent> parameter : strategyParameters.entrySet()) {
-			parameter.getValue().addValueListener(new StrategyParameterValueListener() {
-				@Override
-				public void valueChanged (final String newValue) {
-					controller.changeStrategyParameterValue(parameter.getKey(), newValue);
-				}
-			});
-		}
-		
 		startCorrectingButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed (final ActionEvent e) {
@@ -317,8 +312,7 @@ public class MainWindowView extends AbstractFrame {
 				localeComboBox.setSelectedItem(evt.getNewValue());
 				break;
 			case MainWindowController.STRATEGY_PARAMETER_PROPERTY:
-				final StrategyParameterComponent parameterComponent = strategyParameters.get(parameterKey);
-				parameterComponent.setValue(evt.getNewValue());
+				strategyParameters.get(parameterKey).setValue((String) evt.getNewValue());
 				break;
 			default:
 				LG.info("Model property not handle by main window: " + evt);

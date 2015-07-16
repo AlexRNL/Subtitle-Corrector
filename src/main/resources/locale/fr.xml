@@ -37,7 +37,7 @@
 	<entry key="subtitlecorrector.gui.mainwindow.localeLabel">Langue du dictionnaire</entry>
 	<entry key="subtitlecorrector.gui.mainwindow.startCorrectingButton">Commencer la correction</entry>
 	<!-- Translations for graphic user prompt -->
-	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replacewithcontext&#10;Contexte : %2</entry>
+	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replace&#10;Contexte : %2</entry>
 	<entry key="subtitlecorrector.gui.userprompt.replace">Remplacer '%0' par '%1'?</entry>
 	<entry key="subtitlecorrector.gui.userprompt.rememberchoice">Mémoriser ce remplacement pour le reste de la session ?</entry>
 	

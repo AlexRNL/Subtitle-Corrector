@@ -70,5 +70,10 @@ public class ListStrategyParameter implements StrategyParameterComponent {
 		}
 		valueListeners.add(listener);
 	}
-
+	
+	@Override
+	public void setValue (final String value) {
+		comboBox.setSelectedItem(value);
+	}
+	
 }

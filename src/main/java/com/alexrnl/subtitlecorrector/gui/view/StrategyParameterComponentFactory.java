@@ -6,7 +6,7 @@ import java.util.List;
 import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 
 /**
- * Factory which creates {@link StrategyParameterComponent} depending for each component.
+ * Factory which creates {@link StrategyParameterComponent} for each parameter.
  * @author Alex
  */
 public class StrategyParameterComponentFactory {

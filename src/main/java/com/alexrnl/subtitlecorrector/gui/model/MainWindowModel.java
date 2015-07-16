@@ -1,6 +1,7 @@
 package com.alexrnl.subtitlecorrector.gui.model;
 
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -119,6 +120,14 @@ public class MainWindowModel extends AbstractModel {
 	 */
 	public String getStrategyParameter (final String key) {
 		return parameters.get(key);
+	}
+	
+	/**
+	 * Return an unmodifiable view of the parameters map.
+	 * @return the parameters.
+	 */
+	public Map<String, String> getStrategyParameters () {
+		return Collections.unmodifiableMap(parameters);
 	}
 	
 	/**

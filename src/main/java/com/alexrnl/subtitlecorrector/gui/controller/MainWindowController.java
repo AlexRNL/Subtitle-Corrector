@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ import com.alexrnl.commons.translation.StandardDialog;
 import com.alexrnl.subtitlecorrector.common.Subtitle;
 import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 import com.alexrnl.subtitlecorrector.common.TranslationKeys;
+import com.alexrnl.subtitlecorrector.correctionstrategy.Parameter;
 import com.alexrnl.subtitlecorrector.gui.model.MainWindowModel;
 import com.alexrnl.subtitlecorrector.io.SubtitleFormat;
 import com.alexrnl.subtitlecorrector.service.ServiceProvider;
@@ -126,6 +128,9 @@ public class MainWindowController extends AbstractController {
 	 *        the value of the parameter.
 	 */
 	public void changeStrategyParameterValue (final String key, final String value) {
+		if (LG.isLoggable(Level.INFO)) {
+			LG.info("Setting strategy parameter " + key + " to " + value);
+		}
 		model.setStrategyParameter(key, value);
 	}
 	
@@ -140,6 +145,7 @@ public class MainWindowController extends AbstractController {
 	 */
 	public void startCorrection () {
 		final SwingWorker<Result, Void> worker = new SwingWorker<Result, Void>() {
+			
 			@Override
 			protected Result doInBackground () throws Exception {
 				// TODO Auto-generated method stub
@@ -148,7 +154,10 @@ public class MainWindowController extends AbstractController {
 					return Result.NO_SUBTITLES;
 				}
 				
-				// TODO parameterize strategy
+				for (final Parameter<?> parameter : model.getStrategy().getParameters()) {
+					parameter.setValue(model.getStrategyParameter(parameter.getTranslationKey()));
+					System.out.println(parameter.getTranslationKey() + " = " + parameter.getValue());
+				}
 				
 				// TODO set custom dictionaries and locale
 				final SessionParameters parameters = new SessionParameters();
