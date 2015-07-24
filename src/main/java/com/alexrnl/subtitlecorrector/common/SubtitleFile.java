@@ -45,11 +45,9 @@ public class SubtitleFile extends TreeSet<Subtitle> {
 		if (CollectionUtils.isSorted(this)) {
 			return;
 		}
-
-		final List<Subtitle> tmp = new ArrayList<>(this);
+		
+		final List<Subtitle> backup = new ArrayList<>(this);
 		this.clear();
-		for (final Subtitle subtitle : tmp) {
-			this.add(subtitle);
-		}
+		this.addAll(backup);
 	}
 }
