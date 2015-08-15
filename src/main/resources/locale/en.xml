@@ -41,6 +41,7 @@
 	<entry key="subtitlecorrector.gui.userprompt.replacewithcontext">§subtitlecorrector.gui.userprompt.replace&#10;Context: %2</entry>
 	<entry key="subtitlecorrector.gui.userprompt.replace">Replace '%0' by '%1'?</entry>
 	<entry key="subtitlecorrector.gui.userprompt.rememberchoice">Remember choice for the rest of the session?</entry>
+	<entry key="subtitlecorrector.gui.userprompt.confirmdialogtitle">%0 (%1/%2)</entry>
 	
 	<!-- Translations for console mode -->
 	<!-- Generic translations -->

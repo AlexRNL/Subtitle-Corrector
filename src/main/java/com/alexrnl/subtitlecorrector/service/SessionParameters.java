@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import com.alexrnl.subtitlecorrector.common.SubtitleFile;
+
 /**
  * Class describing the session parameters.<br />
  * @author Alex
@@ -15,6 +17,10 @@ public class SessionParameters {
 	private Locale				locale;
 	/** The custom dictionaries selected for the session */
 	private final Set<String>	customDictionaries;
+	/** The subtitle file being corrected */
+	private SubtitleFile		subtitleFile;
+	/** The current position for the correction in the file */
+	private int					currentCorrectionIndex;
 	
 	/**
 	 * Constructor #1.<br />
@@ -24,6 +30,8 @@ public class SessionParameters {
 		super();
 		locale = Locale.getDefault();
 		customDictionaries = new HashSet<>();
+		subtitleFile = null;
+		currentCorrectionIndex = -1;
 	}
 	
 	/**
@@ -75,11 +83,47 @@ public class SessionParameters {
 	public void clearCustomDictionaries () {
 		customDictionaries.clear();
 	}
-
+	
+	/**
+	 * Return the attribute subtitleFile.
+	 * @return the attribute subtitleFile.
+	 */
+	public SubtitleFile getSubtitleFile () {
+		return subtitleFile;
+	}
+	
+	/**
+	 * Set the attribute subtitleFile.
+	 * @param subtitleFile
+	 *        the attribute subtitleFile.
+	 */
+	public void setSubtitleFile (final SubtitleFile subtitleFile) {
+		this.subtitleFile = subtitleFile;
+	}
+	
+	/**
+	 * Return the attribute currentCorrectionIndex.
+	 * @return the attribute currentCorrectionIndex.
+	 */
+	public int getCurrentCorrectionIndex () {
+		return currentCorrectionIndex;
+	}
+	
+	/**
+	 * Set the attribute currentCorrectionIndex.
+	 * @param currentCorrectionIndex
+	 *        the attribute currentCorrectionIndex.
+	 */
+	public void setCurrentCorrectionIndex (final int currentCorrectionIndex) {
+		this.currentCorrectionIndex = currentCorrectionIndex;
+	}
+	
 	@Override
 	public String toString () {
 		return "SessionParameters [locale=" + locale +
-				", customDictionaries=" + customDictionaries + "]";
+				", customDictionaries=" + customDictionaries +
+				", subtitleFile=" + subtitleFile +
+				", currentCorrectionIndex=" + currentCorrectionIndex + "]";
 	}
 	
 }

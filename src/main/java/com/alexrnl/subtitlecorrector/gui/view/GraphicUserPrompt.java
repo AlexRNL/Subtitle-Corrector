@@ -1,6 +1,5 @@
 package com.alexrnl.subtitlecorrector.gui.view;
 
-
 import static com.alexrnl.subtitlecorrector.common.TranslationKeys.KEYS;
 
 import java.util.Collection;
@@ -9,36 +8,42 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import com.alexrnl.commons.gui.swing.SwingUtils;
+import com.alexrnl.commons.io.IOUtils;
 import com.alexrnl.commons.translation.Dialog;
 import com.alexrnl.commons.translation.SimpleDialog;
 import com.alexrnl.commons.translation.Translatable;
 import com.alexrnl.commons.translation.Translator;
 import com.alexrnl.commons.utils.StringUtils;
 import com.alexrnl.commons.utils.Word;
+import com.alexrnl.subtitlecorrector.common.TranslationKeys.Gui.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.SessionParameters;
 import com.alexrnl.subtitlecorrector.service.SessionStateAdapter;
-import com.alexrnl.subtitlecorrector.service.UserPrompt;
 import com.alexrnl.subtitlecorrector.service.UserPromptAnswer;
 
 /**
- * A GUI implementation of the {@link UserPrompt} interface.
+ * A GUI implementation of the {@link com.alexrnl.subtitlecorrector.service.UserPrompt} interface.
  * @author Alex
  */
-public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt {
+public class GraphicUserPrompt extends SessionStateAdapter implements com.alexrnl.subtitlecorrector.service.UserPrompt {
 	/** Logger */
 	private static final Logger	LG	= Logger.getLogger(GraphicUserPrompt.class.getName());
 	
 	/** The maximum length for lines in dialogs */
 	private static final int	MAXIMUM_LINE_LENGTH = 80;
 	
+	/** The key to the user prompt translations */
+	private final UserPrompt	userPromptKey;
 	/** The translator to use */
 	private Translator			translator;
+	/** The current sessionParameters of the session */
+	private SessionParameters	sessionParameters;
 	
 	/**
 	 * Constructor #1.<br />
 	 */
 	public GraphicUserPrompt () {
 		super();
+		userPromptKey = KEYS.gui().userPrompt();
 	}
 	
 	@Override
@@ -51,6 +56,7 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 		if (translator == null) {
 			throw new IllegalStateException("Cannot start session without translator");
 		}
+		this.sessionParameters = parameters;
 	}
 	
 	/**
@@ -86,12 +92,26 @@ public class GraphicUserPrompt extends SessionStateAdapter implements UserPrompt
 		return SwingUtils.askChoice(null, translator, new SimpleDialog("title", translationKey, parameters), choices, MAXIMUM_LINE_LENGTH);
 	}
 	
+	/**
+	 * Computes the title of the dialog when confirming a replacement.
+	 * @return the title of the dialog.
+	 */
+	private String getTitle () {
+		if (sessionParameters == null || sessionParameters.getSubtitleFile() == null) {
+			return translator.get("");
+		}
+		
+		return translator.get(userPromptKey.confirmDialogTitle(),
+				IOUtils.getFilename(sessionParameters.getSubtitleFile().getFile()),
+				sessionParameters.getCurrentCorrectionIndex(),
+				sessionParameters.getSubtitleFile().size());
+	}
+	
 	@Override
 	public UserPromptAnswer confirm (final String context, final Word original, final String replacement) {
-		final com.alexrnl.subtitlecorrector.common.TranslationKeys.Gui.UserPrompt userPromptKey = KEYS.gui().userPrompt();
 		final Dialog dialog = StringUtils.neitherNullNorEmpty(context) ?
-				new SimpleDialog("title", userPromptKey.replaceWithContext(), original, replacement, context) :
-				new SimpleDialog("title", userPromptKey.replace(), original, replacement);
+				new SimpleDialog(getTitle(), userPromptKey.replaceWithContext(), original, replacement, context) :
+				new SimpleDialog(getTitle(), userPromptKey.replace(), original, replacement);
 		final String answer = SwingUtils.askFreeInput(null, translator, dialog, replacement, MAXIMUM_LINE_LENGTH);
 		
 		return new UserPromptAnswer(answer, answer == null,

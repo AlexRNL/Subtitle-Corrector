@@ -167,7 +167,10 @@ public class MainWindowController extends AbstractController {
 				serviceProvider.getSessionManager().addSessionListener(model.getStrategy());
 				serviceProvider.getSessionManager().startSession(parameters);
 				for (final SubtitleFile subtitleFile : subtitles.keySet()) {
+					parameters.setSubtitleFile(subtitleFile);
+					int subtitleIndex = 0;
 					for (final Subtitle subtitle : subtitleFile) {
+						parameters.setCurrentCorrectionIndex(subtitleIndex++);
 						model.getStrategy().correct(subtitle);
 					}
 				}

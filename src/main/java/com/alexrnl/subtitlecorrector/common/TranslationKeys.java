@@ -445,6 +445,14 @@ public final class TranslationKeys {
 			public String rememberChoice () {
 				return userPromptKey + HIERARCHY_SEPARATOR + "rememberchoice";
 			}
+			
+			/**
+			 * Return the translation for the confirm dialog title.
+			 * @return the confirm dialog title.
+			 */
+			public String confirmDialogTitle () {
+				return userPromptKey + HIERARCHY_SEPARATOR + "confirmdialogtitle";
+			}
 		}
 		
 		/**

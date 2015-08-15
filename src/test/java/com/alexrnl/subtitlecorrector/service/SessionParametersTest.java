@@ -1,13 +1,20 @@
 package com.alexrnl.subtitlecorrector.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 import java.util.Locale;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+
+import com.alexrnl.subtitlecorrector.common.SubtitleFile;
 
 /**
  * Test suite for the {@link SessionParameters} class.
@@ -18,16 +25,22 @@ public class SessionParametersTest {
 	private SessionParameters	defaultParameters;
 	/** Other session parameters */
 	private SessionParameters	otherParameters;
+	/** The mocked subtitle file */
+	@Mock
+	private SubtitleFile		subtitleFile;
 
 	/**
 	 * Set up test attributes.
 	 */
 	@Before
 	public void setUp () {
+		initMocks(this);
 		defaultParameters = new SessionParameters();
 		otherParameters = new SessionParameters();
 		otherParameters.setLocale(Locale.ENGLISH);
 		otherParameters.addCustomDictionay("MAD");
+		otherParameters.setSubtitleFile(subtitleFile);
+		otherParameters.setCurrentCorrectionIndex(88);
 	}
 	
 	/**
@@ -105,13 +118,55 @@ public class SessionParametersTest {
 	}
 	
 	/**
+	 * Test method for {@link SessionParameters#getSubtitleFile}.
+	 */
+	@Test
+	public void testGetSubtitleFile () {
+		assertNull(defaultParameters.getSubtitleFile());
+		assertEquals(subtitleFile, otherParameters.getSubtitleFile());
+	}
+	
+	/**
+	 * Test method for {@link SessionParameters#setSubtitleFile(SubtitleFile)}.
+	 */
+	@Test
+	public void testSetSubtitleFile () {
+		defaultParameters.setSubtitleFile(subtitleFile);
+		final SubtitleFile subtitleFile2 = mock(SubtitleFile.class);
+		otherParameters.setSubtitleFile(subtitleFile2);
+		assertEquals(subtitleFile, defaultParameters.getSubtitleFile());
+		assertEquals(subtitleFile2, otherParameters.getSubtitleFile());
+	}
+	
+	/**
+	 * Test method for {@link SessionParameters#getCurrentCorrectionIndex()}.
+	 */
+	@Test
+	public void testGetCurrentCorrectionIndex () {
+		assertEquals(-1, defaultParameters.getCurrentCorrectionIndex());
+		assertEquals(88, otherParameters.getCurrentCorrectionIndex());
+	}
+	
+	/**
+	 * Test method for {@link SessionParameters#setCurrentCorrectionIndex(int)}.
+	 */
+	@Test
+	public void testSetCurrentCorrectionIndex () {
+		defaultParameters.setCurrentCorrectionIndex(28);
+		otherParameters.setCurrentCorrectionIndex(128);
+		assertEquals(28, defaultParameters.getCurrentCorrectionIndex());
+		assertEquals(128, otherParameters.getCurrentCorrectionIndex());
+	}
+	
+	/**
 	 * Test method for {@link SessionParameters#toString()}.
 	 */
 	@Test
 	public void testToString () {
-		assertEquals("SessionParameters [locale=" + Locale.getDefault().toString() + ", customDictionaries=[]]",
+		assertEquals("SessionParameters [locale=" + Locale.getDefault().toString() + ", customDictionaries=[], subtitleFile=null, currentCorrectionIndex=-1]",
 				defaultParameters.toString());
-		assertEquals("SessionParameters [locale=en, customDictionaries=[MAD]]",
+		when(subtitleFile.toString()).thenReturn("mocked.srt");
+		assertEquals("SessionParameters [locale=en, customDictionaries=[MAD], subtitleFile=mocked.srt, currentCorrectionIndex=88]",
 				otherParameters.toString());
 	}
 }
